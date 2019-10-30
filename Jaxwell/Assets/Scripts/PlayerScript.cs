@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    //store our components here in void start
     Rigidbody2D p_rigidbody;
     SpriteRenderer p_spriteRenderer;
 
@@ -15,6 +16,7 @@ public class PlayerScript : MonoBehaviour
     //flag so we know when we can and can't jump
     bool canJump = false;
 
+
     bool fire = false;
     bool water = false;
     bool earth = false;
@@ -22,7 +24,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-        //get components in Start so we only have to do tha
+        //get components in Start so we only have to do that once
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         p_rigidbody = GetComponent<Rigidbody2D>();
         //start as fire
@@ -189,7 +191,7 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //check if we are touching a jumpable surface
+        //check if we are touching a jumpable surface (add tag in editor to surface objects)
         if (collision.gameObject.CompareTag("JumpableSurface"))
         {
             Debug.Log("Touched Jumpable Surface");
@@ -198,8 +200,8 @@ public class PlayerScript : MonoBehaviour
     }
 
     void OnCollisionExit2D(Collision2D collision)
-    {        
-        //check if we have left a jumpable surface
+    {
+        //check if we have left a jumpable surface (add tag in editor to surface objects)
         if (collision.gameObject.CompareTag("JumpableSurface"))
         {
             Debug.Log("Left Jumpable Surface");
