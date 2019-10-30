@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     Rigidbody2D p_rigidbody;
     SpriteRenderer p_spriteRenderer;
 
+
     //public so we can change in editor
     public float moveSpeed = 3.0f;
     public float jumpHeight = 5.0f;
@@ -16,20 +17,22 @@ public class PlayerScript : MonoBehaviour
     //flag so we know when we can and can't jump
     bool canJump = false;
 
-
-    bool fire = false;
-    bool water = false;
-    bool earth = false;
-    bool air = false;
+    //public bools so we can access from other scripts
+    public bool fire = false;
+    public bool water = false;
+    public bool earth = false;
+    public bool air = false;
 
     void Start()
     {
         //get components in Start so we only have to do that once
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         p_rigidbody = GetComponent<Rigidbody2D>();
+
         //start as fire
         fire = true;
         p_spriteRenderer.color = Color.red;
+
     }
 
     // Update is called once per frame
