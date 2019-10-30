@@ -11,10 +11,22 @@ public class PlayerScript : MonoBehaviour
     //flag so we know when we can and can't jump
     bool canJump = false;
 
+    bool fire = false;
+    bool water = false;
+    bool earth = false;
+    bool air = false;
+
+    void Start()
+    {
+        //start as fire
+        fire = true;
+    }
+
     // Update is called once per frame
     void Update()
-    {     
-        //check if we can jump before then check for keydown press instead of getkey, since we don't leave jumpable surface in 1 frame (causes multiple jumps)
+    {
+        //check if we can jump before then check for keydown press instead of getkey,
+        //since we don't leave jumpable surface in 1 frame (causes multiple jumps)
         if (canJump && Input.GetKeyDown("w"))
         {
             Jump();
@@ -30,9 +42,139 @@ public class PlayerScript : MonoBehaviour
         {
             MoveLeft();
         }
+
+        if(fire)
+        {
+            //TODO
+        }
+
+        if(water)
+        {
+            //TODO
+        }
+
+        if(earth)
+        {
+            //TODO
+        }
+
+        if(air)
+        {
+            //TODO
+        }
+
+        #region Enabling/Disabling elements (using keybinds for now)
+        if(Input.GetKey("1"))
+        {
+            if(water == true)
+            {
+                Debug.Log("Water Disabled for Fire");
+                water = false;
+            }
+
+            if(earth == true)
+            {
+                Debug.Log("Earth Disabled for Fire");
+                earth = false;
+            }
+
+            if(air == true)
+            {
+                Debug.Log("Air Disabled for Fire");
+                air = false;
+            }
+
+            if (fire != true)
+            {
+                Debug.Log("Fire Enabled");
+                fire = true;
+            }
+        }
+
+        if (Input.GetKey("2"))
+        {
+            if (fire == true)
+            {
+                Debug.Log("Fire Disabled for Water");
+                fire = false;
+            }
+
+            if (earth == true)
+            {
+                Debug.Log("Earth Disabled for Water");
+                earth = false;
+            }
+
+            if (air == true)
+            {
+                Debug.Log("Air Disabled for Water");
+                air = false;
+            }
+
+            if (water != true)
+            {
+                Debug.Log("Water Enabled");
+                water = true;
+            }
+        }
+
+        if (Input.GetKey("3"))
+        {
+            if (water == true)
+            {
+                Debug.Log("Water Disabled for Earth");
+                water = false;
+            }
+
+            if (fire == true)
+            {
+                Debug.Log("Fire Disabled for Earth");
+                fire = false;
+            }
+
+            if (air == true)
+            {
+                Debug.Log("Air Disabled for Earth");
+                air = false;
+            }
+
+            if (earth != true)
+            {
+                Debug.Log("Earth Enabled");
+                earth = true;
+            }
+        }
+
+        if (Input.GetKey("4"))
+        {
+            if (water == true)
+            {
+                Debug.Log("Water Disabled for Air");
+                water = false;
+            }
+
+            if (earth == true)
+            {
+                Debug.Log("Earth Disabled for Air");
+                earth = false;
+            }
+
+            if (fire == true)
+            {
+                Debug.Log("Fire Disabled for Air");
+                fire = false;
+            }
+
+            if (air != true)
+            {
+                Debug.Log("Air Enabled");
+                air = true;
+            }
+        }
+        #endregion
     }
 
-    
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         //check if we are touching a jumpable surface
