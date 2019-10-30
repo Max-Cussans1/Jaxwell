@@ -222,7 +222,7 @@ public class PlayerScript : MonoBehaviour
         //update the temp variable in the right direction, * Time.deltaTime for smoothing
         temp = temp + (0.5f * Time.deltaTime * moveSpeed);
         //change position by passing temp in for our x position
-        transform.position = new Vector3(temp, transform.position.y, transform.position.z);
+        transform.position = new Vector2(temp, transform.position.y);
     }
 
     //NOTE: if we want to change movement speed at runtime these could be changed to pass in speed as a parameter
@@ -234,7 +234,7 @@ public class PlayerScript : MonoBehaviour
         //update the temp variable in the left direction, * Time.deltaTime for smoothing
         temp = temp - (0.5f * Time.deltaTime * moveSpeed);
         //change position by passing temp in for our x position
-        transform.position = new Vector3(temp, transform.position.y, transform.position.z);
+        transform.position = new Vector2(temp, transform.position.y);
     }
 
     //NOTE: if we want to change jump speed at runtime these could be changed to pass in speed as a parameter
