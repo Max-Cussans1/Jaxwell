@@ -29,7 +29,7 @@ public class Platforms : MonoBehaviour
         airObjects = GameObject.FindGameObjectsWithTag("Air");
 
         //Make our playerscript variable our player's script so we can get the bools from that script
-        player = GameObject.Find("Player").GetComponent<PlayerScript>();
+        player = GetComponent<PlayerScript>();
 
         #region Debug prints for locations of all element objects
         //print where each element is to console
