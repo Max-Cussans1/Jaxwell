@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - JumpableSurface
+  - Fire
+  - Water
+  - Earth
+  - Air
+  - Neutral
   layers:
   - Default
   - TransparentFX

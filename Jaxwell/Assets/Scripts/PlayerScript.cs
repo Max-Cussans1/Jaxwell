@@ -195,7 +195,7 @@ public class PlayerScript : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         //check if we are touching a jumpable surface (add tag in editor to surface objects)
-        if (collision.gameObject.CompareTag("JumpableSurface"))
+        if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
         {
             Debug.Log("Touched Jumpable Surface");
             canJump = true;
@@ -205,7 +205,7 @@ public class PlayerScript : MonoBehaviour
     void OnCollisionExit2D(Collision2D collision)
     {
         //check if we have left a jumpable surface (add tag in editor to surface objects)
-        if (collision.gameObject.CompareTag("JumpableSurface"))
+        if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
         {
             Debug.Log("Left Jumpable Surface");
             canJump = false;
