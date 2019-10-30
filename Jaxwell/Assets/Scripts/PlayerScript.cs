@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    Rigidbody2D p_rigidbody;
+    SpriteRenderer p_spriteRenderer;
+
     //public so we can change in editor
     public float moveSpeed = 3.0f;
     public float jumpHeight = 5.0f;
+
 
     //flag so we know when we can and can't jump
     bool canJump = false;
@@ -18,8 +22,12 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        //get components in Start so we only have to do tha
+        p_spriteRenderer = GetComponent<SpriteRenderer>();
+        p_rigidbody = GetComponent<Rigidbody2D>();
         //start as fire
         fire = true;
+        p_spriteRenderer.color = Color.red;
     }
 
     // Update is called once per frame
@@ -88,6 +96,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Debug.Log("Fire Enabled");
                 fire = true;
+                p_spriteRenderer.color = Color.red;
             }
         }
 
@@ -115,6 +124,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Debug.Log("Water Enabled");
                 water = true;
+                p_spriteRenderer.color = Color.blue;
             }
         }
 
@@ -142,6 +152,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Debug.Log("Earth Enabled");
                 earth = true;
+                p_spriteRenderer.color = Color.green;
             }
         }
 
@@ -169,6 +180,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Debug.Log("Air Enabled");
                 air = true;
+                p_spriteRenderer.color = Color.gray;
             }
         }
         #endregion
@@ -225,7 +237,7 @@ public class PlayerScript : MonoBehaviour
     {
        Debug.Log("Jumped!");
         //add a force in the Y direction to jump
-       GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+       p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
     }
 
 }
