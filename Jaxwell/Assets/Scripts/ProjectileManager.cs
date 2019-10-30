@@ -13,4 +13,21 @@ public class ProjectileManager : MonoBehaviour
         //destroy projectile after a certain amount of time
         Destroy(this.gameObject, projectileCleanupTime);
     }
+
+    //do stuff if the projectile passes into something else's collision
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //check if whatever we are hitting does have a parent otherwise we get null reference exceptions when they don't
+        if (other.gameObject.transform.parent != null)
+        {
+            //check if they're an enemy
+            if (other.gameObject.transform.parent.CompareTag("Enemy"))
+            {
+                //Destroy enemy if we hit them
+                Destroy(other.transform.parent.gameObject);
+                //Destroy the projectile if it hits an enemy
+                Destroy(gameObject);
+            }
+        }
+    }
 }

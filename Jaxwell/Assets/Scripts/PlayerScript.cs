@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
 
     int jumpNumber = 0;
 
-    //flag so we know when we can and can't jump not needed after working in double jump (for now)
+    //flag so we know when we can and can't jump - not needed after working in double jump (for now)
     //bool canJump = false;
 
     //flag to determine if double jump can be activated
@@ -245,6 +245,8 @@ public class PlayerScript : MonoBehaviour
             jumpNumber = 0;
         }
     }
+
+
     //Don't need this after working in double jump (for now)
    // void OnCollisionExit2D(Collision2D collision)
    // {
@@ -259,6 +261,8 @@ public class PlayerScript : MonoBehaviour
    //        //}
    //     }
    // }
+
+
 
     //NOTE: if we want to change movement speed at runtime these could be changed to pass in speed as a parameter
     //function to move right
