@@ -24,7 +24,8 @@ public class ProjectileManager : MonoBehaviour
             if (other.gameObject.transform.parent.CompareTag("Enemy"))
             {
                 //Destroy enemy if we hit them
-                Destroy(other.transform.parent.gameObject);
+                Debug.Log("Enemy destroyed: " + other + " at " + other.transform.position);
+                Destroy(other.transform.parent.gameObject);                
                 //Destroy the projectile if it hits an enemy
                 Destroy(gameObject);
             }

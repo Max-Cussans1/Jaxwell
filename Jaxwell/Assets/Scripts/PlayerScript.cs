@@ -9,9 +9,11 @@ public class PlayerScript : MonoBehaviour
     SpriteRenderer p_spriteRenderer;
 
 
-    //public so we can change in editor
+    //important player variables as public variables so we can change in editor
     public float moveSpeed = 3.0f;
     public float jumpHeight = 5.0f;
+    public int maxHealth = 100;
+    int currentHealth;
 
     int jumpNumber = 0;
 
@@ -33,10 +35,14 @@ public class PlayerScript : MonoBehaviour
         //get components in Start so we only have to do that once
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         p_rigidbody = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
 
-        //start as fire
-        fire = true;
-        p_spriteRenderer.color = Color.red;
+        //start as fire if no mode selected
+        if (!fire && !water && !earth && !air)
+        {
+            fire = true;
+            p_spriteRenderer.color = Color.red;
+        }
 
     }
 
@@ -297,5 +303,10 @@ public class PlayerScript : MonoBehaviour
        p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
     }
 
-
+    //simple function to take damage passes in the amount of damage to take as a parameter
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Player took " + damage + " damage");
+    }
 }
