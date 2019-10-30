@@ -13,9 +13,13 @@ public class PlayerScript : MonoBehaviour
     public float moveSpeed = 3.0f;
     public float jumpHeight = 5.0f;
 
+    int jumpNumber = 0;
 
-    //flag so we know when we can and can't jump
-    bool canJump = false;
+    //flag so we know when we can and can't jump not needed after working in double jump (for now)
+    //bool canJump = false;
+
+    //flag to determine if double jump can be activated
+    bool canDoubleJump = false;
 
     //public bools so we can access from other scripts
     public bool fire = false;
@@ -41,9 +45,26 @@ public class PlayerScript : MonoBehaviour
     {
         //check if we can jump before then check for keydown press instead of getkey,
         //since we don't leave jumpable surface in 1 frame (causes multiple jumps)
-        if (canJump && Input.GetKeyDown("w"))
+        if (Input.GetKeyDown("w"))
         {
-            Jump();
+            //if we have double jump, check if we've jumped twice, if not allow jumping again
+            if (canDoubleJump)
+            {
+                if (jumpNumber < 2)
+                {
+                    Jump();
+                    jumpNumber++;
+                }
+            }
+            //if we don't have double jump, don't let us jump if we have jumped already
+            else
+            {
+                if (jumpNumber < 1)
+                {
+                    Jump();
+                    jumpNumber++;
+                }
+            }
         }
 
         if (Input.GetKey("d"))
@@ -57,19 +78,33 @@ public class PlayerScript : MonoBehaviour
             MoveLeft();
         }
 
+
+        
         if(fire)
         {
-            //TODO
+            //disable double jump if it's active if we're in any other mode apart from air
+            if (canDoubleJump == true)
+            {
+                canDoubleJump = false;
+            }
         }
 
         if(water)
         {
-            //TODO
+            //disable double jump if it's active if we're in any other mode apart from air
+            if (canDoubleJump == true)
+            {
+                canDoubleJump = false;
+            }
         }
 
         if(earth)
         {
-            //TODO
+            //disable double jump if it's active if we're in any other mode apart from air
+            if (canDoubleJump == true)
+            {
+                canDoubleJump = false;
+            }
         }
 
         if(air)
@@ -188,6 +223,12 @@ public class PlayerScript : MonoBehaviour
                 air = true;
                 p_spriteRenderer.color = Color.gray;
             }
+
+            //Enable double jump if we're in air mode
+            if (canDoubleJump == false)
+            {
+                canDoubleJump = true;
+            }
         }
         #endregion
     }
@@ -199,19 +240,25 @@ public class PlayerScript : MonoBehaviour
         if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
         {
             Debug.Log("Touched Jumpable Surface");
-            canJump = true;
+            
+            //canJump = true;
+            jumpNumber = 0;
         }
     }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        //check if we have left a jumpable surface (add tag in editor to surface objects' parent)
-        if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
-        {
-            Debug.Log("Left Jumpable Surface");
-            canJump = false;
-        }
-    }
+    //Don't need this after working in double jump (for now)
+   // void OnCollisionExit2D(Collision2D collision)
+   // {
+   //     //check if we have left a jumpable surface (add tag in editor to surface objects' parent)
+   //     if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
+   //     {
+   //        //Debug.Log("Left Jumpable Surface");
+   //        //canJump = false;
+   //        //if(canDoubleJump == true)
+   //        //{
+   //        //    canJump = true;
+   //        //}
+   //     }
+   // }
 
     //NOTE: if we want to change movement speed at runtime these could be changed to pass in speed as a parameter
     //function to move right
