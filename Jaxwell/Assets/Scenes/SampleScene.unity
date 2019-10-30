@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 713060500}
   m_Layer: 0
   m_Name: TempGround
-  m_TagString: Fire
+  m_TagString: Neutral
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -498,7 +498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1800035450}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: JumpableSurface
   m_TagString: JumpableSurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -532,6 +532,7 @@ GameObject:
   - component: {fileID: 2071064099}
   - component: {fileID: 2071064102}
   - component: {fileID: 2071064103}
+  - component: {fileID: 2071064104}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -668,6 +669,30 @@ MonoBehaviour:
   water: 0
   earth: 0
   air: 0
+--- !u!114 &2071064104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071064098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7151ba5a332a65141ac44396dafe6be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireProjectile: {fileID: 3425550333617194259, guid: c11574b5f446c674a91929d235c93313,
+    type: 3}
+  waterProjectile: {fileID: 854977206866577425, guid: e184c6baa5343f748afbbca04cf0c335,
+    type: 3}
+  earthProjectile: {fileID: 4444605901515050777, guid: add082382b5c2f8429ba26975e52ff85,
+    type: 3}
+  airProjectile: {fileID: 3342117269845279741, guid: 44e6074e97b82b44ca9d0faee795575e,
+    type: 3}
+  fireProjectileSpeed: 100
+  waterProjectileSpeed: 100
+  earthProjectileSpeed: 100
+  airProjectileSpeed: 100
 --- !u!1001 &5682460950567780745
 PrefabInstance:
   m_ObjectHideFlags: 0

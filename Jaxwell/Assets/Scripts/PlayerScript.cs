@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviour
     public bool earth = false;
     public bool air = false;
 
+
     void Start()
     {
         //get components in Start so we only have to do that once
@@ -244,5 +245,6 @@ public class PlayerScript : MonoBehaviour
         //add a force in the Y direction to jump
        p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
     }
+
 
 }
