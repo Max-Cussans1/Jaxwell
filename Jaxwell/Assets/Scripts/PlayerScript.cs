@@ -179,25 +179,6 @@ public class PlayerScript : MonoBehaviour
             p_collider.offset = new Vector2(p_collider.offset.x, originalColliderYOffset);
         }
 
-
-        if (Input.GetKeyDown("e"))
-        {
-            if (canDash)
-            {
-                DashRight();
-            }
-        }
-
-        if (Input.GetKeyDown("q"))
-        {
-            if (canDash)
-            {
-                DashLeft();
-            }
-        }
-
-
-
         if(dead && Lives > -1)
         {
             //if we aren't out of lives after we die, respawn at the current checkpoint
@@ -210,6 +191,22 @@ public class PlayerScript : MonoBehaviour
             if (canDoubleJump == true)
             {
                 canDoubleJump = false;
+            }
+
+            if (Input.GetKeyDown("e"))
+            {
+                if (canDash)
+                {
+                    DashRight();
+                }
+            }
+
+            if (Input.GetKeyDown("q"))
+            {
+                if (canDash)
+                {
+                    DashLeft();
+                }
             }
         }
 
