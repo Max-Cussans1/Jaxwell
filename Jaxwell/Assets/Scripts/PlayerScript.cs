@@ -13,8 +13,9 @@ public class PlayerScript : MonoBehaviour
     //important player variables as public variables so we can change in editor
     [SerializeField] float moveSpeed = 3.0f;
     [SerializeField] float jumpHeight = 5.0f;
-    [SerializeField] float dashDistance = 5.0f;
+    [SerializeField] float dashSpeed = 25.0f;
     [SerializeField] float dashCooldown = 6.0f;
+    [SerializeField] float dashDuration = 0.1f;
     [SerializeField] int maxHealth = 100;
     [SerializeField] int Lives = 3;
 
@@ -40,6 +41,8 @@ public class PlayerScript : MonoBehaviour
     bool dashedLeft = false;
     //temp variable to store the cooldown every time dash is used
     float tempDashCooldown = 0.0f;
+    float tempDashDuration = 0.0f;
+
 
     //flag so we know when we can and can't jump - not needed after working in double jump (for now)
     //bool canJump = false;
@@ -106,11 +109,16 @@ public class PlayerScript : MonoBehaviour
         //check if we dashed right
         if(dashedRight)
         {
-            //to make the dash smooth, check if the velocity from the force we added is less than 80% of what it was as soon as the force was applied
-            if(p_rigidbody.velocity.x < dashDistance * 0.8)
+            //set gravity to 0 so short sharp dash in air
+            p_rigidbody.gravityScale = 0;
+            //countdown from dash duration
+            tempDashDuration -= Time.deltaTime;
+            //check if duration has completed
+            if (tempDashDuration <= 0)
             {
-                //if it's <80%, set the x velocity to 0 
+                //set x velocity back to 0 and gravity back to normal
                 p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+                p_rigidbody.gravityScale = 1;
                 dashedRight = false;
             }
         }
@@ -118,11 +126,16 @@ public class PlayerScript : MonoBehaviour
         //check if we dashed left
         if(dashedLeft)
         {
-            //to make the dash smooth, check if the velocity from the force we added is less than 80% of what it was as soon as the force was applied
-            if (p_rigidbody.velocity.x > -dashDistance * 0.8)
+            //set gravity to 0 so short sharp dash in air
+            p_rigidbody.gravityScale = 0;
+            //countdown from dash duration
+            tempDashDuration -= Time.deltaTime;
+            //check if duration has completed
+            if (tempDashDuration <= 0)
             {
-                //if it's <80%, set the x velocity to 0 
+                //set x velocity back to 0 and gravity back to normal
                 p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+                p_rigidbody.gravityScale = 1;
                 dashedLeft = false;
             }
         }
@@ -154,13 +167,10 @@ public class PlayerScript : MonoBehaviour
         //crouching with getkeydown and getkeyup to use key as a toggle
         if (Input.GetKeyDown("c"))
         {
-            isCrouching = true;
-
             //reduce the collider size
             p_collider.size = new Vector2(p_collider.size.x, p_collider.size.y * crouchColliderY);
             //half of half of the full size as an offset below the normal offset
             p_collider.offset = new Vector2(p_collider.offset.x, -originalColliderYSize * 0.25f);
-
         }
         if(Input.GetKeyUp("c"))
         {
@@ -424,12 +434,13 @@ public class PlayerScript : MonoBehaviour
         //set x velocity to 0 to make our dash more reliable
         p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
         //add a force in the positive X direction to dash right
-        p_rigidbody.AddForce(new Vector2(dashDistance, 0), ForceMode2D.Impulse);
+        p_rigidbody.AddForce(new Vector2(dashSpeed, 0), ForceMode2D.Impulse);
         //turn dashedRight on
         dashedRight = true;
         //Set on cooldown
         canDash = false;
         tempDashCooldown = dashCooldown;
+        tempDashDuration = dashDuration;
     }
 
     void DashLeft()
@@ -438,12 +449,13 @@ public class PlayerScript : MonoBehaviour
         //set x velocity to 0 to make our dash more reliable
         p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
         //add a force in the positive X direction to dash right
-        p_rigidbody.AddForce(new Vector2(-dashDistance, 0), ForceMode2D.Impulse);
+        p_rigidbody.AddForce(new Vector2(-dashSpeed, 0), ForceMode2D.Impulse);
         //turn dashedLeft on
         dashedLeft = true;
         //Set on cooldown
         canDash = false;
         tempDashCooldown = dashCooldown;
+        tempDashDuration = dashDuration;
     }
 
     //NOTE: if we want to change jump speed at runtime these could be changed to pass in speed as a parameter
