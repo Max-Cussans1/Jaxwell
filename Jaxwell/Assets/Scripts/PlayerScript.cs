@@ -298,9 +298,12 @@ public class PlayerScript : MonoBehaviour
     //function to jump
     void Jump()
     {
-       Debug.Log("Jumped!");
+       Debug.Log("Jumped!");      
+        //set y velocity to 0 to make our jump more reliable (if we just add the force it will take into account how fast we're falling)
+        p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x, 0.0f);
         //add a force in the Y direction to jump
-       p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+        p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+
     }
 
     //simple function to take damage passes in the amount of damage to take as a parameter
