@@ -18,7 +18,6 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] int maxHealth = 100;
     [SerializeField] int Lives = 3;
 
-    bool isCrouching = false;
     //the amount we will modify the y size of the collider by when crouching
     float crouchColliderY = 0.5f;
     //variable to store the original collider y size
@@ -478,6 +477,11 @@ public class PlayerScript : MonoBehaviour
         if(Lives == -1)
         {
             //lose level logic
+        }
+        else
+        {
+            //if we're not out of lives we can respawn
+            Respawn(currentCheckpoint);
         }
 
     }
