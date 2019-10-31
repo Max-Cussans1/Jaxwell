@@ -10,8 +10,8 @@ public class PlayerScript : MonoBehaviour
 
 
     //important player variables as public variables so we can change in editor
-    public float moveSpeed = 3.0f;
-    public float jumpHeight = 5.0f;
+    [SerializeField] public float moveSpeed = 3.0f;
+    [SerializeField] public float jumpHeight = 5.0f;
     public int maxHealth = 100;
     int currentHealth;
 
