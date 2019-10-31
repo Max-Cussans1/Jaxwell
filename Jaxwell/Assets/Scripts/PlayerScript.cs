@@ -7,6 +7,7 @@ public class PlayerScript : MonoBehaviour
     //store our components here in void start
     Rigidbody2D p_rigidbody;
     SpriteRenderer p_spriteRenderer;
+    BoxCollider2D p_collider;
 
 
     //important player variables as public variables so we can change in editor
@@ -16,6 +17,14 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float dashCooldown = 6.0f;
     [SerializeField] int maxHealth = 100;
     [SerializeField] int Lives = 3;
+
+    bool isCrouching = false;
+    //the amount we will modify the y size of the collider by when crouching
+    float crouchColliderY = 0.5f;
+    //variable to store the original collider y size
+    float originalColliderYSize;
+    //variable to store original y offset of the collider
+    float originalColliderYOffset;
 
     int currentHealth;
     bool dead = false;
@@ -51,6 +60,10 @@ public class PlayerScript : MonoBehaviour
         //get components in Start so we only have to do that once
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         p_rigidbody = GetComponent<Rigidbody2D>();
+        p_collider = GetComponent<BoxCollider2D>();
+        originalColliderYSize = p_collider.size.y;
+        originalColliderYOffset = p_collider.offset.y;
+
         currentHealth = maxHealth;
 
         //start as fire if no mode selected
@@ -139,6 +152,24 @@ public class PlayerScript : MonoBehaviour
             MoveLeft();
         }
 
+        //crouching with getkeydown and getkeyup to use key as a toggle
+        if (Input.GetKeyDown("c"))
+        {
+            isCrouching = true;
+
+            //reduce the collider size
+            p_collider.size = new Vector2(p_collider.size.x, p_collider.size.y * crouchColliderY);
+            //half of half of the full size as an offset below the normal offset
+            p_collider.offset = new Vector2(p_collider.offset.x, -originalColliderYSize * 0.25f);
+
+        }
+        if(Input.GetKeyUp("c"))
+        {
+            //if we're not crouching put the collision offset and size back to normal
+            p_collider.size = new Vector2(p_collider.size.x, originalColliderYSize);
+            p_collider.offset = new Vector2(p_collider.offset.x, originalColliderYOffset);
+        }
+
 
         if (Input.GetKeyDown("e"))
         {
@@ -155,6 +186,8 @@ public class PlayerScript : MonoBehaviour
                 DashLeft();
             }
         }
+
+
 
         if(dead && Lives > -1)
         {
@@ -458,4 +491,6 @@ public class PlayerScript : MonoBehaviour
         dead = false;
         Debug.Log("Respawning at " + respawnLocation);
     }
+        
+
 }
