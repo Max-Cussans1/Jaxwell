@@ -12,10 +12,20 @@ public class PlayerScript : MonoBehaviour
     //important player variables as public variables so we can change in editor
     public float moveSpeed = 3.0f;
     public float jumpHeight = 5.0f;
+    public float dashDistance = 5.0f;
+    public float dashCooldown = 6.0f;
     public int maxHealth = 100;
     int currentHealth;
 
+    //number of times we jump
     int jumpNumber = 0;
+    //if we can dash or not (if it's on cooldown)
+    bool canDash = true;
+    //if we have dashed right or left
+    bool dashedRight = false;
+    bool dashedLeft = false;
+    //temp variable to store the cooldown every time dash is used
+    float tempDashCooldown = 0.0f;
 
     //flag so we know when we can and can't jump - not needed after working in double jump (for now)
     //bool canJump = false;
@@ -73,6 +83,43 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
+        //check if we dashed right
+        if(dashedRight)
+        {
+            //to make the dash smooth, check if the velocity from the force we added is less than 80% of what it was as soon as the force was applied
+            if(p_rigidbody.velocity.x < dashDistance * 0.8)
+            {
+                //if it's <80%, set the x velocity to 0 
+                p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+                dashedRight = false;
+            }
+        }
+
+        //check if we dashed left
+        if(dashedLeft)
+        {
+            //to make the dash smooth, check if the velocity from the force we added is less than 80% of what it was as soon as the force was applied
+            if (p_rigidbody.velocity.x > -dashDistance * 0.8)
+            {
+                //if it's <80%, set the x velocity to 0 
+                p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+                dashedLeft = false;
+            }
+        }
+
+        //check if we can dash
+        if(!canDash)
+        {
+            //if we can't we have just dashed and it's on cooldown
+            //since we're calling in update, time.deltatime is time since last frame, so -= will give us a countdown
+            tempDashCooldown -= Time.deltaTime;
+            //if cooldown is finished we can dash again
+            if(tempDashCooldown <= 0)
+            {                
+                canDash = true;
+            }
+        }
+
         if (Input.GetKey("d"))
         {
             MoveRight();
@@ -85,8 +132,24 @@ public class PlayerScript : MonoBehaviour
         }
 
 
-        
-        if(fire)
+        if (Input.GetKeyDown("e"))
+        {
+            if (canDash)
+            {
+                DashRight();
+            }
+        }
+
+        if (Input.GetKeyDown("q"))
+        {
+            if (canDash)
+            {
+                DashLeft();
+            }
+        }
+
+
+        if (fire)
         {
             //disable double jump if it's active if we're in any other mode apart from air
             if (canDoubleJump == true)
@@ -310,6 +373,34 @@ public class PlayerScript : MonoBehaviour
         transform.position = new Vector2(temp, transform.position.y);
     }
 
+    void DashRight()
+    {
+        Debug.Log("Dashed Right");
+        //set x velocity to 0 to make our dash more reliable
+        p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+        //add a force in the positive X direction to dash right
+        p_rigidbody.AddForce(new Vector2(dashDistance, 0), ForceMode2D.Impulse);
+        //turn dashedRight on
+        dashedRight = true;
+        //Set on cooldown
+        canDash = false;
+        tempDashCooldown = dashCooldown;
+    }
+
+    void DashLeft()
+    {
+        Debug.Log("Dashed Left");
+        //set x velocity to 0 to make our dash more reliable
+        p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+        //add a force in the positive X direction to dash right
+        p_rigidbody.AddForce(new Vector2(-dashDistance, 0), ForceMode2D.Impulse);
+        //turn dashedLeft on
+        dashedLeft = true;
+        //Set on cooldown
+        canDash = false;
+        tempDashCooldown = dashCooldown;
+    }
+
     //NOTE: if we want to change jump speed at runtime these could be changed to pass in speed as a parameter
     //function to jump
     void Jump()
@@ -319,7 +410,6 @@ public class PlayerScript : MonoBehaviour
         p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x, 0.0f);
         //add a force in the Y direction to jump
         p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
-
     }
 
     //simple function to take damage passes in the amount of damage to take as a parameter
