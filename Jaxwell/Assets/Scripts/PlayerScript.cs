@@ -242,13 +242,29 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //check if we are touching a jumpable surface (add tag in editor to surface objects' parent)
-        if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
+        //FOR JUMP LOGIC
+        //create 2D raycast fired directly down from player's position
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
+        //if the raycast hits something
+        if (hit.collider != null)
         {
-            Debug.Log("Touched Jumpable Surface");
-            
-            //canJump = true;
-            jumpNumber = 0;
+           //print what the raycast hit to console and where the object is
+           Debug.Log("Raycast hit " + hit.collider.gameObject + " at " + hit.transform.position);
+           
+           //check if the raycast hits the thing we are colliding with (so we know it is underneath us)
+           if (hit.collider == collision.collider)
+           {
+                //check if we are touching a jumpable surface (add tag in editor to surface objects' parent)
+                if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
+                {
+                    //print the gameobject with jumpablesurface tag and where it is
+                    Debug.Log("Touched Jumpable Surface at " + collision.transform.position);
+
+                    //canJump = true;
+                    //reset the number of times we have jumped
+                    jumpNumber = 0;
+                }
+            }
         }
     }
 
