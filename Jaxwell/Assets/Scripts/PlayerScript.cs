@@ -10,12 +10,18 @@ public class PlayerScript : MonoBehaviour
 
 
     //important player variables as public variables so we can change in editor
-    [SerializeField] public float moveSpeed = 3.0f;
-    [SerializeField] public float jumpHeight = 5.0f;
-    [SerializeField] public float dashDistance = 5.0f;
-    [SerializeField] public float dashCooldown = 6.0f;
-    [SerializeField] public int maxHealth = 100;
+    [SerializeField] float moveSpeed = 3.0f;
+    [SerializeField] float jumpHeight = 5.0f;
+    [SerializeField] float dashDistance = 5.0f;
+    [SerializeField] float dashCooldown = 6.0f;
+    [SerializeField] int maxHealth = 100;
+    [SerializeField] int Lives = 3;
+
     int currentHealth;
+    bool dead = false;
+
+    //Vector2 to store the checkpoint (modified in our checkpoint class)
+    public Vector2 currentCheckpoint;
 
     //number of times we jump
     int jumpNumber = 0;
@@ -54,6 +60,8 @@ public class PlayerScript : MonoBehaviour
             p_spriteRenderer.color = Color.red;
         }
 
+        //set our current checkpoint at our start position at the start
+        currentCheckpoint = transform.position;
     }
 
     // Update is called once per frame
@@ -148,6 +156,11 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
+        if(dead && Lives > -1)
+        {
+            //if we aren't out of lives after we die, respawn at the current checkpoint
+            Respawn(currentCheckpoint);
+        }
 
         if (fire)
         {
@@ -417,5 +430,32 @@ public class PlayerScript : MonoBehaviour
     {
         currentHealth -= damage;
         Debug.Log("Player took " + damage + " damage");
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        dead = true;        
+        Lives--;
+        Debug.Log("Died!");
+        //DO YOU ARE DEAD STUFF
+        if(Lives == -1)
+        {
+            //lose level logic
+        }
+
+    }
+
+    void Respawn(Vector2 respawnLocation)
+    {
+        //essentially just moves the player to this location with full health and no velocity         
+        transform.position = respawnLocation;
+        p_rigidbody.velocity = new Vector2(0,0);
+        currentHealth = maxHealth;
+        dead = false;
+        Debug.Log("Respawning at " + respawnLocation);
     }
 }
