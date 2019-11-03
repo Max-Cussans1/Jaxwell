@@ -688,7 +688,17 @@ PrefabInstance:
     - target: {fileID: 4897707626504179686, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: dashDistance
-      value: 10
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897707626504179686, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: dashDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4897707626504179686, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: dashSpeed
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}

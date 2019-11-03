@@ -9,6 +9,8 @@ public class PlayerScript : MonoBehaviour
     SpriteRenderer p_spriteRenderer;
     BoxCollider2D p_collider;
 
+    Destructible destructible;
+
 
     //important player variables as public variables so we can change in editor
     [SerializeField] float moveSpeed = 3.0f;
@@ -18,6 +20,12 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float dashDuration = 0.1f;
     [SerializeField] int maxHealth = 100;
     [SerializeField] int Lives = 3;
+    [SerializeField] float meleeAttackSpeed = 1.0f; //time in between attacks
+
+    float startMeleeAttackSpeed = 0f;
+    bool canAttack = true;
+
+    [SerializeField] int earthDamage = 50;
 
     //the amount we will modify the y size of the collider by when crouching
     float crouchColliderY = 0.5f;
@@ -43,6 +51,8 @@ public class PlayerScript : MonoBehaviour
     float tempDashCooldown = 0.0f;
     float tempDashDuration = 0.0f;
 
+    bool canDestroy = false;
+
 
     //flag so we know when we can and can't jump - not needed after working in double jump (for now)
     //bool canJump = false;
@@ -67,6 +77,8 @@ public class PlayerScript : MonoBehaviour
         originalColliderYOffset = p_collider.offset.y;
 
         currentHealth = maxHealth;
+        startMeleeAttackSpeed = meleeAttackSpeed;
+
 
         //start as fire if no mode selected
         if (!fire && !water && !earth && !air)
@@ -82,6 +94,18 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //check if we've attacked, wait for the attack speed if not
+        if(!canAttack)
+        {
+            meleeAttackSpeed -= Time.deltaTime;
+            if(meleeAttackSpeed < 0)
+            {
+                //set the attack speed back to its original value
+                meleeAttackSpeed = startMeleeAttackSpeed;
+                canAttack = true;
+            }
+        }
+
         //check if we can jump before then check for keydown press instead of getkey,
         //since we don't leave jumpable surface in 1 frame (causes multiple jumps)
         if (Input.GetKeyDown("w"))
@@ -193,6 +217,7 @@ public class PlayerScript : MonoBehaviour
                 canDoubleJump = false;
             }
 
+            //dash right
             if (Input.GetKeyDown("e"))
             {
                 if (canDash)
@@ -201,6 +226,7 @@ public class PlayerScript : MonoBehaviour
                 }
             }
 
+            //dash left
             if (Input.GetKeyDown("q"))
             {
                 if (canDash)
@@ -225,6 +251,26 @@ public class PlayerScript : MonoBehaviour
             if (canDoubleJump == true)
             {
                 canDoubleJump = false;
+            }
+
+            if (canAttack)
+            {
+                //check if our bool has been made true by colliding with destructibles
+                if (canDestroy)
+                {
+                    //check the destructible isn't dead already
+                    if (destructible.health > 0)
+                    {
+                        if (Input.GetKeyDown("f"))
+                        {
+                            //deal damage on the key press
+                            destructible.health -= earthDamage;
+                            Debug.Log("Damaged Destructible at " + destructible.transform.position + " for " + earthDamage + " - it has " + destructible.health + " remaining");
+                            //can't attack because we have just attacked
+                            canAttack = false;
+                        }
+                    }
+                }
             }
         }
 
@@ -369,35 +415,58 @@ public class PlayerScript : MonoBehaviour
            //check if the raycast hits the thing we are colliding with (so we know it is underneath us)
            if (hit.collider == collision.collider)
            {
-                //check if we are touching a jumpable surface (add tag in editor to surface objects' parent)
-                if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
-                {
-                    //print the gameobject with jumpablesurface tag and where it is
-                    Debug.Log("Touched Jumpable Surface at " + collision.transform.position);
+                //print what the raycast hit to console and where the object is
+                Debug.Log("Raycast hit " + hit.collider.gameObject + " at " + hit.transform.position + "was the surface we collided with");
 
-                    //canJump = true;
-                    //reset the number of times we have jumped
-                    jumpNumber = 0;
+                //check if the object has a parent before referencing the tag (temporary way of finding jumpable surface)
+                if (collision.gameObject.transform.parent != null)
+                {
+                    //check if we are touching a jumpable surface (add tag in editor to surface objects' parent)
+                    if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
+                    {
+                        //print the gameobject with jumpablesurface tag and where it is
+                        Debug.Log("Touched Jumpable Surface at " + collision.transform.position);
+
+                        //canJump = true;
+                        //reset the number of times we have jumped
+                        jumpNumber = 0;
+                    }
                 }
             }
+        }
+
+        //check if we are colliding with a destructible
+        if (collision.gameObject.GetComponent<Destructible>() != null)
+        {
+            Debug.Log("Collided with Destructible at " + collision.gameObject.transform.position);
+            //store the destructible we are colliding with in that local variable
+            destructible = collision.gameObject.GetComponent<Destructible>();
+            canDestroy = true;
         }
     }
 
 
-    //Don't need this after working in double jump (for now)
-   // void OnCollisionExit2D(Collision2D collision)
-   // {
-   //     //check if we have left a jumpable surface (add tag in editor to surface objects' parent)
-   //     if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
-   //     {
-   //        //Debug.Log("Left Jumpable Surface");
-   //        //canJump = false;
-   //        //if(canDoubleJump == true)
-   //        //{
-   //        //    canJump = true;
-   //        //}
-   //     }
-   // }
+   
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        //check if we have left a jumpable surface (add tag in editor to surface objects' parent)
+        //if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
+        //{
+           //Debug.Log("Left Jumpable Surface");
+           //canJump = false;
+           //if(canDoubleJump == true)
+           //{
+           //    canJump = true;
+           //}
+        //}
+
+        //check if we've stopped colliding with a destructible
+        if(collision.gameObject.GetComponent<Destructible>() != null)
+        {
+            Debug.Log("Exited collision with Destructible at " + collision.gameObject.transform.position);
+            canDestroy = false;
+        }
+    }
 
 
 
