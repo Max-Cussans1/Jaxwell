@@ -144,3 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileCleanupTime: 3
+  fire: 0
+  water: 0
+  earth: 1
+  air: 0

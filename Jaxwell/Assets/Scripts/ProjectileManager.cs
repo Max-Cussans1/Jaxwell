@@ -7,6 +7,13 @@ public class ProjectileManager : MonoBehaviour
     //time before we clean up projectiles (in seconds)
     public float projectileCleanupTime = 3.0f;
 
+    public bool fire = false;
+    public bool water = false;
+    public bool earth = false;
+    public bool air = false;
+
+    Growable growable;
+
     // Use this for initialization
     void Awake()
     {
@@ -28,6 +35,18 @@ public class ProjectileManager : MonoBehaviour
                 Destroy(other.transform.parent.gameObject);                
                 //Destroy the projectile if it hits an enemy
                 Destroy(gameObject);
+            }
+        }
+
+        //if we're water
+        if (water)
+        {
+            //check if projectile has hit a growable
+            if (other.gameObject.GetComponent<Growable>() != null)
+            {
+                growable = other.gameObject.GetComponent<Growable>();
+                growable.hits++;
+                Debug.Log("Watered a growable, now at " + growable.hits + " out of " + growable.projectilesToGrow + " needed to grow");
             }
         }
     }
