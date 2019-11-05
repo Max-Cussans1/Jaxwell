@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     Rigidbody2D p_rigidbody;
     SpriteRenderer p_spriteRenderer;
     BoxCollider2D p_collider;
+    float initialGravityScale;
 
     Destructible destructible;
 
@@ -21,6 +22,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] int maxHealth = 100;
     [SerializeField] int Lives = 3;
     [SerializeField] float meleeAttackSpeed = 1.0f; //time in between attacks
+
+
 
     float startMeleeAttackSpeed = 0f;
     bool canAttack = true;
@@ -78,7 +81,7 @@ public class PlayerScript : MonoBehaviour
 
         currentHealth = maxHealth;
         startMeleeAttackSpeed = meleeAttackSpeed;
-
+        initialGravityScale = p_rigidbody.gravityScale;
 
         //start as fire if no mode selected
         if (!fire && !water && !earth && !air)
@@ -142,7 +145,7 @@ public class PlayerScript : MonoBehaviour
             {
                 //set x velocity back to 0 and gravity back to normal
                 p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
-                p_rigidbody.gravityScale = 1;
+                p_rigidbody.gravityScale = initialGravityScale;
                 dashedRight = false;
             }
         }
@@ -159,7 +162,7 @@ public class PlayerScript : MonoBehaviour
             {
                 //set x velocity back to 0 and gravity back to normal
                 p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
-                p_rigidbody.gravityScale = 1;
+                p_rigidbody.gravityScale = initialGravityScale;
                 dashedLeft = false;
             }
         }
