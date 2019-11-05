@@ -108,7 +108,7 @@ public class PlayerScript : MonoBehaviour
 
         //check if we can jump before then check for keydown press instead of getkey,
         //since we don't leave jumpable surface in 1 frame (causes multiple jumps)
-        if (Input.GetKeyDown("w"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             //if we have double jump, check if we've jumped twice, if not allow jumping again
             if (canDoubleJump)
