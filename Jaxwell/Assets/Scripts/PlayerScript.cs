@@ -406,34 +406,45 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Collided with " + collision.collider.gameObject + " at " + collision.transform.position);
+
         //FOR JUMP LOGIC
-        //create 2D raycast fired directly down from player's position
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
+        //create 2D raycast fired directly down from player's centre just a tiny bit further than our player
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
         //if the raycast hits something
         if (hit.collider != null)
         {
            //print what the raycast hit to console and where the object is
-           Debug.Log("Raycast hit " + hit.collider.gameObject + " at " + hit.transform.position);
-           
-           //check if the raycast hits the thing we are colliding with (so we know it is underneath us)
-           if (hit.collider == collision.collider)
-           {
+           Debug.Log("Raycast from centre hit " + hit.collider.gameObject + " at " + hit.point);
+
+           //reset our jumpNumber
+           jumpNumber = 0;
+        }
+        else
+        {
+            //fire a raycast from the left side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the left side
+            RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(transform.position.x - (p_collider.size.x * 0.4f), transform.position.y), -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
+
+            if(hitLeft.collider != null)
+            {
                 //print what the raycast hit to console and where the object is
-                Debug.Log("Raycast hit " + hit.collider.gameObject + " at " + hit.transform.position + "was the surface we collided with");
+                Debug.Log("Raycast from left hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
 
-                //check if the object has a parent before referencing the tag (temporary way of finding jumpable surface)
-                if (collision.gameObject.transform.parent != null)
+                //reset our jumpNumber
+                jumpNumber = 0;
+            }
+            else
+            {
+                //fire a raycast from the right side of the player if the centre or left might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
+                RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(transform.position.x + (p_collider.size.x * 0.4f), transform.position.y), -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
+                
+                if(hitRight.collider != null)
                 {
-                    //check if we are touching a jumpable surface (add tag in editor to surface objects' parent)
-                    if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
-                    {
-                        //print the gameobject with jumpablesurface tag and where it is
-                        Debug.Log("Touched Jumpable Surface at " + collision.transform.position);
+                    //print what the raycast hit to console and where the object is
+                    Debug.Log("Raycast from right hit " + hitRight.collider.gameObject + " at " + hitRight.point);
 
-                        //canJump = true;
-                        //reset the number of times we have jumped
-                        jumpNumber = 0;
-                    }
+                    //reset our jumpNumber
+                    jumpNumber = 0;
                 }
             }
         }
@@ -449,22 +460,13 @@ public class PlayerScript : MonoBehaviour
     }
 
 
-   
+
     void OnCollisionExit2D(Collision2D collision)
     {
-        //check if we have left a jumpable surface (add tag in editor to surface objects' parent)
-        //if (collision.gameObject.transform.parent.CompareTag("JumpableSurface"))
-        //{
-           //Debug.Log("Left Jumpable Surface");
-           //canJump = false;
-           //if(canDoubleJump == true)
-           //{
-           //    canJump = true;
-           //}
-        //}
+        Debug.Log("Stopped colliding with " + collision.collider.gameObject + " at " + collision.transform.position);
 
         //check if we've stopped colliding with a destructible
-        if(collision.gameObject.GetComponent<Destructible>() != null)
+        if (collision.gameObject.GetComponent<Destructible>() != null)
         {
             Debug.Log("Exited collision with Destructible at " + collision.gameObject.transform.position);
             canDestroy = false;
