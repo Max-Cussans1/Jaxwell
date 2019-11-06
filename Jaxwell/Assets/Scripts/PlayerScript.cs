@@ -9,11 +9,11 @@ public class PlayerScript : MonoBehaviour
     SpriteRenderer p_spriteRenderer;
     BoxCollider2D p_collider;
     float initialGravityScale;
-
     Destructible destructible;
+    float startMeleeAttackSpeed = 0f;
 
 
-    //important player variables as public variables so we can change in editor
+    //important player variables as serlialized variables so we can change in editor
     [SerializeField] float moveSpeed = 3.0f;
     [SerializeField] float jumpHeight = 5.0f;
     [SerializeField] float dashSpeed = 25.0f;
@@ -22,13 +22,11 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] int maxHealth = 100;
     [SerializeField] int Lives = 3;
     [SerializeField] float meleeAttackSpeed = 1.0f; //time in between attacks
+    [SerializeField] int earthDamage = 50;  //damage we do to destructibles
+    [SerializeField] float earthFallForce = 35.0f;  //force to fall at
 
-
-
-    float startMeleeAttackSpeed = 0f;
     bool canAttack = true;
 
-    [SerializeField] int earthDamage = 50;
 
     //the amount we will modify the y size of the collider by when crouching
     float crouchColliderY = 0.5f;
@@ -63,6 +61,8 @@ public class PlayerScript : MonoBehaviour
     //flag to determine if double jump can be activated
     bool canDoubleJump = false;
 
+    bool earthFalling = false;
+
     //public bools so we can access from other scripts
     public bool fire = false;
     public bool water = false;
@@ -96,7 +96,7 @@ public class PlayerScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         //check if we've attacked, wait for the attack speed if not
         if(!canAttack)
         {
@@ -194,16 +194,11 @@ public class PlayerScript : MonoBehaviour
         //crouching with getkeydown and getkeyup to use key as a toggle
         if (Input.GetKeyDown(KeyCode.C))
         {
-            //reduce the collider size
-            p_collider.size = new Vector2(p_collider.size.x, p_collider.size.y * crouchColliderY);
-            //half of half of the full size as an offset below the normal offset
-            p_collider.offset = new Vector2(p_collider.offset.x, -originalColliderYSize * 0.25f);
+            Crouch();
         }
         if(Input.GetKeyUp(KeyCode.C))
         {
-            //if we're not crouching put the collision offset and size back to normal
-            p_collider.size = new Vector2(p_collider.size.x, originalColliderYSize);
-            p_collider.offset = new Vector2(p_collider.offset.x, originalColliderYOffset);
+            Uncrouch();
         }
 
         if(dead && Lives > -1)
@@ -275,9 +270,16 @@ public class PlayerScript : MonoBehaviour
                     }
                 }
             }
+            
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                //call our earthfall function
+                EarthFall(earthFallForce);                                
+            }            
         }
 
-        if(air)
+
+        if (air)
         {
             //TODO
         }
@@ -419,6 +421,15 @@ public class PlayerScript : MonoBehaviour
 
            //reset our jumpNumber
            jumpNumber = 0;
+
+            if (earthFalling)
+            {
+                //set collision detection mode back to discrete from continuous to avoid overhead
+                p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+                Debug.Log("Enabling discrete collision because earthfall stopped");
+                //end falling fast
+                earthFalling = false;
+            }
         }
         else
         {
@@ -432,6 +443,15 @@ public class PlayerScript : MonoBehaviour
 
                 //reset our jumpNumber
                 jumpNumber = 0;
+
+                if (earthFalling)
+                {
+                    //set collision detection mode back to discrete from continuous to avoid overhead
+                    p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+                    Debug.Log("Enabling discrete collision because earthfall stopped");
+                    //end falling fast
+                    earthFalling = false;
+                }
             }
             else
             {
@@ -445,6 +465,15 @@ public class PlayerScript : MonoBehaviour
 
                     //reset our jumpNumber
                     jumpNumber = 0;
+
+                    if (earthFalling)
+                    {
+                        //set collision detection mode back to discrete from continuous to avoid overhead
+                        p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+                        Debug.Log("Enabling discrete collision because earthfall stopped");
+                        //end falling fast
+                        earthFalling = false;
+                    }
                 }
             }
         }
@@ -540,6 +569,19 @@ public class PlayerScript : MonoBehaviour
         p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
     }
 
+    void EarthFall(float force)
+    {
+        Debug.Log("Earthfall!");
+        //set velocity to 0 to make our fall straight down
+        p_rigidbody.velocity = new Vector2(0.0f, 0.0f);
+        //add a force in the negative Y direction to fall down fast
+        p_rigidbody.AddForce(new Vector2(0, -force), ForceMode2D.Impulse);
+        earthFalling = true;
+        //change to continuous collision because we might be falling really fast
+        p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        Debug.Log("Enabled continuous collision for earthfall");
+    }
+
     //simple function to take damage passes in the amount of damage to take as a parameter
     void TakeDamage(int damage)
     {
@@ -577,6 +619,23 @@ public class PlayerScript : MonoBehaviour
         currentHealth = maxHealth;
         dead = false;
         Debug.Log("Respawning at " + respawnLocation);
+    }
+
+    void Crouch()
+    {
+        Debug.Log("Crouched!");
+        //reduce the collider size
+        p_collider.size = new Vector2(p_collider.size.x, p_collider.size.y * crouchColliderY);
+        //half of half of the full size as an offset below the normal offset
+        p_collider.offset = new Vector2(p_collider.offset.x, -originalColliderYSize * 0.25f);
+    }
+
+    void Uncrouch()
+    {
+        Debug.Log("Uncrouched!");
+        //if we're not crouching put the collision offset and size back to normal
+        p_collider.size = new Vector2(p_collider.size.x, originalColliderYSize);
+        p_collider.offset = new Vector2(p_collider.offset.x, originalColliderYOffset);
     }
         
 
