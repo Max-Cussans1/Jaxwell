@@ -180,26 +180,26 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKey("d"))
+        if (Input.GetKey(KeyCode.D))
         {
             MoveRight();
         }
 
 
-        if (Input.GetKey("a"))
+        if (Input.GetKey(KeyCode.A))
         {
             MoveLeft();
         }
 
         //crouching with getkeydown and getkeyup to use key as a toggle
-        if (Input.GetKeyDown("c"))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             //reduce the collider size
             p_collider.size = new Vector2(p_collider.size.x, p_collider.size.y * crouchColliderY);
             //half of half of the full size as an offset below the normal offset
             p_collider.offset = new Vector2(p_collider.offset.x, -originalColliderYSize * 0.25f);
         }
-        if(Input.GetKeyUp("c"))
+        if(Input.GetKeyUp(KeyCode.C))
         {
             //if we're not crouching put the collision offset and size back to normal
             p_collider.size = new Vector2(p_collider.size.x, originalColliderYSize);
@@ -221,7 +221,7 @@ public class PlayerScript : MonoBehaviour
             }
 
             //dash right
-            if (Input.GetKeyDown("e"))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 if (canDash)
                 {
@@ -230,7 +230,7 @@ public class PlayerScript : MonoBehaviour
             }
 
             //dash left
-            if (Input.GetKeyDown("q"))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 if (canDash)
                 {
@@ -264,7 +264,7 @@ public class PlayerScript : MonoBehaviour
                     //check the destructible isn't dead already
                     if (destructible.health > 0)
                     {
-                        if (Input.GetKeyDown("f"))
+                        if (Input.GetKeyDown(KeyCode.F))
                         {
                             //deal damage on the key press
                             destructible.health -= earthDamage;
@@ -283,7 +283,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         #region Enabling/Disabling elements (using keybinds for now)
-        if(Input.GetKey("1"))
+        if(Input.GetKey(KeyCode.Keypad1))
         {
             if(water == true)
             {
@@ -311,7 +311,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKey("2"))
+        if (Input.GetKey(KeyCode.Keypad2))
         {
             if (fire == true)
             {
@@ -339,7 +339,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKey("3"))
+        if (Input.GetKey(KeyCode.Keypad3))
         {
             if (water == true)
             {
@@ -367,7 +367,7 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKey("4"))
+        if (Input.GetKey(KeyCode.KeypadEnter))
         {
             if (water == true)
             {
