@@ -139,6 +139,8 @@ public class PlayerScript : MonoBehaviour
         //check if we dashed right
         if(dashedRight)
         {
+            //since we might be going fast enable continuous collision
+            p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             //set gravity to 0 so short sharp dash in air
             p_rigidbody.gravityScale = 0;
             //countdown from dash duration
@@ -156,6 +158,8 @@ public class PlayerScript : MonoBehaviour
         //check if we dashed left
         if(dashedLeft)
         {
+            //since we might be going fast enable continuous collision
+            p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             //set gravity to 0 so short sharp dash in air
             p_rigidbody.gravityScale = 0;
             //countdown from dash duration
@@ -455,7 +459,7 @@ public class PlayerScript : MonoBehaviour
            //reset our jumpNumber
            jumpNumber = 0;
 
-            if (earthFalling)
+            if (earthFalling || dashedLeft || dashedRight)
             {
                 //set collision detection mode back to discrete from continuous to avoid overhead
                 p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
