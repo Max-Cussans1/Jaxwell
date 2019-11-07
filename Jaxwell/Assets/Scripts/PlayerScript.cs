@@ -14,7 +14,9 @@ public class PlayerScript : MonoBehaviour
 
 
     //important player variables as serlialized variables so we can change in editor
-    [SerializeField] float moveSpeed = 3.0f;
+    [SerializeField] float maxSpeed = 3.0f;
+    [SerializeField] float acceleration = 0.3f;
+    [SerializeField] float deceleration = 0.3f;
     [SerializeField] float jumpHeight = 5.0f;
     [SerializeField] float dashSpeed = 25.0f;
     [SerializeField] float dashCooldown = 6.0f;
@@ -26,6 +28,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float earthFallForce = 35.0f;  //force to fall at
 
     bool canAttack = true;
+    bool accelerating = false;
 
 
     //the amount we will modify the y size of the collider by when crouching
@@ -180,16 +183,51 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.D))
+        //check if we're already going maxSpeed
+        if (p_rigidbody.velocity.x < maxSpeed)
         {
-            MoveRight();
+            if (Input.GetKey(KeyCode.D))
+            {
+                AccelerateRight();                
+
+                //if this pushes us past our maxspeed stay at maxspeed
+                if (p_rigidbody.velocity.x > maxSpeed)
+                {
+                    p_rigidbody.velocity = new Vector2(maxSpeed, p_rigidbody.velocity.y);
+                }
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            accelerating = false;
+        }
+
+        //check if we're already going maxSpeed
+        if (p_rigidbody.velocity.x > -maxSpeed)        
+        {
+            if (Input.GetKey(KeyCode.A))
+            {
+                AccelerateLeft();                
+
+                //if this pushes us past our maxspeed stay at maxspeed
+                if (p_rigidbody.velocity.x < -maxSpeed)
+                {
+                    p_rigidbody.velocity = new Vector2(-maxSpeed, p_rigidbody.velocity.y);
+                }
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            accelerating = false;
+        }
+
+        //decelerate if we aren't putting input in for left or right
+        if(accelerating == false)
+        {
+            Decelerate();
         }
 
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            MoveLeft();
-        }
 
         //crouching with getkeydown and getkeyup to use key as a toggle
         if (Input.GetKeyDown(KeyCode.C))
@@ -201,11 +239,6 @@ public class PlayerScript : MonoBehaviour
             Uncrouch();
         }
 
-        if(dead && Lives > -1)
-        {
-            //if we aren't out of lives after we die, respawn at the current checkpoint
-            Respawn(currentCheckpoint);
-        }
 
         if (fire)
         {
@@ -506,26 +539,41 @@ public class PlayerScript : MonoBehaviour
 
     //NOTE: if we want to change movement speed at runtime these could be changed to pass in speed as a parameter
     //function to move right
-    void MoveRight()
+    void AccelerateRight()
     {
-        //get x position
-        float temp = transform.position.x;
-        //update the temp variable in the right direction, * Time.deltaTime for smoothing
-        temp = temp + (0.5f * Time.deltaTime * moveSpeed);
-        //change position by passing temp in for our x position
-        transform.position = new Vector2(temp, transform.position.y);
+        //add acceleration in the positive x direction for our rigidbody's velocity
+        p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x + acceleration, p_rigidbody.velocity.y);
+        accelerating = true;
     }
 
     //NOTE: if we want to change movement speed at runtime these could be changed to pass in speed as a parameter
     //function to move left
-    void MoveLeft()
+    void AccelerateLeft()
     {
-        //get x position
-        float temp = transform.position.x;
-        //update the temp variable in the left direction, * Time.deltaTime for smoothing
-        temp = temp - (0.5f * Time.deltaTime * moveSpeed);
-        //change position by passing temp in for our x position
-        transform.position = new Vector2(temp, transform.position.y);
+        //add acceleration in the negative x direction for our rigidbody's velocity
+        p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x - acceleration, p_rigidbody.velocity.y);
+        accelerating = true;
+    }
+
+    void Decelerate()
+    {
+        //if we're less than our deceleration speed to stopping set our velocity to 0
+        if(p_rigidbody.velocity.x <= deceleration || p_rigidbody.velocity.x >= -deceleration)
+        {
+            p_rigidbody.velocity = new Vector2(0, p_rigidbody.velocity.y);
+        }
+
+        //if we have a negative velocity, accelerate in positive direction
+        if (p_rigidbody.velocity.x < 0)
+        {
+            p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x + deceleration, p_rigidbody.velocity.y);
+        }
+        //if we have a positive velocity, accelerate in negative direction
+        else if (p_rigidbody.velocity.x > 0)
+        {
+            p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x - deceleration, p_rigidbody.velocity.y);
+        }
+        
     }
 
     void DashRight()
