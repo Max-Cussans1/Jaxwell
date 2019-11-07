@@ -99,7 +99,7 @@ public class PlayerScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
         //check if we've attacked, wait for the attack speed if not
         if(!canAttack)
         {
@@ -221,8 +221,8 @@ public class PlayerScript : MonoBehaviour
             accelerating = false;
         }
 
-        //decelerate if we aren't putting input in for left or right
-        if(accelerating == false)
+        //decelerate if we aren't putting input in for left or right before we start decelerating
+        if(accelerating == false && !dashedRight && !dashedLeft)
         {
             Decelerate();
         }
@@ -520,7 +520,6 @@ public class PlayerScript : MonoBehaviour
             canDestroy = true;
         }
     }
-
 
 
     void OnCollisionExit2D(Collision2D collision)
