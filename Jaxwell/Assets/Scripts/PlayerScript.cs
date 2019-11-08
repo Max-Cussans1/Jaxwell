@@ -26,9 +26,17 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] float meleeAttackSpeed = 1.0f; //time in between attacks
     [SerializeField] int earthDamage = 50;  //damage we do to destructibles
     [SerializeField] float earthFallForce = 35.0f;  //force to fall at
+    [SerializeField] float grabbingFallSpeed = 0.1f;  //velocity to fall at when grabbing
+    [SerializeField] float wallJumpForce = 2.5f;  //velocity to fall at when grabbing
 
     bool canAttack = true;
+    bool canGrabRight = false;
+    bool canGrabLeft = false;
+    bool grabbing = false;
     bool accelerating = false;
+    bool wallJumping = false;
+
+    
 
 
     //the amount we will modify the y size of the collider by when crouching
@@ -100,6 +108,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //check if we've attacked, wait for the attack speed if not
         if(!canAttack)
         {
@@ -226,7 +235,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         //decelerate if we aren't putting input in for left or right before we start decelerating
-        if(accelerating == false && !dashedRight && !dashedLeft)
+        if(accelerating == false && !dashedRight && !dashedLeft && !wallJumping)
         {
             Decelerate();
         }
@@ -278,6 +287,29 @@ public class PlayerScript : MonoBehaviour
             {
                 canDoubleJump = false;
             }
+
+            //if we can grab
+            if (canGrabRight || canGrabLeft)
+            {
+                //make sure we don't regrab if we're jumping off
+                if (!wallJumping)
+                {
+                    //grab every frame we hold E
+                    if (Input.GetKey(KeyCode.E))
+                    {
+                        Grab();
+                    }
+                }
+
+                //we're no longer grabbing if we let go of E
+                if (Input.GetKeyUp(KeyCode.E))
+                {
+                    if (grabbing)
+                    {
+                        grabbing = false;
+                    }
+                }
+            }
         }
 
         if(earth)
@@ -315,11 +347,6 @@ public class PlayerScript : MonoBehaviour
             }            
         }
 
-
-        if (air)
-        {
-            //TODO
-        }
 
         #region Enabling/Disabling elements (using keybinds for now)
         if(Input.GetKey(KeyCode.Keypad1))
@@ -445,8 +472,10 @@ public class PlayerScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        wallJumping = false;
         Debug.Log("Collided with " + collision.collider.gameObject + " at " + collision.transform.position);
 
+        #region Jumping raycasts and resetting jumpnumber
         //FOR JUMP LOGIC
         //create 2D raycast fired directly down from player's centre just a tiny bit further than our player
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
@@ -454,12 +483,12 @@ public class PlayerScript : MonoBehaviour
         if (hit.collider != null)
         {
            //print what the raycast hit to console and where the object is
-           Debug.Log("Raycast from centre hit " + hit.collider.gameObject + " at " + hit.point);
+           Debug.Log("Jump raycast from centre hit " + hit.collider.gameObject + " at " + hit.point);
 
            //reset our jumpNumber
            jumpNumber = 0;
 
-            if (earthFalling || dashedLeft || dashedRight)
+            if (earthFalling)
             {
                 //set collision detection mode back to discrete from continuous to avoid overhead
                 p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
@@ -476,7 +505,7 @@ public class PlayerScript : MonoBehaviour
             if(hitLeft.collider != null)
             {
                 //print what the raycast hit to console and where the object is
-                Debug.Log("Raycast from left hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
+                Debug.Log("Jump raycast from left hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
 
                 //reset our jumpNumber
                 jumpNumber = 0;
@@ -498,7 +527,7 @@ public class PlayerScript : MonoBehaviour
                 if(hitRight.collider != null)
                 {
                     //print what the raycast hit to console and where the object is
-                    Debug.Log("Raycast from right hit " + hitRight.collider.gameObject + " at " + hitRight.point);
+                    Debug.Log("Jump raycast from right hit " + hitRight.collider.gameObject + " at " + hitRight.point);
 
                     //reset our jumpNumber
                     jumpNumber = 0;
@@ -514,6 +543,85 @@ public class PlayerScript : MonoBehaviour
                 }
             }
         }
+        #endregion
+
+        #region Grabbing Raycasts
+        //FOR GRAB RIGHT LOGIC
+        //create 2D raycast fired directly right from player's centre just a tiny bit further than our player
+        RaycastHit2D grabHit = Physics2D.Raycast(transform.position, Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+        //if the raycast hits something
+        if (grabHit.collider != null)
+        {
+            //print what the raycast hit to console and where the object is
+            Debug.Log("Grab raycast right from centre hit " + grabHit.collider.gameObject + " at " + grabHit.point);
+            canGrabRight = true;
+
+        }
+        else
+        {
+            //fire a raycast from the bottom side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the bottom side
+            RaycastHit2D grabHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - (p_collider.size.y * 0.4f)), Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+
+            if (grabHitBottom.collider != null)
+            {
+                //print what the raycast hit to console and where the object is
+                Debug.Log("Grab raycast right from bottom hit " + grabHitBottom.collider.gameObject + " at " + grabHitBottom.point);
+                canGrabRight = true;
+
+            }
+            else
+            {
+                //fire a raycast from the top side of the player if the centre or bottom might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
+                RaycastHit2D grabHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + (p_collider.size.y * 0.4f)), Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+
+                if (grabHitTop.collider != null)
+                {
+                    //print what the raycast hit to console and where the object is
+                    Debug.Log("Grab raycast right from top hit " + grabHitTop.collider.gameObject + " at " + grabHitTop.point);
+                    canGrabRight = true;
+
+                }
+                //if we didn't hit anything with our raycasts to the right, try left
+                //FOR GRAB LEFT LOGIC
+                //create 2D raycast fired directly left from player's centre just a tiny bit further than our player
+                RaycastHit2D grabLeftHit = Physics2D.Raycast(transform.position, -Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+                //if the raycast hits something
+                if (grabLeftHit.collider != null)
+                {
+                    //print what the raycast hit to console and where the object is
+                    Debug.Log("Grab raycast left from centre hit " + grabLeftHit.collider.gameObject + " at " + grabLeftHit.point);
+                    canGrabLeft = true;
+
+                }
+                else
+                {
+                    //fire a raycast from the bottom side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the bottom side
+                    RaycastHit2D grabLeftHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - (p_collider.size.y * 0.4f)), -Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+
+                    if (grabLeftHitBottom.collider != null)
+                    {
+                        //print what the raycast hit to console and where the object is
+                        Debug.Log("Grab raycast left from bottom hit " + grabLeftHitBottom.collider.gameObject + " at " + grabLeftHitBottom.point);
+                        canGrabLeft = true;
+
+                    }
+                    else
+                    {
+                        //fire a raycast from the top side of the player if the centre or bottom might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
+                        RaycastHit2D grabLeftHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + (p_collider.size.y * 0.4f)), -Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+
+                        if (grabLeftHitTop.collider != null)
+                        {
+                            //print what the raycast hit to console and where the object is
+                            Debug.Log("Grab raycast left top hit " + grabLeftHitTop.collider.gameObject + " at " + grabLeftHitTop.point);
+                            canGrabLeft = true;
+
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
 
         //check if we are colliding with a destructible
         if (collision.gameObject.GetComponent<Destructible>() != null)
@@ -525,6 +633,92 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    #region Call Raycasts every frame we stay on collision if we feel it's needed
+    //void OnCollisionStay2D(Collision2D collision)
+    //{
+    //    #region Raycasts for grabbing
+    //    //FOR GRAB RIGHT LOGIC
+    //    //create 2D raycast fired directly right from player's centre just a tiny bit further than our player
+    //    RaycastHit2D grabRightHit = Physics2D.Raycast(transform.position, Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+    //    //if the raycast hits something
+    //    if (grabRightHit.collider != null)
+    //    {
+    //        //print what the raycast hit to console and where the object is
+    //        Debug.Log("Grab raycast right from centre hit " + grabRightHit.collider.gameObject + " at " + grabRightHit.point);
+    //        canGrabRight = true;
+    //
+    //    }
+    //    else
+    //    {
+    //        //fire a raycast from the bottom side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the bottom side
+    //        RaycastHit2D grabRightHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - (p_collider.size.y * 0.4f)), Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+    //
+    //        if (grabRightHitBottom.collider != null)
+    //        {
+    //            //print what the raycast hit to console and where the object is
+    //            Debug.Log("Grab raycast right from bottom hit " + grabRightHitBottom.collider.gameObject + " at " + grabRightHitBottom.point);
+    //            canGrabRight = true;
+    //
+    //        }
+    //        else
+    //        {
+    //            //fire a raycast from the top side of the player if the centre or bottom might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
+    //            RaycastHit2D grabRightHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + (p_collider.size.y * 0.4f)), Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+    //
+    //            if (grabRightHitTop.collider != null)
+    //            {
+    //                //print what the raycast hit to console and where the object is
+    //                Debug.Log("Grab raycast right from top hit " + grabRightHitTop.collider.gameObject + " at " + grabRightHitTop.point);
+    //                canGrabRight = true;
+    //
+    //            }
+    //            else
+    //            {
+    //                //if we didn't hit anything with our raycasts to the right, try left
+    //                //FOR GRAB LEFT LOGIC
+    //                //create 2D raycast fired directly left from player's centre just a tiny bit further than our player
+    //                RaycastHit2D grabLeftHit = Physics2D.Raycast(transform.position, -Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+    //                //if the raycast hits something
+    //                if (grabLeftHit.collider != null)
+    //                {
+    //                    //print what the raycast hit to console and where the object is
+    //                    Debug.Log("Grab raycast left from centre hit " + grabLeftHit.collider.gameObject + " at " + grabLeftHit.point);
+    //                    canGrabLeft = true;
+    //
+    //                }
+    //                else
+    //                {
+    //                    //fire a raycast from the bottom side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the bottom side
+    //                    RaycastHit2D grabLeftHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - (p_collider.size.y * 0.4f)), -Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+    //
+    //                    if (grabLeftHitBottom.collider != null)
+    //                    {
+    //                        //print what the raycast hit to console and where the object is
+    //                        Debug.Log("Grab raycast left from bottom hit " + grabLeftHitBottom.collider.gameObject + " at " + grabLeftHitBottom.point);
+    //                        canGrabLeft = true;
+    //
+    //                    }
+    //                    else
+    //                    {
+    //                        //fire a raycast from the top side of the player if the centre or bottom might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
+    //                        RaycastHit2D grabLeftHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + (p_collider.size.y * 0.4f)), -Vector2.right, (p_collider.size.x * 0.5f) + 0.05f);
+    //
+    //                        if (grabLeftHitTop.collider != null)
+    //                        {
+    //                            //print what the raycast hit to console and where the object is
+    //                            Debug.Log("Grab raycast right left top hit " + grabLeftHitTop.collider.gameObject + " at " + grabLeftHitTop.point);
+    //                            canGrabLeft = true;
+    //
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //    #endregion
+    //
+    //}
+    #endregion
 
     void OnCollisionExit2D(Collision2D collision)
     {
@@ -536,11 +730,14 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("Exited collision with Destructible at " + collision.gameObject.transform.position);
             canDestroy = false;
         }
+
+        //if we aren't touching anything we can't grab
+        canGrabRight = false;
+        canGrabLeft = false;
+        grabbing = false;
     }
 
 
-
-    //NOTE: if we want to change movement speed at runtime these could be changed to pass in speed as a parameter
     //function to move right
     void AccelerateRight()
     {
@@ -549,7 +746,6 @@ public class PlayerScript : MonoBehaviour
         accelerating = true;
     }
 
-    //NOTE: if we want to change movement speed at runtime these could be changed to pass in speed as a parameter
     //function to move left
     void AccelerateLeft()
     {
@@ -612,12 +808,32 @@ public class PlayerScript : MonoBehaviour
     //NOTE: if we want to change jump speed at runtime these could be changed to pass in speed as a parameter
     //function to jump
     void Jump()
-    {
-       Debug.Log("Jumped!");      
+    {          
         //set y velocity to 0 to make our jump more reliable (if we just add the force it will take into account how fast we're falling)
         p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x, 0.0f);
-        //add a force in the Y direction to jump
-        p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+        //if we aren't grabbing, perform normal jump
+        if (!grabbing)
+        {
+            Debug.Log("Jumped!");
+            //add a force in the Y direction to jump
+            p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+        }
+        //if we're grabbing to the left
+        if(grabbing && canGrabLeft)
+        {
+            wallJumping = true;
+            Debug.Log("Jumped off a wall to our left!");
+            //add a force in the Y direction to jump and x direction away from wall
+            p_rigidbody.AddForce(new Vector2(wallJumpForce, jumpHeight), ForceMode2D.Impulse);
+        }
+        //if we're grabbing to the right
+        if (grabbing && canGrabRight)
+        {
+            wallJumping = true;
+            Debug.Log("Jumped off a wall to our right!");
+            //add a force in the Y direction to jump and x direction away from wall
+            p_rigidbody.AddForce(new Vector2(-wallJumpForce, jumpHeight), ForceMode2D.Impulse);
+        }
     }
 
     void EarthFall(float force)
@@ -687,6 +903,18 @@ public class PlayerScript : MonoBehaviour
         //if we're not crouching put the collision offset and size back to normal
         p_collider.size = new Vector2(p_collider.size.x, originalColliderYSize);
         p_collider.offset = new Vector2(p_collider.offset.x, originalColliderYOffset);
+    }
+
+    void Grab()
+    {
+        //reset jumpNumber
+        if(jumpNumber > 0)
+        {
+            jumpNumber = 0;
+        }
+        //set our y velocity to the grab fall speed
+        p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x, grabbingFallSpeed);
+        grabbing = true;
     }
         
 
