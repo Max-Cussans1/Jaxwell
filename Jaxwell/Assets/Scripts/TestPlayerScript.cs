@@ -35,8 +35,8 @@ public class TestPlayerScript : MonoBehaviour
     bool grabbing = false;
     bool accelerating = false;
     bool wallJumping = false;
-    bool lastInputRight = false;
 
+    
 
 
     //the amount we will modify the y size of the collider by when crouching
@@ -110,10 +110,10 @@ public class TestPlayerScript : MonoBehaviour
     {
 
         //check if we've attacked, wait for the attack speed if not
-        if (!canAttack)
+        if(!canAttack)
         {
             meleeAttackSpeed -= Time.deltaTime;
-            if (meleeAttackSpeed < 0)
+            if(meleeAttackSpeed < 0)
             {
                 //set the attack speed back to its original value
                 meleeAttackSpeed = startMeleeAttackSpeed;
@@ -146,7 +146,7 @@ public class TestPlayerScript : MonoBehaviour
         }
 
         //check if we dashed right
-        if (dashedRight)
+        if(dashedRight)
         {
             //since we might be going fast enable continuous collision
             p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -165,7 +165,7 @@ public class TestPlayerScript : MonoBehaviour
         }
 
         //check if we dashed left
-        if (dashedLeft)
+        if(dashedLeft)
         {
             //since we might be going fast enable continuous collision
             p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -184,14 +184,14 @@ public class TestPlayerScript : MonoBehaviour
         }
 
         //check if we can dash
-        if (!canDash)
+        if(!canDash)
         {
             //if we can't we have just dashed and it's on cooldown
             //since we're calling in update, time.deltatime is time since last frame, so -= will give us a countdown
             tempDashCooldown -= Time.deltaTime;
             //if cooldown is finished we can dash again
-            if (tempDashCooldown <= 0)
-            {
+            if(tempDashCooldown <= 0)
+            {                
                 canDash = true;
             }
         }
@@ -201,7 +201,7 @@ public class TestPlayerScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.D))
             {
-                AccelerateRight();
+                AccelerateRight();                
 
                 //if this pushes us past our maxspeed stay at maxspeed
                 if (p_rigidbody.velocity.x > maxSpeed)
@@ -216,11 +216,11 @@ public class TestPlayerScript : MonoBehaviour
         }
 
         //check if we're already going maxSpeed
-        if (p_rigidbody.velocity.x > -maxSpeed)
+        if (p_rigidbody.velocity.x > -maxSpeed)        
         {
             if (Input.GetKey(KeyCode.A))
             {
-                AccelerateLeft();
+                AccelerateLeft();                
 
                 //if this pushes us past our maxspeed stay at maxspeed
                 if (p_rigidbody.velocity.x < -maxSpeed)
@@ -235,7 +235,7 @@ public class TestPlayerScript : MonoBehaviour
         }
 
         //decelerate if we aren't putting input in for left or right before we start decelerating
-        if (accelerating == false && !dashedRight && !dashedLeft && !wallJumping)
+        if(accelerating == false && !dashedRight && !dashedLeft && !wallJumping)
         {
             Decelerate();
         }
@@ -247,7 +247,7 @@ public class TestPlayerScript : MonoBehaviour
         {
             Crouch();
         }
-        if (Input.GetKeyUp(KeyCode.C))
+        if(Input.GetKeyUp(KeyCode.C))
         {
             Uncrouch();
         }
@@ -260,13 +260,27 @@ public class TestPlayerScript : MonoBehaviour
             {
                 canDoubleJump = false;
             }
-            if(grabbing)
+
+            //dash right
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                grabbing = false;
+                if (canDash)
+                {
+                    DashRight();
+                }
+            }
+
+            //dash left
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (canDash)
+                {
+                    DashLeft();
+                }
             }
         }
 
-        if (water)
+        if(water)
         {
             //disable double jump if it's active if we're in any other mode apart from air
             if (canDoubleJump == true)
@@ -280,23 +294,30 @@ public class TestPlayerScript : MonoBehaviour
                 //make sure we don't regrab if we're jumping off
                 if (!wallJumping)
                 {
-                     Grab();
+                    //grab every frame we hold E
+                    if (Input.GetKey(KeyCode.E))
+                    {
+                        Grab();
+                    }
                 }
-                
+
+                //we're no longer grabbing if we let go of E
+                if (Input.GetKeyUp(KeyCode.E))
+                {
+                    if (grabbing)
+                    {
+                        grabbing = false;
+                    }
+                }
             }
         }
 
-        if (earth)
+        if(earth)
         {
             //disable double jump if it's active if we're in any other mode apart from air
             if (canDoubleJump == true)
             {
                 canDoubleJump = false;
-            }
-
-            if (grabbing)
-            {
-                grabbing = false;
             }
 
             if (canAttack)
@@ -318,34 +339,31 @@ public class TestPlayerScript : MonoBehaviour
                     }
                 }
             }
-
-        }
-
-        if(air)
-        {
-            if (grabbing)
+            
+            if(Input.GetKeyDown(KeyCode.E))
             {
-                grabbing = false;
-            }
+                //call our earthfall function
+                EarthFall(earthFallForce);                                
+            }            
         }
 
 
         #region Enabling/Disabling elements (using keybinds for now)
-        if (Input.GetKey(KeyCode.Keypad1))
+        if(Input.GetKey(KeyCode.Keypad1))
         {
-            if (water == true)
+            if(water == true)
             {
                 Debug.Log("Water Disabled for Fire");
                 water = false;
             }
 
-            if (earth == true)
+            if(earth == true)
             {
                 Debug.Log("Earth Disabled for Fire");
                 earth = false;
             }
 
-            if (air == true)
+            if(air == true)
             {
                 Debug.Log("Air Disabled for Fire");
                 air = false;
@@ -356,22 +374,6 @@ public class TestPlayerScript : MonoBehaviour
                 Debug.Log("Fire Enabled");
                 fire = true;
                 p_spriteRenderer.color = Color.red;
-
-                if (lastInputRight)
-                {
-                    if (canDash)
-                    {
-                        DashRight();
-                    }
-                }
-                else
-                {
-                    if (canDash)
-                    {
-                        DashLeft();
-                    }
-                }
-
             }
         }
 
@@ -428,7 +430,6 @@ public class TestPlayerScript : MonoBehaviour
                 Debug.Log("Earth Enabled");
                 earth = true;
                 p_spriteRenderer.color = Color.green;
-                EarthFall(earthFallForce);
             }
         }
 
@@ -457,11 +458,6 @@ public class TestPlayerScript : MonoBehaviour
                 Debug.Log("Air Enabled");
                 air = true;
                 p_spriteRenderer.color = Color.gray;
-                if (jumpNumber < 2)
-                {
-                    Jump();
-                    jumpNumber++;
-                }
             }
 
             //Enable double jump if we're in air mode
@@ -469,8 +465,6 @@ public class TestPlayerScript : MonoBehaviour
             {
                 canDoubleJump = true;
             }
-
-
         }
         #endregion
     }
@@ -488,11 +482,11 @@ public class TestPlayerScript : MonoBehaviour
         //if the raycast hits something
         if (hit.collider != null)
         {
-            //print what the raycast hit to console and where the object is
-            Debug.Log("Jump raycast from centre hit " + hit.collider.gameObject + " at " + hit.point);
+           //print what the raycast hit to console and where the object is
+           Debug.Log("Jump raycast from centre hit " + hit.collider.gameObject + " at " + hit.point);
 
-            //reset our jumpNumber
-            jumpNumber = 0;
+           //reset our jumpNumber
+           jumpNumber = 0;
 
             if (earthFalling)
             {
@@ -508,7 +502,7 @@ public class TestPlayerScript : MonoBehaviour
             //fire a raycast from the left side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the left side
             RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(transform.position.x - (p_collider.size.x * 0.4f), transform.position.y), -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
 
-            if (hitLeft.collider != null)
+            if(hitLeft.collider != null)
             {
                 //print what the raycast hit to console and where the object is
                 Debug.Log("Jump raycast from left hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
@@ -529,8 +523,8 @@ public class TestPlayerScript : MonoBehaviour
             {
                 //fire a raycast from the right side of the player if the centre or left might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
                 RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(transform.position.x + (p_collider.size.x * 0.4f), transform.position.y), -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
-
-                if (hitRight.collider != null)
+                
+                if(hitRight.collider != null)
                 {
                     //print what the raycast hit to console and where the object is
                     Debug.Log("Jump raycast from right hit " + hitRight.collider.gameObject + " at " + hitRight.point);
@@ -750,7 +744,6 @@ public class TestPlayerScript : MonoBehaviour
         //add acceleration in the positive x direction for our rigidbody's velocity
         p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x + acceleration, p_rigidbody.velocity.y);
         accelerating = true;
-        lastInputRight = true;
     }
 
     //function to move left
@@ -759,13 +752,12 @@ public class TestPlayerScript : MonoBehaviour
         //add acceleration in the negative x direction for our rigidbody's velocity
         p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x - acceleration, p_rigidbody.velocity.y);
         accelerating = true;
-        lastInputRight = false;
     }
 
     void Decelerate()
     {
         //if we're less than our deceleration speed to stopping set our velocity to 0
-        if (p_rigidbody.velocity.x <= deceleration || p_rigidbody.velocity.x >= -deceleration)
+        if(p_rigidbody.velocity.x <= deceleration || p_rigidbody.velocity.x >= -deceleration)
         {
             p_rigidbody.velocity = new Vector2(0, p_rigidbody.velocity.y);
         }
@@ -780,7 +772,7 @@ public class TestPlayerScript : MonoBehaviour
         {
             p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x - deceleration, p_rigidbody.velocity.y);
         }
-
+        
     }
 
     void DashRight()
@@ -816,7 +808,7 @@ public class TestPlayerScript : MonoBehaviour
     //NOTE: if we want to change jump speed at runtime these could be changed to pass in speed as a parameter
     //function to jump
     void Jump()
-    {
+    {          
         //set y velocity to 0 to make our jump more reliable (if we just add the force it will take into account how fast we're falling)
         p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x, 0.0f);
         //if we aren't grabbing, perform normal jump
@@ -827,7 +819,7 @@ public class TestPlayerScript : MonoBehaviour
             p_rigidbody.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
         }
         //if we're grabbing to the left
-        if (grabbing && canGrabLeft)
+        if(grabbing && canGrabLeft)
         {
             wallJumping = true;
             Debug.Log("Jumped off a wall to our left!");
@@ -862,7 +854,7 @@ public class TestPlayerScript : MonoBehaviour
     {
         currentHealth -= damage;
         Debug.Log("Player took " + damage + " damage");
-        if (currentHealth <= 0)
+        if(currentHealth <= 0)
         {
             Die();
         }
@@ -870,11 +862,11 @@ public class TestPlayerScript : MonoBehaviour
 
     void Die()
     {
-        dead = true;
+        dead = true;        
         Lives--;
         Debug.Log("Died!");
         //DO YOU ARE DEAD STUFF
-        if (Lives == -1)
+        if(Lives == -1)
         {
             //lose level logic
         }
@@ -890,7 +882,7 @@ public class TestPlayerScript : MonoBehaviour
     {
         //essentially just moves the player to this location with full health and no velocity         
         transform.position = respawnLocation;
-        p_rigidbody.velocity = new Vector2(0, 0);
+        p_rigidbody.velocity = new Vector2(0,0);
         currentHealth = maxHealth;
         dead = false;
         Debug.Log("Respawning at " + respawnLocation);
@@ -916,7 +908,7 @@ public class TestPlayerScript : MonoBehaviour
     void Grab()
     {
         //reset jumpNumber
-        if (jumpNumber > 0)
+        if(jumpNumber > 0)
         {
             jumpNumber = 0;
         }
@@ -924,6 +916,6 @@ public class TestPlayerScript : MonoBehaviour
         p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x, grabbingFallSpeed);
         grabbing = true;
     }
-
+        
 
 }
