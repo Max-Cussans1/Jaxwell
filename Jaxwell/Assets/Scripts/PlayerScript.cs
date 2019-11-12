@@ -765,7 +765,7 @@ public class PlayerScript : MonoBehaviour
     void Decelerate()
     {
         //if we're less than our deceleration speed to stopping set our velocity to 0
-        if (p_rigidbody.velocity.x <= deceleration || p_rigidbody.velocity.x >= -deceleration)
+        if (p_rigidbody.velocity.x <= deceleration && p_rigidbody.velocity.x > 0 || p_rigidbody.velocity.x >= -deceleration && p_rigidbody.velocity.x < 0)
         {
             p_rigidbody.velocity = new Vector2(0, p_rigidbody.velocity.y);
         }
