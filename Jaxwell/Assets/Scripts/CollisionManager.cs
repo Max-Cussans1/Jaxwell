@@ -44,7 +44,7 @@ public class CollisionManager : MonoBehaviour
         if (hit.collider != null)
         {
             //print what the raycast hit to console and where the object is
-            Debug.Log("Raycast to check if we're grounded hit " + hit.collider.gameObject + " at " + hit.point);
+            Debug.Log("Raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
             isGroundedCheck = true;
         }
         else
@@ -55,7 +55,7 @@ public class CollisionManager : MonoBehaviour
             if (hitLeft.collider != null)
             {
                 //print what the raycast hit to console and where the object is
-                Debug.Log("Jump raycast from left hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
+                Debug.Log("Left raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
                 isGroundedCheck = true;
             }
             else
@@ -66,7 +66,7 @@ public class CollisionManager : MonoBehaviour
                 if (hitRight.collider != null)
                 {
                     //print what the raycast hit to console and where the object is
-                    Debug.Log("Jump raycast from right hit " + hitRight.collider.gameObject + " at " + hitRight.point);
+                    Debug.Log("Right raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
                     isGroundedCheck = true;
                 }
             }
