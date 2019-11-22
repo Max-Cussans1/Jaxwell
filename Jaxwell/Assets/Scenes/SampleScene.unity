@@ -285,6 +285,7 @@ MonoBehaviour:
   maxSpeed: 3
   acceleration: 0.3
   deceleration: 0.001
+  direction: 1
 --- !u!61 &226886406
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -323,6 +324,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c0a18d4710bd1498d6d46b3c1c6f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &226886408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226886404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82379f34494487243ad49544349712c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 30
+  dashCooldown: 2
+  dashDuration: 0.1
+  dashing: 0
 --- !u!114 &226886411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +381,7 @@ PrefabInstance:
     - target: {fileID: 4897707626504179685, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4897707626504179681, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
@@ -2245,6 +2262,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &2095029933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7831050061220130203, guid: 287a5b02daeebfd4896c6e9fcc0eaf75,
+    type: 3}
+  m_PrefabInstance: {fileID: 962972364}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2095029938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095029933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc1caae1f9827a42be1560ff18b8f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 0
 --- !u!1001 &4897707626920021789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2260,7 +2296,7 @@ PrefabInstance:
     - target: {fileID: 4897707626504179685, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4897707626504179681, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}

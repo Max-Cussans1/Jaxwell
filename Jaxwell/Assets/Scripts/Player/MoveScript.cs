@@ -8,16 +8,21 @@ public class MoveScript : MonoBehaviour
     [SerializeField] float acceleration = 0.3f;
     [SerializeField] float deceleration = 0.3f;
 
+    public enum directions { left,right};
+    public directions direction = directions.right;
+
     bool acceleratingRight = false;
     bool acceleratingLeft = false;
 
     Rigidbody2D p_rigidbody;
+    DashScript dashScript;
 
     // Start is called before the first frame update
     void Start()
     {
         //cache rigidbody at the start of the game
         p_rigidbody = GetComponent<Rigidbody2D>();
+        dashScript = GetComponent<DashScript>();
     }
 
     // Update is called once per frame
@@ -26,6 +31,7 @@ public class MoveScript : MonoBehaviour
         //set bools for movement in update so we're instantly detecting input
         if (Input.GetKey(KeyCode.D))
         {
+            direction = directions.right;
             acceleratingRight = true;
         }
         if (Input.GetKeyUp(KeyCode.D))
@@ -35,6 +41,7 @@ public class MoveScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
+            direction = directions.left;
             acceleratingLeft = true;
         }
         if (Input.GetKeyUp(KeyCode.A))
@@ -47,17 +54,17 @@ public class MoveScript : MonoBehaviour
     void FixedUpdate()
     {
         //handle movement in fixedupdate to be consistent at all framerates
-        if(acceleratingRight)
+        if(acceleratingRight && !dashScript.dashing)
         {
             AccelerateRight(p_rigidbody, acceleration, maxSpeed);
         }
 
-        if(acceleratingLeft)
+        if(acceleratingLeft && !dashScript.dashing)
         {
             AccelerateLeft(p_rigidbody, acceleration, maxSpeed);
         }
 
-        if(!acceleratingRight && !acceleratingLeft)
+        if(!acceleratingRight && !acceleratingLeft && !dashScript.dashing)
         {
             Decelerate(p_rigidbody, deceleration);
         }
