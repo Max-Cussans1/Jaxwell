@@ -5,7 +5,6 @@ using UnityEngine;
 public class DashScript : MonoBehaviour
 {
     Rigidbody2D p_rigidbody;
-    BoxCollider2D p_collider;
 
     MoveScript movescript;
 
@@ -22,13 +21,13 @@ public class DashScript : MonoBehaviour
 
     public bool dashing = false;
     bool canDash = true;
+    bool dashJustEnded = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
         p_rigidbody = GetComponent<Rigidbody2D>();
-        p_collider = GetComponent<BoxCollider2D>();
         initialGravityScale = p_rigidbody.gravityScale;
         movescript = GetComponent<MoveScript>();
     }
@@ -73,19 +72,13 @@ public class DashScript : MonoBehaviour
         //while we're dashing handle gravity and collision detection modes
         if (dashing)
         {
-            //since we might be going fast enable continuous collision
-            p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            //set gravity to 0 so short sharp dash in air
-            p_rigidbody.gravityScale = 0;
-
             tempDashDuration -= Time.deltaTime;
             //check if duration has completed
             if (tempDashDuration <= 0)
             {
                 dashing = false;
-                p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
-                p_rigidbody.gravityScale = initialGravityScale;
-                p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+                //set this bool to handle dash end physics in fixedupdate
+                dashJustEnded = true;
             }
         }
     }
@@ -94,46 +87,73 @@ public class DashScript : MonoBehaviour
     {
         if(pressedDashLeft == true)
         {
-            DashLeft(dashSpeed);
+            DashLeft(p_rigidbody, dashSpeed);
             pressedDashLeft = false;
         }
 
         if (pressedDashRight == true)
         {
-            DashRight(dashSpeed);
+            DashRight(p_rigidbody, dashSpeed);
             pressedDashRight = false;
+        }
+
+        if (dashJustEnded)
+        {
+            HandleDashEnd(p_rigidbody);
+            dashJustEnded = false;
         }
     }
 
-    void DashRight(float speed)
+    void DashRight(Rigidbody2D rigidbody, float speed)
     {
         Debug.Log("Dashed Right");
         //set x velocity to 0 to make our dash more reliable
-        p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+        rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
         dashing = true;
         //add a force in the positive X direction to dash right
-        p_rigidbody.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
+        rigidbody.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
 
         //Set on cooldown
         canDash = false;
+
+        //since we might be going fast enable continuous collision
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        //set gravity to 0 so short sharp dash in air
+        rigidbody.gravityScale = 0;
 
         tempDashCooldown = dashCooldown;
         tempDashDuration = dashDuration;
     }
 
-    void DashLeft(float speed)
+    void DashLeft(Rigidbody2D rigidbody, float speed)
     {
         Debug.Log("Dashed Left");
         //set x velocity to 0 to make our dash more reliable
-        p_rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
+        rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
         dashing = true;
         //add a force in the positive X direction to dash right
-        p_rigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse); 
+        rigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse); 
 
         //Set on cooldown
         canDash = false;
 
+        //since we might be going fast enable continuous collision
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        //set gravity to 0 so short sharp dash in air
+        rigidbody.gravityScale = 0;
+
         tempDashCooldown = dashCooldown;
         tempDashDuration = dashDuration;
+    }
+
+    //function to handle physics at the end of dashing
+    void HandleDashEnd(Rigidbody2D rigidbody)
+    {
+        //zero out our x velocity to make us stop
+        rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
+        //change the gravity scale back to the one we have in editor
+        rigidbody.gravityScale = initialGravityScale;
+        //set collision detection back from continuous since it's expensive
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 }

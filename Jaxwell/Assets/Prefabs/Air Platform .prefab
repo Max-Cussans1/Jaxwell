@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7831050061220130201}
   - component: {fileID: 7831050061220130199}
   - component: {fileID: 7831050061220130198}
+  - component: {fileID: 3765172569662790615}
   m_Layer: 0
   m_Name: 'Air Platform '
   m_TagString: Air
@@ -148,3 +149,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3765172569662790615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7831050061220130203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc1caae1f9827a42be1560ff18b8f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 3
