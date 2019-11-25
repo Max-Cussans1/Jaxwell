@@ -1,0 +1,90 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WallClimb : MonoBehaviour
+{
+    Rigidbody2D p_rigidbody;
+    PlayerState playerstate;
+    float initialGravityScale;
+
+    [SerializeField] float grabbingFallSpeed = -0.1f;
+    [SerializeField] float wallJumpHeight = 15.0f;
+    [SerializeField] float wallJumpHorizontalForce = 3.0f;
+
+    bool grabbing = false;
+    bool pressedWallJump = false;
+
+    void Start()
+    {
+        p_rigidbody = GetComponent<Rigidbody2D>();
+        playerstate = GetComponent<PlayerState>();
+        initialGravityScale = p_rigidbody.gravityScale;
+    }
+
+    void Update()
+    {
+        //if we're against a wall, not grounded, water type and we're not moving upwards
+        if((CollisionManager.isAgainstWallRight == true || CollisionManager.isAgainstWallLeft == true) && !CollisionManager.isGrounded && playerstate.element == Elements.elements.water && p_rigidbody.velocity.y < 0)
+        {
+            grabbing = true;
+        }
+        else
+        {
+            grabbing = false;
+        }
+
+        //if we press jump while we're grabbing a wall, wall jump
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(grabbing)
+            {
+                pressedWallJump = true;
+            }
+        }
+            
+    }
+
+    void FixedUpdate()
+    {
+        if(grabbing == true)
+        {
+            Grab(p_rigidbody);
+        }
+        if(grabbing == false)
+        {
+            //set initial gravity scale back since we removed it to have a smooth fall speed
+            p_rigidbody.gravityScale = initialGravityScale;
+        }
+
+        if(pressedWallJump)
+        {
+            if (CollisionManager.isAgainstWallRight)
+            {
+                //jump in left direction if we're against a wall to the right
+                WallJump(p_rigidbody, -1);
+            }
+
+            if (CollisionManager.isAgainstWallLeft)
+            {
+                //jump in right direction if we're against a wall to the left
+                WallJump(p_rigidbody, 1);
+            }
+            pressedWallJump = false;
+        }
+    }
+
+    void Grab(Rigidbody2D rigidbody)
+    {
+        //disable gravity
+        rigidbody.gravityScale = 0;
+        //add a fall speed for when we're grabbing
+        rigidbody.velocity = new Vector2(rigidbody.velocity.x, grabbingFallSpeed);
+    }
+
+    void WallJump(Rigidbody2D rigidbody, int direction)
+    {
+        //add a force in x and y direction to jump off the wall
+        rigidbody.AddForce(new Vector2(wallJumpHorizontalForce * direction, wallJumpHeight), ForceMode2D.Impulse);
+    }
+}

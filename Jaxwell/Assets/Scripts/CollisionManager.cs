@@ -5,33 +5,55 @@ using UnityEngine;
 public class CollisionManager : MonoBehaviour
 {
     public static bool isGrounded = false;
-    public static bool isAgainstWall = false;
+    public static bool isAgainstWallLeft = false;
+    public static bool isAgainstWallRight = false;
+
+    float raycastStartOffset;
+    float raycastDistance;
 
     BoxCollider2D p_collider;
 
     void Start()
     {
         p_collider = GetComponent<BoxCollider2D>();
+        //the distance from centre of the collider we will check left/right and top/bottom
+        raycastStartOffset = p_collider.size.y * 0.4f;
+        //the distance the raycast will travel (just further than the collider)
+        raycastDistance = (p_collider.size.y * 0.5f) +0.05f;
     }
 
     //run checks when we collide with something
     void OnCollisionEnter2D(Collision2D collision)
     {
         isGrounded = GroundedCheck();
-        isAgainstWall = WallCheck();
+        isAgainstWallRight = WallCheckRight();
+
+        //if we didn't hit anything with our raycasts to the right, try left   
+        if (!isAgainstWallRight)
+        {
+            isAgainstWallLeft = WallCheckLeft();
+        }
     }
 
     //run wallcheck when we stay colliding with something
     void OnCollisionStay2D(Collision2D collision)
     {
-        isAgainstWall = WallCheck();
+        isGrounded = GroundedCheck();
+        isAgainstWallRight = WallCheckRight();
+
+        //if we didn't hit anything with our raycasts to the right, try left   
+        if (!isAgainstWallRight)
+        {
+            isAgainstWallLeft = WallCheckLeft();
+        }
     }
 
     //run checks when we exit collision with something
     void OnCollisionExit2D(Collision2D collision)
     {
-        isGrounded = GroundedCheck();
-        isAgainstWall = WallCheck();
+        isGrounded = false;
+        isAgainstWallRight = false;
+        isAgainstWallLeft = false;
     }
 
     private bool GroundedCheck()
@@ -39,7 +61,7 @@ public class CollisionManager : MonoBehaviour
         bool isGroundedCheck = false;
 
         //create 2D raycast fired directly down from player's centre just a tiny bit further than our player
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, raycastDistance);
         //if the raycast hits something
         if (hit.collider != null)
         {
@@ -49,8 +71,8 @@ public class CollisionManager : MonoBehaviour
         }
         else
         {
-            //fire a raycast from the left side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the left side
-            RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(transform.position.x - (p_collider.size.x * 0.4f), transform.position.y), -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
+            //fire a raycast from the left side of the player if the centre might not hit
+            RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(transform.position.x - raycastStartOffset, transform.position.y), -Vector2.up, raycastDistance);
 
             if (hitLeft.collider != null)
             {
@@ -60,8 +82,8 @@ public class CollisionManager : MonoBehaviour
             }
             else
             {
-                //fire a raycast from the right side of the player if the centre or left might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
-                RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(transform.position.x + (p_collider.size.x * 0.4f), transform.position.y), -Vector2.up, (p_collider.size.y * 0.5f) + 0.05f);
+                //fire a raycast from the right side of the player if the centre or left might not hit
+                RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(transform.position.x + raycastStartOffset, transform.position.y), -Vector2.up, raycastDistance);
 
                 if (hitRight.collider != null)
                 {
@@ -74,9 +96,91 @@ public class CollisionManager : MonoBehaviour
         return isGroundedCheck;
     }
 
-    private bool WallCheck()
+    private bool WallCheckRight()
     {
         bool isWallCheck = false;
+
+        //create 2D raycast fired directly right from player's centre just a tiny bit further than our player
+        RaycastHit2D grabRightHit = Physics2D.Raycast(transform.position, Vector2.right, raycastDistance);
+        //if the raycast hits something
+        if (grabRightHit.collider != null)
+        {
+            //print what the raycast hit to console and where the object is
+            Debug.Log("Grab raycast right from centre hit " + grabRightHit.collider.gameObject + " at " + grabRightHit.point);
+            isWallCheck = true;
+
+        }
+        else
+        {
+            //fire a raycast from the bottom side of the player if the centre might not hit
+            RaycastHit2D grabRightHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - raycastStartOffset), Vector2.right, raycastDistance);
+
+            if (grabRightHitBottom.collider != null)
+            {
+                //print what the raycast hit to console and where the object is
+                Debug.Log("Grab raycast right from bottom hit " + grabRightHitBottom.collider.gameObject + " at " + grabRightHitBottom.point);
+                isWallCheck = true;
+
+            }
+            else
+            {
+                //fire a raycast from the top side of the player if the centre or bottom might not hit
+                RaycastHit2D grabRightHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + raycastStartOffset), Vector2.right, raycastDistance);
+
+                if (grabRightHitTop.collider != null)
+                {
+                    //print what the raycast hit to console and where the object is
+                    Debug.Log("Grab raycast right from top hit " + grabRightHitTop.collider.gameObject + " at " + grabRightHitTop.point);
+                    isWallCheck = true;
+
+                }             
+            }
+        }
+
+        return isWallCheck;
+    }
+
+    private bool WallCheckLeft()
+    {
+        bool isWallCheck = false;
+
+            
+        //create 2D raycast fired directly left from player's centre just a tiny bit further than our player
+        RaycastHit2D grabLeftHit = Physics2D.Raycast(transform.position, -Vector2.right, raycastDistance);
+        //if the raycast hits something
+        if (grabLeftHit.collider != null)
+        {
+            //print what the raycast hit to console and where the object is
+            Debug.Log("Grab raycast left from centre hit " + grabLeftHit.collider.gameObject + " at " + grabLeftHit.point);
+            isWallCheck = true;
+
+        }
+        else
+        {
+            //fire a raycast from the bottom side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the bottom side
+            RaycastHit2D grabLeftHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - raycastStartOffset), -Vector2.right, raycastDistance);
+
+            if (grabLeftHitBottom.collider != null)
+            {
+                //print what the raycast hit to console and where the object is
+                Debug.Log("Grab raycast left from bottom hit " + grabLeftHitBottom.collider.gameObject + " at " + grabLeftHitBottom.point);
+                isWallCheck = true;
+
+            }
+            else
+            {
+                //fire a raycast from the top side of the player if the centre or bottom might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
+                RaycastHit2D grabLeftHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + raycastStartOffset), -Vector2.right, raycastDistance);
+
+                if (grabLeftHitTop.collider != null)
+                {
+                    //print what the raycast hit to console and where the object is
+                    Debug.Log("Grab raycast left top hit " + grabLeftHitTop.collider.gameObject + " at " + grabLeftHitTop.point);
+                    isWallCheck = true;
+
+                }
+            }
+        }
 
         return isWallCheck;
     }
