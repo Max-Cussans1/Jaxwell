@@ -30,7 +30,7 @@ public class EarthDash : MonoBehaviour
             pressedDashToEarth = false;
             forceApplied = false;
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad3) && playerstate.element != Elements.elements.earth)
+        if (Input.GetKeyDown(KeyCode.Keypad3) && playerstate.element != Elements.elements.earth)
         {
             pressedDashToEarth = true;
         }
