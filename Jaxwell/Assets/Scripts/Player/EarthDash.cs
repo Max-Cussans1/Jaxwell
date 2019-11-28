@@ -12,6 +12,7 @@ public class EarthDash : MonoBehaviour
 
     public static bool pressedDashToEarth = false;
     bool forceApplied;
+    bool earthDashEnded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,35 +34,50 @@ public class EarthDash : MonoBehaviour
         {
             pressedDashToEarth = true;
         }
+
+        //if we change element after dashing or we are grounded set gravity back to normal
+        if((playerstate.element != Elements.elements.earth && forceApplied) || CollisionManager.isGrounded)
+        {
+            earthDashEnded = true;
+        }
     }
 
     void FixedUpdate()
     {
         if(pressedDashToEarth && !forceApplied)
         {
-            DashToEarth(p_rigidbody);
+            DashToEarth(p_rigidbody, earthDashSpeed);
             forceApplied = true;
         }
-        
-        //set gravity back to normal if we're climbing or dashing
-        if(!pressedDashToEarth && !WallClimb.grabbing)
-        {
-            p_rigidbody.gravityScale = initialGravityScale;
-            p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+
+        if(earthDashEnded)
+        {            
+            HandleEarthDashEnd(p_rigidbody);
+            earthDashEnded = false;
         }
         
     }
 
-    void DashToEarth(Rigidbody2D rigidbody)
+    void DashToEarth(Rigidbody2D rigidbody, float speed)
     {
         //disable gravity
         rigidbody.gravityScale = 0;
-        //add a fall speed for when we're grabbing
+        //zero out x and y velocity
         rigidbody.velocity = new Vector2(0, 0);
 
-        //add a force for our
-        rigidbody.AddForce(new Vector2(0, -earthDashSpeed), ForceMode2D.Impulse);
-
+        //enable continuous collision because we might be going fast
         rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        //add a force for our downward dash
+        rigidbody.AddForce(new Vector2(0, -speed), ForceMode2D.Impulse);
+
+    }
+
+    void HandleEarthDashEnd(Rigidbody2D rigidbody)
+    {
+        //reset gravity
+        p_rigidbody.gravityScale = initialGravityScale;
+        //disable continuous collision because it's expensive
+        p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 }

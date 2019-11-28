@@ -110,14 +110,16 @@ public class DashScript : MonoBehaviour
         //set x velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, p_rigidbody.velocity.y);
         dashing = true;
+
+        //since we might be going fast enable continuous collision
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
         //add a force in the positive X direction to dash right
         rigidbody.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
 
         //Set on cooldown
         canDash = false;
 
-        //since we might be going fast enable continuous collision
-        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         //set gravity to 0 so short sharp dash in air
         rigidbody.gravityScale = 0;
 
@@ -131,14 +133,16 @@ public class DashScript : MonoBehaviour
         //set x velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
         dashing = true;
+
+        //since we might be going fast enable continuous collision
+        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
         //add a force in the positive X direction to dash right
         rigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse); 
 
         //Set on cooldown
         canDash = false;
 
-        //since we might be going fast enable continuous collision
-        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         //set gravity to 0 so short sharp dash in air
         rigidbody.gravityScale = 0;
 
