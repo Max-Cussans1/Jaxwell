@@ -21,7 +21,7 @@ public class Platform : Elements
         p_collider = GetComponent<BoxCollider2D>();
 
         //get player components
-        player = GameObject.Find("TestPlayer");
+        player = GameObject.Find("Player");
         playerstate = player.GetComponent<PlayerState>();
         player_collider = player.GetComponent<BoxCollider2D>();
 

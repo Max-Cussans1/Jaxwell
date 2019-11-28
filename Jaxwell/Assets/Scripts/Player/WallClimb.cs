@@ -7,12 +7,13 @@ public class WallClimb : MonoBehaviour
     Rigidbody2D p_rigidbody;
     PlayerState playerstate;
     float initialGravityScale;
+    EarthDash earthdash;
 
     [SerializeField] float grabbingFallSpeed = -0.1f;
     [SerializeField] float wallJumpHeight = 15.0f;
     [SerializeField] float wallJumpHorizontalForce = 3.0f;
 
-    bool grabbing = false;
+    public static bool grabbing = false;
     bool pressedWallJump = false;
 
     void Start()
@@ -25,7 +26,7 @@ public class WallClimb : MonoBehaviour
     void Update()
     {
         //if we're against a wall, not grounded, water type and we're not moving upwards
-        if((CollisionManager.isAgainstWallRight == true || CollisionManager.isAgainstWallLeft == true) && !CollisionManager.isGrounded && playerstate.element == Elements.elements.water && p_rigidbody.velocity.y < 0)
+        if((CollisionManager.isAgainstWallRight || CollisionManager.isAgainstWallLeft) && !CollisionManager.isGrounded && playerstate.element == Elements.elements.water && p_rigidbody.velocity.y < 0)
         {
             grabbing = true;
         }
@@ -47,11 +48,11 @@ public class WallClimb : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(grabbing == true)
+        if(grabbing)
         {
             Grab(p_rigidbody);
         }
-        if(grabbing == false)
+        if(!grabbing && !EarthDash.pressedDashToEarth)
         {
             //set initial gravity scale back since we removed it to have a smooth fall speed
             p_rigidbody.gravityScale = initialGravityScale;
