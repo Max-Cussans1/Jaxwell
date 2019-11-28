@@ -135,7 +135,7 @@ public class DashScript : MonoBehaviour
         dashing = true;
 
         //since we might be going fast enable continuous collision
-        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        //rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
         //add a force in the positive X direction to dash right
         rigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse); 
@@ -158,6 +158,6 @@ public class DashScript : MonoBehaviour
         //change the gravity scale back to the one we have in editor
         rigidbody.gravityScale = initialGravityScale;
         //set collision detection back from continuous since it's expensive
-        rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+        //rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 }
