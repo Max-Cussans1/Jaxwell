@@ -121,6 +121,24 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &73580590 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2930405940970940903, guid: df717aa74021de842b9d7cf6aa074f44,
+    type: 3}
+  m_PrefabInstance: {fileID: 2930405941029530339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &73580601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73580590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0d851582ab7a4240aca1ec1561a37b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &98010542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2004,11 +2022,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2930405940970940903, guid: df717aa74021de842b9d7cf6aa074f44,
-        type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 2930405940970940910, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2063,6 +2076,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940903, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: element
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: waterAcceleration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: waterDeceleration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940909, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: wallJumpHorizontalForce
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}
