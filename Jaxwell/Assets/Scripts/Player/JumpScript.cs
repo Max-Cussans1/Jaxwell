@@ -30,7 +30,7 @@ public class JumpScript : MonoBehaviour
         //get input in update (every frame)
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (CollisionManager.isGrounded == true)
+            if (CollisionManager.isGrounded == true && playerstate.element != Elements.elements.earth)
             {
                 pressedJump = true;
             }

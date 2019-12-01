@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MoveScript : MonoBehaviour
 {
-    [SerializeField] float maxSpeed = 3.0f;
-    [SerializeField] float acceleration = 0.3f;
-    [SerializeField] float deceleration = 0.3f;
+    public float maxSpeed = 3.0f;
+    public float acceleration = 0.3f;
+    public float deceleration = 0.3f;
 
     public enum directions { left,right};
     public directions direction = directions.right;
