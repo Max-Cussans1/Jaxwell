@@ -23,62 +23,79 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //manage input when we press fire
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Time.timeScale != 0)
         {
-            //if we aren't in fire already, dash
-            if(playerState.element != Elements.elements.fire)
+            //manage input when we press fire
+            if (Input.GetKeyDown(KeyCode.Keypad1))
             {
-                dashScript.pressedDash = true;
-            }
-            playerState.pressedFire = true;
-        }
-
-        //manage imput when we press water
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            playerState.pressedWater = true;
-        }
-
-        //manage input when we press earth
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            //if we aren't in earth already, earth dash
-            if (playerState.element != Elements.elements.earth)
-            {
-                EarthDash.pressedDashToEarth = true;
-            }
-
-            playerState.pressedEarth = true;
-        }
-
-        //manage input when we press air
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            if (playerState.element != Elements.elements.air)
-            {
-                if (!jumpScript.usedAirJump)
+                //if we aren't in fire already, dash
+                if (playerState.element != Elements.elements.fire && dashScript.canDash)
                 {
-                    jumpScript.pressedAirJump = true;
+                    dashScript.pressedDash = true;
+                }
+                playerState.pressedFire = true;
+            }
+
+            //manage imput when we press water
+            if (Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                playerState.pressedWater = true;
+            }
+
+            //manage input when we press earth
+            if (Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                //if we aren't in earth already, earth dash
+                if (playerState.element != Elements.elements.earth)
+                {
+                    EarthDash.pressedDashToEarth = true;
+                }
+
+                playerState.pressedEarth = true;
+            }
+
+            //manage input when we press air
+            if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                if (playerState.element != Elements.elements.air)
+                {
+                    if (!jumpScript.usedAirJump)
+                    {
+                        jumpScript.pressedAirJump = true;
+                    }
+                }
+
+                playerState.pressedAir = true;
+            }
+
+            //manage input when we press jump
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //if we're grounded and not earth form, jump
+                if (CollisionManager.isGrounded == true && playerState.element != Elements.elements.earth)
+                {
+                    jumpScript.pressedJump = true;
+                }
+
+                //if grabbing use walljump
+                if (WallClimb.grabbing)
+                {
+                    wallClimb.pressedWallJump = true;
                 }
             }
-
-            playerState.pressedAir = true;
         }
 
-        //manage input when we press jump
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //if we're grounded and not earth form, jump
-            if (CollisionManager.isGrounded == true && playerState.element != Elements.elements.earth)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {            
+            if(Time.timeScale == 1)
             {
-                jumpScript.pressedJump = true;
+                Debug.Log("Paused");
+                Time.timeScale = 0;
             }
-
-            //if grabbing use walljump
-            if (WallClimb.grabbing)
+            else if (Time.timeScale == 0)
             {
-                wallClimb.pressedWallJump = true;
+                Debug.Log("Unpaused");
+                Time.timeScale = 1;
             }
         }
     }

@@ -20,7 +20,7 @@ public class DashScript : MonoBehaviour
     bool pressedDashRight = false;
 
     public bool dashing = false;
-    bool canDash = true;
+    public bool canDash = true;
     bool dashJustEnded = false;
 
     public bool pressedDash = false;
@@ -40,24 +40,21 @@ public class DashScript : MonoBehaviour
         //input
         if (pressedDash)
         {
-            if (canDash)
+            //check which direction we're going from the movescript
+            switch (movescript.direction)
             {
-                //check which direction we're going from the movescript
-                switch (movescript.direction)
-                {
-                    case MoveScript.directions.left:
-                        pressedDashLeft = true;
-                        break;
+                case MoveScript.directions.left:
+                    pressedDashLeft = true;
+                    break;
 
-                    case MoveScript.directions.right:
-                        pressedDashRight = true;
-                        break;
+                case MoveScript.directions.right:
+                    pressedDashRight = true;
+                    break;
 
-                    default:
-                        pressedDashRight = true;
-                        break;
-                }
-            }
+                default:
+                    pressedDashRight = true;
+                    break;
+            }            
         }
 
         if (!canDash)
