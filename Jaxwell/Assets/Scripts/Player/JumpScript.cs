@@ -9,9 +9,9 @@ public class JumpScript : MonoBehaviour
     PlayerState playerstate;
     Rigidbody2D p_rigidbody;
 
-    bool pressedJump = false;
-    bool pressedAirJump = false;
-    bool usedAirJump = false;
+    public bool pressedAirJump = false;
+    public bool usedAirJump = false;
+    public bool pressedJump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,21 +26,6 @@ public class JumpScript : MonoBehaviour
         if(CollisionManager.isGrounded)
         {
             usedAirJump = false;
-        }
-        //get input in update (every frame)
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (CollisionManager.isGrounded == true && playerstate.element != Elements.elements.earth)
-            {
-                pressedJump = true;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.KeypadEnter) && playerstate.element != Elements.elements.air)
-        {
-            if (!usedAirJump)
-            {
-                pressedAirJump = true;
-            }
         }
     }
 

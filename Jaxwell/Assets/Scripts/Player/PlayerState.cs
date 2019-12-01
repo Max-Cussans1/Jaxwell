@@ -27,75 +27,83 @@ public class PlayerState : Elements
     MoveScript moveScript;
     SpriteRenderer p_spriteRenderer;
 
-    bool changedProperties = false;
+    public bool pressedFire = false;
+    public bool pressedWater = false;
+    public bool pressedEarth = false;
+    public bool pressedAir = false;
 
     void Start()
     {
         //temp solution changing colour until we get sprites/anims
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         moveScript = GetComponent<MoveScript>();
+
+        if (element == elements.fire)
+        {
+            ChangeMovementProperties(fireMaxSpeed, fireAcceleration, fireDeceleration);
+            p_spriteRenderer.color = Color.red;
+        }
+
+        if (element == elements.water)
+        {
+            ChangeMovementProperties(waterMaxSpeed, waterAcceleration, waterDeceleration);
+            p_spriteRenderer.color = Color.blue;
+        }
+
+        if (element == elements.earth)
+        {
+            ChangeMovementProperties(earthMaxSpeed, earthAcceleration, earthDeceleration);
+            p_spriteRenderer.color = Color.green;
+        }
+
+        if (element == elements.air)
+        {
+            ChangeMovementProperties(airMaxSpeed, airAcceleration, airDeceleration);
+            p_spriteRenderer.color = Color.gray;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (pressedFire)
         {
             element = elements.fire;
             Debug.Log("Enabled Fire");
-            changedProperties = false;
+            ChangeMovementProperties(fireMaxSpeed, fireAcceleration, fireDeceleration);
+            p_spriteRenderer.color = Color.red;
+            pressedFire = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad2))
+        if (pressedWater)
         {
             element = elements.water;
             Debug.Log("Enabled Water");
-            changedProperties = false;
+            ChangeMovementProperties(waterMaxSpeed, waterAcceleration, waterDeceleration);
+            p_spriteRenderer.color = Color.blue;
+            pressedWater = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad3))
+        if (pressedEarth)
         {
             element = elements.earth;
             Debug.Log("Enabled Earth");
-            changedProperties = false;
+            ChangeMovementProperties(earthMaxSpeed, earthAcceleration, earthDeceleration);
+            p_spriteRenderer.color = Color.green;
+            pressedEarth = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (pressedAir)
         {
             element = elements.air;
             Debug.Log("Enabled Air");
-            changedProperties = false;
-        }
-
-        if(element == elements.fire && !changedProperties)
-        {
-            ChangeMovementProperties(fireMaxSpeed, fireAcceleration, fireDeceleration);
-            p_spriteRenderer.color = Color.red;
-            changedProperties = true;
-        }
-
-        if (element == elements.water && !changedProperties)
-        {
-            ChangeMovementProperties(waterMaxSpeed, waterAcceleration, waterDeceleration);
-            p_spriteRenderer.color = Color.blue;
-            changedProperties = true;
-        }
-
-        if (element == elements.earth && !changedProperties)
-        {
-            ChangeMovementProperties(earthMaxSpeed, earthAcceleration, earthDeceleration);
-            p_spriteRenderer.color = Color.green;
-            changedProperties = true;
-        }
-
-        if (element == elements.air && !changedProperties)
-        {
             ChangeMovementProperties(airMaxSpeed, airAcceleration, airDeceleration);
             p_spriteRenderer.color = Color.gray;
-            changedProperties = true;
+            pressedAir = false;
         }
     }
 
+    //function to change properties
     void ChangeMovementProperties(float maxSpeed, float acceleration, float deceleration)
     {
         moveScript.maxSpeed = maxSpeed;

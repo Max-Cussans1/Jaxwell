@@ -23,6 +23,8 @@ public class DashScript : MonoBehaviour
     bool canDash = true;
     bool dashJustEnded = false;
 
+    public bool pressedDash = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +38,7 @@ public class DashScript : MonoBehaviour
     void Update()
     {
         //input
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (pressedDash)
         {
             if (canDash)
             {
@@ -89,12 +91,14 @@ public class DashScript : MonoBehaviour
         {
             DashLeft(p_rigidbody, dashSpeed);
             pressedDashLeft = false;
+            pressedDash = false;
         }
 
         if (pressedDashRight == true)
         {
             DashRight(p_rigidbody, dashSpeed);
             pressedDashRight = false;
+            pressedDash = false;
         }
 
         if (dashJustEnded)

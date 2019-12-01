@@ -30,10 +30,6 @@ public class EarthDash : MonoBehaviour
             pressedDashToEarth = false;
             forceApplied = false;
         }
-        if (Input.GetKeyDown(KeyCode.Keypad3) && playerstate.element != Elements.elements.earth)
-        {
-            pressedDashToEarth = true;
-        }
 
         //if we change element after dashing or we are grounded set gravity back to normal
         if((playerstate.element != Elements.elements.earth && forceApplied) || CollisionManager.isGrounded)

@@ -14,7 +14,7 @@ public class WallClimb : MonoBehaviour
     [SerializeField] float wallJumpHorizontalForce = 3.0f;
 
     public static bool grabbing = false;
-    bool pressedWallJump = false;
+    public bool pressedWallJump = false;
 
     void Start()
     {
@@ -33,17 +33,7 @@ public class WallClimb : MonoBehaviour
         else
         {
             grabbing = false;
-        }
-
-        //if we press jump while we're grabbing a wall, wall jump
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if(grabbing)
-            {
-                pressedWallJump = true;
-            }
-        }
-            
+        }          
     }
 
     void FixedUpdate()
