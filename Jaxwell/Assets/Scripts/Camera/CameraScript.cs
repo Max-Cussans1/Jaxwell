@@ -7,13 +7,40 @@ public class CameraScript : MonoBehaviour
 
     //add the player to the script in editor
     public Transform player;
+    Camera camera;
+    public float orthographicCameraSizeOnToggle = 25.0f;
+    private float originalOrthographicCameraSize;
+
+    bool cameraSizeToggled = false;
 
     //change as needed
     public float height = -10.0f;
+
+    void Start()
+    {
+        camera = this.GetComponent<Camera>();
+        originalOrthographicCameraSize = camera.orthographicSize;
+    }
 
     void Update()
     {
         //changes camera position to be above the player poition (added in editor) in the z axis
         transform.position = new Vector3(player.position.x, player.position.y, height);
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            if (!cameraSizeToggled)
+            {
+                camera.orthographicSize = orthographicCameraSizeOnToggle;
+                Debug.Log("Camera size toggled to " + orthographicCameraSizeOnToggle);
+                cameraSizeToggled = true;
+            }
+            else
+            {
+                camera.orthographicSize = originalOrthographicCameraSize;
+                Debug.Log("Camera size toggled to " + originalOrthographicCameraSize);
+                cameraSizeToggled = false;
+            }
+        }
     }
 }

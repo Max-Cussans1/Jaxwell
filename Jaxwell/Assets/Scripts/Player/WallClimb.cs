@@ -7,7 +7,7 @@ public class WallClimb : MonoBehaviour
     Rigidbody2D p_rigidbody;
     PlayerState playerstate;
     float initialGravityScale;
-    EarthDash earthdash;
+    DashScript dashScript;
 
     [SerializeField] float grabbingFallSpeed = -0.1f;
     [SerializeField] float wallJumpHeight = 15.0f;
@@ -20,6 +20,7 @@ public class WallClimb : MonoBehaviour
     {
         p_rigidbody = GetComponent<Rigidbody2D>();
         playerstate = GetComponent<PlayerState>();
+        dashScript = GetComponent<DashScript>();
         initialGravityScale = p_rigidbody.gravityScale;
     }
 
@@ -42,7 +43,7 @@ public class WallClimb : MonoBehaviour
         {
             Grab(p_rigidbody);
         }
-        if(!grabbing && !EarthDash.pressedDashToEarth)
+        if(!grabbing && !EarthDash.pressedDashToEarth && !dashScript.dashing && p_rigidbody.gravityScale != initialGravityScale)
         {
             //set initial gravity scale back since we removed it to have a smooth fall speed
             p_rigidbody.gravityScale = initialGravityScale;
