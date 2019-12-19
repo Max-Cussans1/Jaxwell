@@ -13,11 +13,15 @@ public class WallClimb : MonoBehaviour
     [SerializeField] float grabbingFallSpeed = -0.1f;
     [SerializeField] float wallJumpHeight = 15.0f;
     [SerializeField] float wallJumpHorizontalForce = 3.0f;
+    [SerializeField] float timeToIgnoreDecelerationForWallJump = 0.5f;
 
     public static bool grabbing = false;
     public bool pressedWallJump = false;
+    
 
     float tempTimeToWaitBeforeSliding;
+    float temptimeToIgnoreDecelerationForWallJump;
+    public static bool ignoreDecelerationForWallJump = false;
 
     void Start()
     {
@@ -26,6 +30,7 @@ public class WallClimb : MonoBehaviour
         dashScript = GetComponent<DashScript>();
         initialGravityScale = p_rigidbody.gravityScale;
         tempTimeToWaitBeforeSliding = timeToWaitBeforeSliding;
+        temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;
     }
 
     void Update()
@@ -50,6 +55,16 @@ public class WallClimb : MonoBehaviour
                 Debug.Log("Wall grab hang time reset");
             }
         }          
+
+        if(ignoreDecelerationForWallJump)
+        {
+            temptimeToIgnoreDecelerationForWallJump -= Time.deltaTime;
+            if(temptimeToIgnoreDecelerationForWallJump <= 0)
+            {
+                ignoreDecelerationForWallJump = false;
+                temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -104,5 +119,6 @@ public class WallClimb : MonoBehaviour
         //add a force in x and y direction to jump off the wall
         rigidbody.AddForce(new Vector2(wallJumpHorizontalForce * direction, wallJumpHeight), ForceMode2D.Impulse);
         Debug.Log(rigidbody + " wall jumped " + direction + "with a horizontal force of " + wallJumpHorizontalForce + "and vertical force of " + wallJumpHeight);
+        ignoreDecelerationForWallJump = true;
     }
 }

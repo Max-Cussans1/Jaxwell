@@ -64,7 +64,7 @@ public class MoveScript : MonoBehaviour
             AccelerateLeft(p_rigidbody, acceleration, maxSpeed);
         }
 
-        if(!acceleratingRight && !acceleratingLeft && !dashScript.dashing)
+        if(!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
         {
             Decelerate(p_rigidbody, deceleration);
         }
