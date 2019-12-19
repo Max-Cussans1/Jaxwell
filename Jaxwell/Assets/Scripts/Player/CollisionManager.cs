@@ -7,9 +7,16 @@ public class CollisionManager : MonoBehaviour
     public static bool isGrounded = false;
     public static bool isAgainstWallLeft = false;
     public static bool isAgainstWallRight = false;
+    JumpScript jumpScript;
+
+    [SerializeField] float coyoteTime = 0.1f;
 
     float raycastStartOffset;
     float raycastDistance;
+
+    float tempCoyoteTime;
+    bool coyoteTimeActive = false;
+    public static bool jumped = false;
 
     BoxCollider2D p_collider;
 
@@ -20,12 +27,47 @@ public class CollisionManager : MonoBehaviour
         raycastStartOffset = p_collider.size.y * 0.4f;
         //the distance the raycast will travel (just further than the collider)
         raycastDistance = (p_collider.size.y * 0.5f) +0.05f;
+
+        tempCoyoteTime = coyoteTime;
+    }
+
+    void Update()
+    {
+        if (coyoteTimeActive)
+        {
+            Debug.Log("Coyote time is active");
+            isGrounded = true;
+
+            //start counting down our coyote time
+            tempCoyoteTime -= Time.deltaTime;
+            if(tempCoyoteTime <= 0)
+            {
+                Debug.Log("Coyote time ended");
+                coyoteTimeActive = false;
+                //set isGrounded to false when coyote time is over
+                isGrounded = false;
+                //reset coyote time
+                tempCoyoteTime = coyoteTime;
+            }
+
+            //if we jump disable coyote time straight away
+            if (jumped)
+            {
+                Debug.Log("Coyote time no longer active because we jumped during coyote time");
+                coyoteTimeActive = false;
+                //set isGrounded to false when coyote time is over
+                isGrounded = false;
+                //reset coyote time
+                tempCoyoteTime = coyoteTime;
+                jumped = false;
+            }
+        }
+
     }
 
     //run checks when we collide with something
     void OnCollisionEnter2D(Collision2D collision)
-    {
-        isGrounded = GroundedCheck();
+    {        
         isAgainstWallRight = WallCheckRight();
 
         //if we didn't hit anything with our raycasts to the right, try left   
@@ -33,12 +75,12 @@ public class CollisionManager : MonoBehaviour
         {
             isAgainstWallLeft = WallCheckLeft();
         }
+        isGrounded = GroundedCheck();
     }
 
     //run wallcheck when we stay colliding with something
     void OnCollisionStay2D(Collision2D collision)
     {
-        isGrounded = GroundedCheck();
         isAgainstWallRight = WallCheckRight();
 
         //if we didn't hit anything with our raycasts to the right, try left   
@@ -46,6 +88,8 @@ public class CollisionManager : MonoBehaviour
         {
             isAgainstWallLeft = WallCheckLeft();
         }
+
+        isGrounded = GroundedCheck();
     }
 
     //run checks when we exit collision with something
@@ -54,6 +98,7 @@ public class CollisionManager : MonoBehaviour
         isGrounded = false;
         isAgainstWallRight = false;
         isAgainstWallLeft = false;
+        
     }
 
     private bool GroundedCheck()
@@ -92,6 +137,12 @@ public class CollisionManager : MonoBehaviour
                     isGroundedCheck = true;
                 }
             }
+        }
+        //if we're not grounded or against any walls after doing a ground check enable coyote time
+        if(!isGroundedCheck && !isAgainstWallLeft && !isAgainstWallRight)
+        {
+            Debug.Log("Raycasts to check if we're grounded from " + p_collider.gameObject + " didn't hit anything, enabling coyote time");
+            coyoteTimeActive = true;
         }
         return isGroundedCheck;
     }

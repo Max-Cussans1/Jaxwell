@@ -75,6 +75,7 @@ public class InputManager : MonoBehaviour
                 if (CollisionManager.isGrounded == true && playerState.element != Elements.elements.earth)
                 {
                     jumpScript.pressedJump = true;
+                    CollisionManager.jumped = true;
                 }
 
                 //if grabbing use walljump

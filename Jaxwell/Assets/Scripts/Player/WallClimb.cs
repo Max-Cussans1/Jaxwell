@@ -58,9 +58,11 @@ public class WallClimb : MonoBehaviour
 
         if(ignoreDecelerationForWallJump)
         {
+            Debug.Log("Ignore deceleration for wall jump");
             temptimeToIgnoreDecelerationForWallJump -= Time.deltaTime;
             if(temptimeToIgnoreDecelerationForWallJump <= 0)
             {
+                Debug.Log("Stopped ignoring deceleration for wall jump");
                 ignoreDecelerationForWallJump = false;
                 temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;
             }
@@ -116,9 +118,13 @@ public class WallClimb : MonoBehaviour
 
     void WallJump(Rigidbody2D rigidbody, int direction)
     {
+        rigidbody.velocity = new Vector2(0, 0);
         //add a force in x and y direction to jump off the wall
         rigidbody.AddForce(new Vector2(wallJumpHorizontalForce * direction, wallJumpHeight), ForceMode2D.Impulse);
         Debug.Log(rigidbody + " wall jumped " + direction + "with a horizontal force of " + wallJumpHorizontalForce + "and vertical force of " + wallJumpHeight);
+
+        //reset the timer for ignoring deceleration if it's not yet over
+        temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;
         ignoreDecelerationForWallJump = true;
     }
 }
