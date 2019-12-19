@@ -61,19 +61,13 @@ public class EarthDash : MonoBehaviour
         //zero out x and y velocity
         rigidbody.velocity = new Vector2(0, 0);
 
-        //enable continuous collision because we might be going fast
-        //rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-
         //add a force for our downward dash
         rigidbody.AddForce(new Vector2(0, -speed), ForceMode2D.Impulse);
-
     }
 
     void HandleEarthDashEnd(Rigidbody2D rigidbody)
     {
         //reset gravity
         p_rigidbody.gravityScale = initialGravityScale;
-        //disable continuous collision because it's expensive
-        //p_rigidbody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 }
