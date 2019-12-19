@@ -6350,12 +6350,12 @@ PrefabInstance:
     - target: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: waterAcceleration
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: waterDeceleration
-      value: 0.8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
@@ -6450,7 +6450,7 @@ PrefabInstance:
     - target: {fileID: 2930405940970940904, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: jumpHeight
-      value: 47.5
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 2930405940970940904, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
