@@ -9,6 +9,7 @@ public class WallClimb : MonoBehaviour
     float initialGravityScale;
     DashScript dashScript;
 
+    [SerializeField] float timeToWaitBeforeSliding = 0.5f;
     [SerializeField] float grabbingFallSpeed = -0.1f;
     [SerializeField] float wallJumpHeight = 15.0f;
     [SerializeField] float wallJumpHorizontalForce = 3.0f;
@@ -16,24 +17,38 @@ public class WallClimb : MonoBehaviour
     public static bool grabbing = false;
     public bool pressedWallJump = false;
 
+    float tempTimeToWaitBeforeSliding;
+
     void Start()
     {
         p_rigidbody = GetComponent<Rigidbody2D>();
         playerstate = GetComponent<PlayerState>();
         dashScript = GetComponent<DashScript>();
         initialGravityScale = p_rigidbody.gravityScale;
+        tempTimeToWaitBeforeSliding = timeToWaitBeforeSliding;
     }
 
     void Update()
     {
-        //if we're against a wall, not grounded, water type and we're not moving upwards
-        if((CollisionManager.isAgainstWallRight || CollisionManager.isAgainstWallLeft) && !CollisionManager.isGrounded && playerstate.element == Elements.elements.water && p_rigidbody.velocity.y < 0)
+        //if we're against a wall, not grounded, water type
+        if((CollisionManager.isAgainstWallRight || CollisionManager.isAgainstWallLeft) && !CollisionManager.isGrounded && playerstate.element == Elements.elements.water)
         {
             grabbing = true;
+            if (tempTimeToWaitBeforeSliding > 0)
+            {
+                //count down to slide
+                tempTimeToWaitBeforeSliding -= Time.deltaTime;
+            }
         }
         else
         {
             grabbing = false;
+            //reset the timer to start sliding
+            if (tempTimeToWaitBeforeSliding != timeToWaitBeforeSliding)
+            {                
+                tempTimeToWaitBeforeSliding = timeToWaitBeforeSliding;
+                Debug.Log("Wall grab hang time reset");
+            }
         }          
     }
 
@@ -68,15 +83,26 @@ public class WallClimb : MonoBehaviour
 
     void Grab(Rigidbody2D rigidbody)
     {
-        //disable gravity
-        rigidbody.gravityScale = 0;
-        //add a fall speed for when we're grabbing
-        rigidbody.velocity = new Vector2(rigidbody.velocity.x, grabbingFallSpeed);
+        //stop the y movement to stick to the wall and disable gravity so we don't fall - only do this if we're moving downwards so we can jump against walls still
+        if (rigidbody.velocity.y < 0)
+        {
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, 0);
+            Debug.Log(rigidbody + " stopped Y movement for water wall grabbing");
+            rigidbody.gravityScale = 0;
+            Debug.Log(rigidbody + " disabled gravity for water wall grabbing");
+        }        
+        if (tempTimeToWaitBeforeSliding <= 0)
+        {            
+            //add a fall speed for when we're grabbing
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, grabbingFallSpeed);
+            Debug.Log(rigidbody + " wall grab hang time has ended, falling with grabbing fall speed " + grabbingFallSpeed);
+        }
     }
 
     void WallJump(Rigidbody2D rigidbody, int direction)
     {
         //add a force in x and y direction to jump off the wall
         rigidbody.AddForce(new Vector2(wallJumpHorizontalForce * direction, wallJumpHeight), ForceMode2D.Impulse);
+        Debug.Log(rigidbody + " wall jumped " + direction + "with a horizontal force of " + wallJumpHorizontalForce + "and vertical force of " + wallJumpHeight);
     }
 }
