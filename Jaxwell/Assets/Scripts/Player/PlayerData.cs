@@ -14,8 +14,8 @@ public class PlayerData
         element = (int)player.element;
         //populate the position array with our player's position
         position = new float[3];
-        position[0] = player.transform.position.x;
-        position[1] = player.transform.position.y;
-        position[2] = player.transform.position.z;
+        position[0] = player.currentCheckpoint.x;
+        position[1] = player.currentCheckpoint.y;
+        position[2] = player.currentCheckpoint.z;
     }
 }

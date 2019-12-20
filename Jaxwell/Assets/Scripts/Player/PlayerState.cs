@@ -32,15 +32,16 @@ public class PlayerState : Elements
     public bool pressedEarth = false;
     public bool pressedAir = false;
 
-    [SerializeField] float timeToSave = 10.0f;
-    float tempTimeToSave;
+    public Vector3 currentCheckpoint;
 
     void Start()
     {
-        Load();
+        currentCheckpoint = transform.position;
         //temp solution changing colour until we get sprites/anims
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         moveScript = GetComponent<MoveScript>();
+
+        Load();
 
         if (element == elements.fire)
         {
@@ -66,7 +67,6 @@ public class PlayerState : Elements
             p_spriteRenderer.color = Color.gray;
         }
 
-        tempTimeToSave = timeToSave;
     }
 
     // Update is called once per frame
@@ -107,18 +107,6 @@ public class PlayerState : Elements
             p_spriteRenderer.color = Color.gray;
             pressedAir = false;
         }
-
-        //save every timeToSave seconds
-        if(tempTimeToSave > 0)
-        {
-            tempTimeToSave -= Time.deltaTime;
-            if(tempTimeToSave < 0)
-            {
-                Save();
-                Debug.Log("Game Saved");
-                tempTimeToSave = timeToSave;
-            }
-        }
     }
 
     //function to change properties
@@ -129,7 +117,7 @@ public class PlayerState : Elements
         moveScript.deceleration = deceleration;
     }
 
-    void Save()
+    public void Save()
     {
         SaveSystem.Save(this);
     }
@@ -142,7 +130,8 @@ public class PlayerState : Elements
         if (SaveSystem.Load() != null)
         {
             element = (elements)data.element;
-            Vector3 position;
+
+            Vector3 position = currentCheckpoint;
             position.x = data.position[0];
             position.y = data.position[1];
             position.z = data.position[2];

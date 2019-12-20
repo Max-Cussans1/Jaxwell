@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    PlayerScript player;
+    PlayerState player;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerScript>();        
+        player = FindObjectOfType<PlayerState>();        
     }
 
     
@@ -22,6 +22,7 @@ public class Checkpoint : MonoBehaviour
             {                
                 player.currentCheckpoint = transform.position;
                 Debug.Log("New checkpoint at " + transform.position);
+                player.Save();
             }
         }
     }
