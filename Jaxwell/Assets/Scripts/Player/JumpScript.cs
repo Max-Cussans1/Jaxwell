@@ -12,6 +12,9 @@ public class JumpScript : MonoBehaviour
     public bool pressedAirJump = false;
     public bool usedAirJump = false;
     public bool pressedJump = false;
+    public bool pressedPreJump = false;
+
+    bool preJump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,22 +26,41 @@ public class JumpScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(CollisionManager.isGrounded)
+        if(CollisionManager.isGrounded && usedAirJump)
         {
             usedAirJump = false;
+        }
+
+        if(CollisionManager.isGrounded && pressedPreJump)
+        {
+            preJump = true;
         }
     }
 
     void FixedUpdate()
     {
         //call our jump function in fixedupdate so it's consistent across machines
-        if (pressedJump)
+        if (preJump)
         {
+            Debug.Log("Jumping from pre-jump");
             Jump(jumpHeight);
+            pressedPreJump = false;
+            preJump = false;
             pressedJump = false;
+            CollisionManager.jumped = true;
         }
 
-        if(pressedAirJump)
+        //call our jump function in fixedupdate so it's consistent across machines
+        if (pressedJump)
+        {
+            Debug.Log("Jumping from a normal jump");
+            Jump(jumpHeight);
+            pressedJump = false;
+            CollisionManager.jumped = true;
+        }
+
+        //call our jump function in fixedupdate so it's consistent across machines
+        if (pressedAirJump)
         {
             Jump(jumpHeight);
             usedAirJump = true;

@@ -74,14 +74,19 @@ public class InputManager : MonoBehaviour
                 //if we're grounded and not earth form, jump
                 if (CollisionManager.isGrounded == true && playerState.element != Elements.elements.earth)
                 {
-                    jumpScript.pressedJump = true;
-                    CollisionManager.jumped = true;
+                    jumpScript.pressedJump = true;                    
                 }
 
                 //if grabbing use walljump
                 if (WallClimb.grabbing)
                 {
                     wallClimb.pressedWallJump = true;
+                }
+
+                //if we're in pre-jump range (about to land)
+                if(CollisionManager.preJump)
+                {
+                    jumpScript.pressedPreJump = true;
                 }
             }
         }

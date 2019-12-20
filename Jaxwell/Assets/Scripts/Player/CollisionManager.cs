@@ -10,23 +10,30 @@ public class CollisionManager : MonoBehaviour
     JumpScript jumpScript;
 
     [SerializeField] float coyoteTime = 0.1f;
+    [SerializeField] float preJumpDistanceModifier = 5.0f;
+    [SerializeField] bool drawPreJumpRaycastDebug = false;
 
     float raycastStartOffset;
     float raycastDistance;
+    float preJumpRaycastDistance;
 
     float tempCoyoteTime;
     bool coyoteTimeActive = false;
     public static bool jumped = false;
+    public static bool preJump = false;
 
     BoxCollider2D p_collider;
+    Rigidbody2D p_rigidbody;
 
     void Start()
     {
         p_collider = GetComponent<BoxCollider2D>();
+        p_rigidbody = GetComponent<Rigidbody2D>();
         //the distance from centre of the collider we will check left/right and top/bottom
         raycastStartOffset = p_collider.size.y * 0.4f;
         //the distance the raycast will travel (just further than the collider)
         raycastDistance = (p_collider.size.y * 0.5f) +0.05f;
+        preJumpRaycastDistance = raycastDistance * preJumpDistanceModifier;
 
         tempCoyoteTime = coyoteTime;
     }
@@ -63,6 +70,16 @@ public class CollisionManager : MonoBehaviour
             }
         }
 
+        //when we're falling check if we can pre-jump
+        if(p_rigidbody.velocity.y < 0 && !WallClimb.grabbing)
+        {
+            preJump = PreJumpCheck();
+        }
+        else
+        {
+            preJump = false;
+        }
+
     }
 
     //run checks when we collide with something
@@ -97,8 +114,7 @@ public class CollisionManager : MonoBehaviour
     {
         isGrounded = false;
         isAgainstWallRight = false;
-        isAgainstWallLeft = false;
-        
+        isAgainstWallLeft = false;        
     }
 
     private bool GroundedCheck()
@@ -145,6 +161,63 @@ public class CollisionManager : MonoBehaviour
             coyoteTimeActive = true;
         }
         return isGroundedCheck;
+    }
+
+    //function to check if player pressed jump just before landing
+    private bool PreJumpCheck()
+    {
+        bool shouldJump = false;
+
+        //create 2D raycast fired directly down from player's centre just a tiny bit further than our player
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, preJumpRaycastDistance);
+
+        if (drawPreJumpRaycastDebug)
+        {
+            Debug.DrawRay(transform.position, -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
+        }
+        //if the raycast hits something
+        if (hit.collider != null)
+        {
+            //print what the raycast hit to console and where the object is
+            Debug.Log("Raycast to check if we can pre-jump " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
+            shouldJump = true;
+        }
+        else
+        {
+            //fire a raycast from the left side of the player if the centre might not hit
+            RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(transform.position.x - raycastStartOffset, transform.position.y), -Vector2.up, preJumpRaycastDistance);
+
+            if (drawPreJumpRaycastDebug)
+            {
+                Debug.DrawRay(new Vector2(transform.position.x - raycastStartOffset, transform.position.y), -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
+            }
+
+            if (hitLeft.collider != null)
+            {
+                //print what the raycast hit to console and where the object is
+                Debug.Log("Left raycast to check if we can pre-jump " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
+                shouldJump = true;
+            }
+            else
+            {
+                //fire a raycast from the right side of the player if the centre or left might not hit
+                RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(transform.position.x + raycastStartOffset, transform.position.y), -Vector2.up, preJumpRaycastDistance);
+
+                if (drawPreJumpRaycastDebug)
+                {
+                    Debug.DrawRay(new Vector2(transform.position.x + raycastStartOffset, transform.position.y), -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
+                }
+
+                if (hitRight.collider != null)
+                {
+                    //print what the raycast hit to console and where the object is
+                    Debug.Log("Right raycast to check if we can pre-jump from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
+                    shouldJump = true;
+                }
+            }
+        }
+
+        return shouldJump;
     }
 
     private bool WallCheckRight()
