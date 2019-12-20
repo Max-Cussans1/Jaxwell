@@ -125,18 +125,17 @@ public class PlayerState : Elements
     void Load()
     {
         PlayerData data = SaveSystem.Load();
-
+        //temp initialization
+        Vector3 position = currentCheckpoint;
         //if we have a save file
         if (SaveSystem.Load() != null)
         {
             element = (elements)data.element;
 
-            Vector3 position = currentCheckpoint;
             position.x = data.position[0];
             position.y = data.position[1];
             position.z = data.position[2];
-
-            transform.position = position;
         }
+        transform.position = position;
     }
 }

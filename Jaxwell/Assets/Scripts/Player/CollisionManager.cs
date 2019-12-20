@@ -24,11 +24,13 @@ public class CollisionManager : MonoBehaviour
 
     BoxCollider2D p_collider;
     Rigidbody2D p_rigidbody;
+    PlayerState playerState;
 
     void Start()
     {
         p_collider = GetComponent<BoxCollider2D>();
         p_rigidbody = GetComponent<Rigidbody2D>();
+        playerState = GetComponent<PlayerState>();
         //the distance from centre of the collider we will check left/right and top/bottom
         raycastStartOffset = p_collider.size.y * 0.4f;
         //the distance the raycast will travel (just further than the collider)
@@ -71,11 +73,12 @@ public class CollisionManager : MonoBehaviour
         }
 
         //when we're falling check if we can pre-jump
-        if(p_rigidbody.velocity.y < 0 && !WallClimb.grabbing)
+        if(p_rigidbody.velocity.y < 0 && !WallClimb.grabbing && playerState.element != Elements.elements.earth)
         {
             preJump = PreJumpCheck();
         }
-        else
+        
+        if(isGrounded || playerState.element == Elements.elements.earth)
         {
             preJump = false;
         }
