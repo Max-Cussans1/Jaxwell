@@ -6553,12 +6553,12 @@ PrefabInstance:
     - target: {fileID: 2930405940970940909, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: wallJumpHorizontalForce
-      value: 40
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2930405940970940909, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: wallJumpHeight
-      value: 40
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2930405940970940909, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
