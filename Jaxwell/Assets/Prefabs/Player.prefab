@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 2930405940970940911}
   - component: {fileID: 2930405940970940909}
   - component: {fileID: 2930405940970940908}
+  - component: {fileID: 73580602}
+  - component: {fileID: 73580601}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -35,7 +37,7 @@ Transform:
   m_GameObject: {fileID: 2930405940970940903}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.63, y: -5.61, z: -1.4941406}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.032, y: 0.032, z: 0.32}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,10 +54,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 1
   m_AngularDrag: 0
-  m_GravityScale: 4
+  m_GravityScale: 5
   m_Material: {fileID: 6200000, guid: cbdbcd6c9b4a54e4ebcf52c9b0594ac3, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -100,12 +102,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 540edc1018c282449a86fb1fede84e44, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -4150249582323590683, guid: a582465626efae54ba580bd498e28468,
+    type: 3}
+  m_Color: {r: 1, g: 0.995283, b: 0.995283, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.65, y: 0.65}
+  m_Size: {x: 32, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -127,9 +130,9 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.65, y: 0.65}
-    newSize: {x: 0.65, y: 0.65}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 32, y: 32}
+    newSize: {x: 32, y: 32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -165,6 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c0a18d4710bd1498d6d46b3c1c6f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coyoteTime: 0.1
+  preJumpDistanceModifier: 3
+  drawPreJumpRaycastDebug: 0
 --- !u!114 &2930405940970940907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,10 +183,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82379f34494487243ad49544349712c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 30
-  dashCooldown: 2
-  dashDuration: 0.1
+  dashSpeed: 70
+  dashCooldown: 0
+  dashDuration: 0.3
   dashing: 0
+  canDash: 0
+  pressedDash: 0
 --- !u!114 &2930405940970940904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81f26dea2976e04ca4313bab377bc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 15
+  jumpHeight: 45
+  pressedAirJump: 0
+  usedAirJump: 0
+  pressedJump: 0
+  pressedPreJump: 0
 --- !u!114 &2930405940970940911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +218,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c969c3554eea18d4a9f3e199aee900d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: 3
+  element: 1
+  fireMaxSpeed: 10
+  fireAcceleration: 0.7
+  fireDeceleration: 0.8
+  waterMaxSpeed: 10
+  waterAcceleration: 1
+  waterDeceleration: 9
+  earthMaxSpeed: 5
+  earthAcceleration: 0.4
+  earthDeceleration: 0.2
+  airMaxSpeed: 10
+  airAcceleration: 0.7
+  airDeceleration: 0.85
+  pressedFire: 0
+  pressedWater: 0
+  pressedEarth: 0
+  pressedAir: 0
+  currentCheckpoint: {x: 0, y: 0, z: 0}
 --- !u!114 &2930405940970940909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,9 +248,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f434c21d56f6e8498a3ed1421a1e873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabbingFallSpeed: -0.5
-  wallJumpHeight: 15
-  wallJumpHorizontalForce: 3
+  timeToWaitBeforeSliding: 0.5
+  grabbingFallSpeed: -0.7
+  wallJumpHeight: 20
+  wallJumpHorizontalForce: 25
+  timeToIgnoreDecelerationForWallJump: 0.5
+  pressedWallJump: 0
 --- !u!114 &2930405940970940908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,4 +266,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c65bdb495de20c43abd4df750791e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  earthDashSpeed: 20
+  earthDashSpeed: 30
+--- !u!95 &73580602
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2930405940970940903}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cd8a9c87a55dce24ba34651a6068596d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &73580601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2930405940970940903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0d851582ab7a4240aca1ec1561a37b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
