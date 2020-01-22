@@ -15,7 +15,7 @@ MonoBehaviour:
   _animationNamesThatDoNotLoop:
   - death
   _automaticImporting: 0
-  _spritePixelsPerUnit: 0.32
+  _spritePixelsPerUnit: 100
   _targetObjectType: 0
   _spriteAlignment: 7
   _spriteAlignmentCustomX: 0
