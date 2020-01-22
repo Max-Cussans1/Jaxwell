@@ -12,10 +12,13 @@ public class CollisionManager : MonoBehaviour
     [SerializeField] float coyoteTime = 0.1f;
     [SerializeField] float preJumpDistanceModifier = 5.0f;
     [SerializeField] bool drawPreJumpRaycastDebug = false;
+    [SerializeField] bool drawGroundedRaycastDebug = false;
+    [SerializeField] bool drawWallCheckRaycastDebug = false;
 
     float raycastStartOffset;
     float raycastDistance;
     float preJumpRaycastDistance;
+    Vector2 raycastStartPoint;
 
     float tempCoyoteTime;
     bool coyoteTimeActive = false;
@@ -124,8 +127,18 @@ public class CollisionManager : MonoBehaviour
     {
         bool isGroundedCheck = false;
 
+        //make sure the raycast start point take into account the offset
+        raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y);
+
         //create 2D raycast fired directly down from player's centre just a tiny bit further than our player
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, raycastDistance);
+        RaycastHit2D hit = Physics2D.Raycast(raycastStartPoint, -Vector2.up, raycastDistance);
+
+        if (drawGroundedRaycastDebug)
+        {
+            //draw ray to check debug for grounded check
+            Debug.DrawRay(raycastStartPoint, -Vector2.up * raycastDistance, Color.red, 0.0f);
+        }
+
         //if the raycast hits something
         if (hit.collider != null)
         {
@@ -135,8 +148,17 @@ public class CollisionManager : MonoBehaviour
         }
         else
         {
+            //make sure the raycast start point take into account the offset
+            raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x - raycastStartOffset, transform.position.y + p_collider.offset.y);
+
             //fire a raycast from the left side of the player if the centre might not hit
-            RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(transform.position.x - raycastStartOffset, transform.position.y), -Vector2.up, raycastDistance);
+            RaycastHit2D hitLeft = Physics2D.Raycast(raycastStartPoint, -Vector2.up, raycastDistance);
+
+            if (drawGroundedRaycastDebug)
+            {
+                //draw ray to check debug for grounded check
+                Debug.DrawRay(raycastStartPoint, -Vector2.up * raycastDistance, Color.red, 0.0f);
+            }
 
             if (hitLeft.collider != null)
             {
@@ -146,8 +168,17 @@ public class CollisionManager : MonoBehaviour
             }
             else
             {
+                raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x + raycastStartOffset, transform.position.y + p_collider.offset.y);
+
+
                 //fire a raycast from the right side of the player if the centre or left might not hit
-                RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(transform.position.x + raycastStartOffset, transform.position.y), -Vector2.up, raycastDistance);
+                RaycastHit2D hitRight = Physics2D.Raycast(raycastStartPoint, -Vector2.up, raycastDistance);
+
+                if (drawGroundedRaycastDebug)
+                {
+                    //draw ray to check debug for grounded check
+                    Debug.DrawRay(raycastStartPoint, -Vector2.up * raycastDistance, Color.red, 0.0f);
+                }
 
                 if (hitRight.collider != null)
                 {
@@ -171,12 +202,15 @@ public class CollisionManager : MonoBehaviour
     {
         bool shouldJump = false;
 
+        //make sure the raycast start point take into account the offset
+        raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y);
+
         //create 2D raycast fired directly down from player's centre just a tiny bit further than our player
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, preJumpRaycastDistance);
+        RaycastHit2D hit = Physics2D.Raycast(raycastStartPoint, -Vector2.up, preJumpRaycastDistance);
 
         if (drawPreJumpRaycastDebug)
         {
-            Debug.DrawRay(transform.position, -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
+            Debug.DrawRay(raycastStartPoint, -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
         }
         //if the raycast hits something
         if (hit.collider != null)
@@ -187,12 +221,15 @@ public class CollisionManager : MonoBehaviour
         }
         else
         {
+            //make sure the raycast start point take into account the offset
+            raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x - raycastStartOffset, transform.position.y + p_collider.offset.y);
+
             //fire a raycast from the left side of the player if the centre might not hit
-            RaycastHit2D hitLeft = Physics2D.Raycast(new Vector2(transform.position.x - raycastStartOffset, transform.position.y), -Vector2.up, preJumpRaycastDistance);
+            RaycastHit2D hitLeft = Physics2D.Raycast(raycastStartPoint, -Vector2.up, preJumpRaycastDistance);
 
             if (drawPreJumpRaycastDebug)
             {
-                Debug.DrawRay(new Vector2(transform.position.x - raycastStartOffset, transform.position.y), -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
+                Debug.DrawRay(raycastStartPoint, -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
             }
 
             if (hitLeft.collider != null)
@@ -203,12 +240,15 @@ public class CollisionManager : MonoBehaviour
             }
             else
             {
+                //make sure the raycast start point take into account the offset
+                raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x + raycastStartOffset, transform.position.y + p_collider.offset.y);
+
                 //fire a raycast from the right side of the player if the centre or left might not hit
-                RaycastHit2D hitRight = Physics2D.Raycast(new Vector2(transform.position.x + raycastStartOffset, transform.position.y), -Vector2.up, preJumpRaycastDistance);
+                RaycastHit2D hitRight = Physics2D.Raycast(raycastStartPoint, -Vector2.up, preJumpRaycastDistance);
 
                 if (drawPreJumpRaycastDebug)
                 {
-                    Debug.DrawRay(new Vector2(transform.position.x + raycastStartOffset, transform.position.y), -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
+                    Debug.DrawRay(raycastStartPoint, -Vector2.up * preJumpRaycastDistance, Color.green, 0.0f);
                 }
 
                 if (hitRight.collider != null)
@@ -227,8 +267,18 @@ public class CollisionManager : MonoBehaviour
     {
         bool isWallCheck = false;
 
+        //make sure the raycast start point take into account the offset
+        raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y);
+
         //create 2D raycast fired directly right from player's centre just a tiny bit further than our player
-        RaycastHit2D grabRightHit = Physics2D.Raycast(transform.position, Vector2.right, raycastDistance);
+        RaycastHit2D grabRightHit = Physics2D.Raycast(raycastStartPoint, Vector2.right, raycastDistance);
+
+        if (drawWallCheckRaycastDebug)
+        {
+            //draw ray to check debug for wall check
+            Debug.DrawRay(raycastStartPoint, Vector2.right * raycastDistance, Color.cyan, 0.0f);
+        }
+
         //if the raycast hits something
         if (grabRightHit.collider != null)
         {
@@ -239,8 +289,17 @@ public class CollisionManager : MonoBehaviour
         }
         else
         {
+            //make sure the raycast start point take into account the offset
+            raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y - raycastStartOffset);
+
             //fire a raycast from the bottom side of the player if the centre might not hit
-            RaycastHit2D grabRightHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - raycastStartOffset), Vector2.right, raycastDistance);
+            RaycastHit2D grabRightHitBottom = Physics2D.Raycast(raycastStartPoint, Vector2.right, raycastDistance);
+
+            if (drawWallCheckRaycastDebug)
+            {
+                //draw ray to check debug for wall check
+                Debug.DrawRay(raycastStartPoint, Vector2.right * raycastDistance, Color.cyan, 0.0f);
+            }
 
             if (grabRightHitBottom.collider != null)
             {
@@ -251,8 +310,17 @@ public class CollisionManager : MonoBehaviour
             }
             else
             {
+                //make sure the raycast start point take into account the offset
+                raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y + raycastStartOffset);
+
                 //fire a raycast from the top side of the player if the centre or bottom might not hit
-                RaycastHit2D grabRightHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + raycastStartOffset), Vector2.right, raycastDistance);
+                RaycastHit2D grabRightHitTop = Physics2D.Raycast(raycastStartPoint, Vector2.right, raycastDistance);
+
+                if (drawWallCheckRaycastDebug)
+                {
+                    //draw ray to check debug for wall check
+                    Debug.DrawRay(raycastStartPoint, Vector2.right * raycastDistance, Color.cyan, 0.0f);
+                }
 
                 if (grabRightHitTop.collider != null)
                 {
@@ -271,9 +339,18 @@ public class CollisionManager : MonoBehaviour
     {
         bool isWallCheck = false;
 
-            
+        //make sure the raycast start point take into account the offset
+        raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y);
+
         //create 2D raycast fired directly left from player's centre just a tiny bit further than our player
-        RaycastHit2D grabLeftHit = Physics2D.Raycast(transform.position, -Vector2.right, raycastDistance);
+        RaycastHit2D grabLeftHit = Physics2D.Raycast(raycastStartPoint, -Vector2.right, raycastDistance);
+
+        if (drawWallCheckRaycastDebug)
+        {
+            //draw ray to check debug for wall check
+            Debug.DrawRay(raycastStartPoint, -Vector2.right * raycastDistance, Color.cyan, 0.0f);
+        }
+
         //if the raycast hits something
         if (grabLeftHit.collider != null)
         {
@@ -284,8 +361,17 @@ public class CollisionManager : MonoBehaviour
         }
         else
         {
+            //make sure the raycast start point take into account the offset
+            raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y - raycastStartOffset);
+
             //fire a raycast from the bottom side of the player if the centre might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the bottom side
-            RaycastHit2D grabLeftHitBottom = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - raycastStartOffset), -Vector2.right, raycastDistance);
+            RaycastHit2D grabLeftHitBottom = Physics2D.Raycast(raycastStartPoint, -Vector2.right, raycastDistance);
+
+            if (drawWallCheckRaycastDebug)
+            {
+                //draw ray to check debug for wall check
+                Debug.DrawRay(raycastStartPoint, -Vector2.right * raycastDistance, Color.cyan, 0.0f);
+            }
 
             if (grabLeftHitBottom.collider != null)
             {
@@ -296,8 +382,17 @@ public class CollisionManager : MonoBehaviour
             }
             else
             {
+                //make sure the raycast start point take into account the offset
+                raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y + raycastStartOffset);
+
                 //fire a raycast from the top side of the player if the centre or bottom might not hit; 0.4f to avoid raycasting from the very edge, may lead to false positives when we hit something with the right side
-                RaycastHit2D grabLeftHitTop = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + raycastStartOffset), -Vector2.right, raycastDistance);
+                RaycastHit2D grabLeftHitTop = Physics2D.Raycast(raycastStartPoint, -Vector2.right, raycastDistance);
+
+                if (drawWallCheckRaycastDebug)
+                {
+                    //draw ray to check debug for wall check
+                    Debug.DrawRay(raycastStartPoint, -Vector2.right * raycastDistance, Color.cyan, 0.0f);
+                }
 
                 if (grabLeftHitTop.collider != null)
                 {
@@ -312,5 +407,3 @@ public class CollisionManager : MonoBehaviour
         return isWallCheck;
     }
 }
-
-
