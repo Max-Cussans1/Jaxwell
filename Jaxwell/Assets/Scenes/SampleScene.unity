@@ -6462,6 +6462,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940901, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940901, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940901, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940901, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940900, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: drawPreJumpRaycastDebug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940900, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: drawWallCheckRaycastDebug
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}
 --- !u!1001 &8021294723244828010
