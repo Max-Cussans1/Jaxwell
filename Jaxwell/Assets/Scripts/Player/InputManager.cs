@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
         if (Time.timeScale != 0)
         {
             //manage input when we press fire
-            if (Input.GetKeyDown(KeyCode.Keypad1))
+            if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetAxis("LeftTrigger") > 0)
             {
                 //if we aren't in fire already, dash
                 if (playerState.element != Elements.elements.fire && dashScript.canDash)
@@ -37,13 +37,13 @@ public class InputManager : MonoBehaviour
             }
 
             //manage imput when we press water
-            if (Input.GetKeyDown(KeyCode.Keypad2))
+            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown("joystick button 4"))
             {
                 playerState.pressedWater = true;
             }
 
             //manage input when we press earth
-            if (Input.GetKeyDown(KeyCode.Keypad3))
+            if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetAxis("RightTrigger") > 0)
             {
                 //if we aren't in earth already, earth dash
                 if (playerState.element != Elements.elements.earth)
@@ -55,7 +55,7 @@ public class InputManager : MonoBehaviour
             }
 
             //manage input when we press air
-            if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown("joystick button 5"))
             {
                 if (playerState.element != Elements.elements.air)
                 {
@@ -69,7 +69,7 @@ public class InputManager : MonoBehaviour
             }
 
             //manage input when we press jump
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0"))
             {
                 //if we're grounded and not earth form, jump
                 if (CollisionManager.isGrounded == true && playerState.element != Elements.elements.earth)
