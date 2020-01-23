@@ -17,6 +17,9 @@ public static class SaveSystem
             Debug.Log("Overwritten a save file in " + path);
 
             PlayerData playerData = new PlayerData(player);
+            Debug.Log("Saved scene: " + playerData.sceneName);
+            Debug.Log("Saved element: " + playerData.element);
+            Debug.Log("Saved position: " + playerData.position[0] + ", " + playerData.position[1] + ", " + playerData.position[2]);
 
             //write to the file
             formatter.Serialize(stream, playerData);
@@ -41,6 +44,7 @@ public static class SaveSystem
 
         if(File.Exists(path))
         {
+            Debug.Log("Loading data from " + path);
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 

@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerState : Elements
 {    
     //change to the element we want to start with in editor
     public elements element = 0;
     elements platformElement;
+
+    [SerializeField] bool loadCheckpointFromSavedScene = false;
 
     [SerializeField] float fireMaxSpeed = 3.0f;
     [SerializeField] float fireAcceleration = 0.3f;
@@ -41,7 +44,10 @@ public class PlayerState : Elements
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         moveScript = GetComponent<MoveScript>();
 
-        Load();
+        if (loadCheckpointFromSavedScene)
+        {
+            Load();
+        }
 
         if (element == elements.fire)
         {
@@ -124,12 +130,18 @@ public class PlayerState : Elements
 
     void Load()
     {
-        PlayerData data = SaveSystem.Load();
+        PlayerData data = SaveSystem.Load();        
         //temp initialization
         Vector3 position = currentCheckpoint;
         //if we have a save file
         if (SaveSystem.Load() != null)
         {
+            //if the scene loaded isn't the current scene in the save file, load the scene in the save file
+            if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName(data.sceneName))
+            {
+                Debug.Log("Loaded scene from the save file, uncheck loadCheckpointFromSavedScene in the PlayerState script if this was not intended");
+                SceneManager.LoadScene(data.sceneName);
+            }
             element = (elements)data.element;
 
             position.x = data.position[0];

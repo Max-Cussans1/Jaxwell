@@ -21,7 +21,7 @@ public class Checkpoint : MonoBehaviour
             if (other.gameObject == player.gameObject)
             {                
                 player.currentCheckpoint = transform.position;
-                Debug.Log("New checkpoint at " + transform.position);
+                Debug.Log("New save at " + transform.position);
                 player.Save();
             }
         }
