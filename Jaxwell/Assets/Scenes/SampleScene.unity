@@ -6398,6 +6398,16 @@ PrefabInstance:
       propertyPath: loadCheckpointFromSavedScene
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940905, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940908, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: earthDashSpeed
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}
 --- !u!1001 &8058176973625679858
