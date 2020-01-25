@@ -10,6 +10,11 @@ public class InputManager : MonoBehaviour
     PlayerState playerState;
     WallClimb wallClimb;
 
+    public bool disableFireInput = false;
+    public bool disableWaterInput = false;
+    public bool disableEarthInput = false;
+    public bool disableAirInput = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +23,11 @@ public class InputManager : MonoBehaviour
         jumpScript = GetComponent<JumpScript>();
         playerState = GetComponent<PlayerState>();    
         wallClimb = GetComponent<WallClimb>();
+
+        Debug.Log("Fire input = " + !disableFireInput + ". If this was unintended check the variables on the InputManager script");
+        Debug.Log("Water input = " + !disableWaterInput + ". If this was unintended check the variables on the InputManager script");
+        Debug.Log("Earth input = " + !disableEarthInput + ". If this was unintended check the variables on the InputManager script");
+        Debug.Log("Air input = " + !disableAirInput + ". If this was unintended check the variables on the InputManager script");
     }
 
     // Update is called once per frame
@@ -25,47 +35,59 @@ public class InputManager : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
-            //manage input when we press fire
-            if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetAxis("LeftTrigger") > 0)
+            if (!disableFireInput)
             {
-                //if we aren't in fire already, dash
-                if (playerState.element != Elements.elements.fire && dashScript.canDash)
+                //manage input when we press fire
+                if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetAxis("LeftTrigger") > 0)
                 {
-                    dashScript.pressedDash = true;
-                }
-                playerState.pressedFire = true;
-            }
-
-            //manage imput when we press water
-            if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown("joystick button 4"))
-            {
-                playerState.pressedWater = true;
-            }
-
-            //manage input when we press earth
-            if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetAxis("RightTrigger") > 0)
-            {
-                //if we aren't in earth already, earth dash
-                if (playerState.element != Elements.elements.earth)
-                {
-                    EarthDash.pressedDashToEarth = true;
-                }
-
-                playerState.pressedEarth = true;
-            }
-
-            //manage input when we press air
-            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown("joystick button 5"))
-            {
-                if (playerState.element != Elements.elements.air)
-                {
-                    if (!jumpScript.usedAirJump)
+                    //if we aren't in fire already, dash
+                    if (playerState.element != Elements.elements.fire && dashScript.canDash)
                     {
-                        jumpScript.pressedAirJump = true;
+                        dashScript.pressedDash = true;
                     }
+                    playerState.pressedFire = true;
                 }
+            }
 
-                playerState.pressedAir = true;
+            if (!disableWaterInput)
+            {
+                //manage imput when we press water
+                if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown("joystick button 4"))
+                {
+                    playerState.pressedWater = true;
+                }
+            }
+
+            if (!disableEarthInput)
+            {
+                //manage input when we press earth
+                if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetAxis("RightTrigger") > 0)
+                {
+                    //if we aren't in earth already, earth dash
+                    if (playerState.element != Elements.elements.earth)
+                    {
+                        EarthDash.pressedDashToEarth = true;
+                    }
+
+                    playerState.pressedEarth = true;
+                }
+            }
+
+            if (!disableAirInput)
+            {
+                //manage input when we press air
+                if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown("joystick button 5"))
+                {
+                    if (playerState.element != Elements.elements.air)
+                    {
+                        if (!jumpScript.usedAirJump)
+                        {
+                            jumpScript.pressedAirJump = true;
+                        }
+                    }
+
+                    playerState.pressedAir = true;
+                }
             }
 
             //manage input when we press jump
