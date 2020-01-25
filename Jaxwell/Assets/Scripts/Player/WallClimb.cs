@@ -52,17 +52,17 @@ public class WallClimb : MonoBehaviour
             if (tempTimeToWaitBeforeSliding != timeToWaitBeforeSliding)
             {                
                 tempTimeToWaitBeforeSliding = timeToWaitBeforeSliding;
-                Debug.Log("Wall grab hang time reset");
+                Debug.Log("Frame: " + Time.frameCount + " Wall grab hang time reset");
             }
         }          
 
         if(ignoreDecelerationForWallJump)
         {
-            Debug.Log("Ignore deceleration for wall jump");
+            Debug.Log("Frame: " + Time.frameCount + " Ignore deceleration for wall jump");
             temptimeToIgnoreDecelerationForWallJump -= Time.deltaTime;
             if(temptimeToIgnoreDecelerationForWallJump <= 0)
             {
-                Debug.Log("Stopped ignoring deceleration for wall jump");
+                Debug.Log("Frame: " + Time.frameCount + " Stopped ignoring deceleration for wall jump");
                 ignoreDecelerationForWallJump = false;
                 temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;
             }
@@ -77,7 +77,7 @@ public class WallClimb : MonoBehaviour
         }
         if(!EarthDash.pressedDashToEarth && !grabbing && !dashScript.dashing && p_rigidbody.gravityScale != initialGravityScale)
         {
-            Debug.Log("Setting initial gravity scale in wallclimb script");
+            Debug.Log("Frame: " + Time.frameCount + " Setting initial gravity scale in wallclimb script");
             //set initial gravity scale back since we removed it to have a smooth fall speed
             p_rigidbody.gravityScale = initialGravityScale;
         }
@@ -105,15 +105,15 @@ public class WallClimb : MonoBehaviour
         if (rigidbody.velocity.y < 0)
         {
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, 0);
-            Debug.Log(rigidbody + " stopped Y movement for water wall grabbing");
+            Debug.Log("Frame: " + Time.frameCount + " " + rigidbody + " stopped Y movement for water wall grabbing");
             rigidbody.gravityScale = 0;
-            Debug.Log(rigidbody + " disabled gravity for water wall grabbing");
+            Debug.Log("Frame: " + Time.frameCount + " " + rigidbody + " disabled gravity for water wall grabbing");
         }        
         if (tempTimeToWaitBeforeSliding <= 0)
         {            
             //add a fall speed for when we're grabbing
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, grabbingFallSpeed);
-            Debug.Log(rigidbody + " wall grab hang time has ended, falling with grabbing fall speed " + grabbingFallSpeed);
+            Debug.Log("Frame: " + Time.frameCount + " " + rigidbody + " wall grab hang time has ended, falling with grabbing fall speed " + grabbingFallSpeed);
         }
     }
 
@@ -122,7 +122,7 @@ public class WallClimb : MonoBehaviour
         rigidbody.velocity = new Vector2(0, 0);
         //add a force in x and y direction to jump off the wall
         rigidbody.AddForce(new Vector2(wallJumpHorizontalForce * direction, wallJumpHeight), ForceMode2D.Impulse);
-        Debug.Log(rigidbody + " wall jumped " + direction + "with a horizontal force of " + wallJumpHorizontalForce + "and vertical force of " + wallJumpHeight);
+        Debug.Log("Frame: " + Time.frameCount + " " + rigidbody + " wall jumped " + direction + "with a horizontal force of " + wallJumpHorizontalForce + "and vertical force of " + wallJumpHeight);
 
         //reset the timer for ignoring deceleration if it's not yet over
         temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;

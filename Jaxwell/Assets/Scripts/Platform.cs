@@ -47,12 +47,12 @@ public class Platform : Elements
             if (ElementCheck(element, playerstate.element))
             {
                 p_collider.enabled = true;
-                Debug.Log(this.gameObject + " had collider enabled because player is the same element and in range");
+                Debug.Log("Frame: " + Time.frameCount + " " + this.gameObject + " had collider enabled because player is the same element and in range");
             }
             else
             {
                 p_collider.enabled = false;
-                Debug.Log(this.gameObject + " had collider disabled because player is a different element and in range");
+                Debug.Log("Frame: " + Time.frameCount + " " + this.gameObject + " had collider disabled because player is a different element and in range");
             }
         }
 

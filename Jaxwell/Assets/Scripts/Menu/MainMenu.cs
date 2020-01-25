@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("Pressed quit from main menu");
+        Debug.Log("Frame: " + Time.frameCount + " " + "Pressed quit from main menu");
         Application.Quit();
     }
 }

@@ -106,7 +106,7 @@ public class DashScript : MonoBehaviour
 
     void DashRight(Rigidbody2D rigidbody, float speed)
     {
-        Debug.Log("Dashed Right");
+        Debug.Log("Frame: " + Time.frameCount + " " + "Dashed Right");
         //set x and y velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, 0.0f);
         dashing = true;
@@ -126,7 +126,7 @@ public class DashScript : MonoBehaviour
 
     void DashLeft(Rigidbody2D rigidbody, float speed)
     {
-        Debug.Log("Dashed Left");
+        Debug.Log("Frame: " + Time.frameCount + " " + "Dashed Left");
         //set x and y velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, 0.0f);
         dashing = true;
