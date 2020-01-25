@@ -7,6 +7,7 @@ public class EarthDash : MonoBehaviour
     Rigidbody2D p_rigidbody;
     PlayerState playerstate;
     float initialGravityScale;
+    float initialDrag;
 
     [SerializeField] float earthDashSpeed = 20.0f;
 
@@ -20,6 +21,7 @@ public class EarthDash : MonoBehaviour
         p_rigidbody = GetComponent<Rigidbody2D>();
         playerstate = GetComponent<PlayerState>();
         initialGravityScale = p_rigidbody.gravityScale;
+        initialDrag = p_rigidbody.drag;
     }
 
     // Update is called once per frame
@@ -56,8 +58,9 @@ public class EarthDash : MonoBehaviour
 
     void DashToEarth(Rigidbody2D rigidbody, float speed)
     {
-        //disable gravity
+        //disable gravity & drag
         rigidbody.gravityScale = 0;
+        rigidbody.drag = 0;
 
         //if we are travelling upwards
         if (rigidbody.velocity.y > 0)
@@ -72,7 +75,8 @@ public class EarthDash : MonoBehaviour
 
     void HandleEarthDashEnd(Rigidbody2D rigidbody)
     {
-        //reset gravity
-        p_rigidbody.gravityScale = initialGravityScale;
+        //reset gravity & drag
+        rigidbody.gravityScale = initialGravityScale;
+        rigidbody.drag = initialDrag;
     }
 }
