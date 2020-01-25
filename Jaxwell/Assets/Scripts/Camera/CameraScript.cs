@@ -7,7 +7,7 @@ public class CameraScript : MonoBehaviour
 
     //add the player to the script in editor
     public Transform player;
-    Camera camera;
+    Camera mainCamera;
     public float orthographicCameraSizeOnToggle = 25.0f;
     private float originalOrthographicCameraSize;
 
@@ -18,8 +18,8 @@ public class CameraScript : MonoBehaviour
 
     void Start()
     {
-        camera = this.GetComponent<Camera>();
-        originalOrthographicCameraSize = camera.orthographicSize;
+        mainCamera = this.GetComponent<Camera>();
+        originalOrthographicCameraSize = mainCamera.orthographicSize;
     }
 
     void Update()
@@ -31,13 +31,13 @@ public class CameraScript : MonoBehaviour
         {
             if (!cameraSizeToggled)
             {
-                camera.orthographicSize = orthographicCameraSizeOnToggle;
+                mainCamera.orthographicSize = orthographicCameraSizeOnToggle;
                 Debug.Log("Camera size toggled to " + orthographicCameraSizeOnToggle);
                 cameraSizeToggled = true;
             }
             else
             {
-                camera.orthographicSize = originalOrthographicCameraSize;
+                mainCamera.orthographicSize = originalOrthographicCameraSize;
                 Debug.Log("Camera size toggled to " + originalOrthographicCameraSize);
                 cameraSizeToggled = false;
             }
