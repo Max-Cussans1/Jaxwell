@@ -24,10 +24,10 @@ public class InputManager : MonoBehaviour
         playerState = GetComponent<PlayerState>();    
         wallClimb = GetComponent<WallClimb>();
 
-        Debug.Log("Frame: " + Time.frameCount + " " + "Fire input = " + !disableFireInput + ". If this was unintended check the variables on the InputManager script");
-        Debug.Log("Frame: " + Time.frameCount + " " + "Water input = " + !disableWaterInput + ". If this was unintended check the variables on the InputManager script");
-        Debug.Log("Frame: " + Time.frameCount + " " + "Earth input = " + !disableEarthInput + ". If this was unintended check the variables on the InputManager script");
-        Debug.Log("Frame: " + Time.frameCount + " " + "Air input = " + !disableAirInput + ". If this was unintended check the variables on the InputManager script");
+        DebugHelper.Log("Fire input = " + !disableFireInput + ". If this was unintended check the variables on the InputManager script");
+        DebugHelper.Log("Water input = " + !disableWaterInput + ". If this was unintended check the variables on the InputManager script");
+        DebugHelper.Log("Earth input = " + !disableEarthInput + ". If this was unintended check the variables on the InputManager script");
+        DebugHelper.Log("Air input = " + !disableAirInput + ". If this was unintended check the variables on the InputManager script");
     }
 
     // Update is called once per frame
@@ -117,12 +117,12 @@ public class InputManager : MonoBehaviour
         {            
             if(Time.timeScale == 1)
             {
-                Debug.Log("Frame: " + Time.frameCount + " " + "Paused");
+                DebugHelper.Log("Paused");
                 Time.timeScale = 0;
             }
             else if (Time.timeScale == 0)
             {
-                Debug.Log("Frame: " + Time.frameCount + " " + "Unpaused");
+                DebugHelper.Log("Unpaused");
                 Time.timeScale = 1;
             }
         }

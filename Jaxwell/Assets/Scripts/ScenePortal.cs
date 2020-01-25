@@ -25,13 +25,13 @@ public class ScenePortal : MonoBehaviour
             {
                 if (destinationScene != null)
                 {
-                    Debug.Log("Frame: " + Time.frameCount + " " + "Entered scene transition from " + SceneManager.GetActiveScene().name + " to " + destinationScene);
+                    DebugHelper.Log("Entered scene transition from " + SceneManager.GetActiveScene().name + " to " + destinationScene);
                     SceneManager.LoadScene(destinationScene);
                     player.Save();
                 }
                 else
                 {
-                    Debug.Log("Frame: " + Time.frameCount + " " + "Attempted scene transition through scene portal but destination scene was null");
+                    DebugHelper.Log("Attempted scene transition through scene portal but destination scene was null");
                 }
             }
         }

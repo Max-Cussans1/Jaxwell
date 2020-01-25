@@ -32,13 +32,13 @@ public class CameraScript : MonoBehaviour
             if (!cameraSizeToggled)
             {
                 mainCamera.orthographicSize = orthographicCameraSizeOnToggle;
-                Debug.Log("Frame: " + Time.frameCount + " " + "Camera size toggled to " + orthographicCameraSizeOnToggle);
+                DebugHelper.Log("Camera size toggled to " + orthographicCameraSizeOnToggle);
                 cameraSizeToggled = true;
             }
             else
             {
                 mainCamera.orthographicSize = originalOrthographicCameraSize;
-                Debug.Log("Frame: " + Time.frameCount + " " + "Camera size toggled to " + originalOrthographicCameraSize);
+                DebugHelper.Log("Camera size toggled to " + originalOrthographicCameraSize);
                 cameraSizeToggled = false;
             }
         }

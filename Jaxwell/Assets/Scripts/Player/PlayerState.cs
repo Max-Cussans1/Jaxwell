@@ -81,7 +81,7 @@ public class PlayerState : Elements
         if (pressedFire)
         {
             element = elements.fire;
-            Debug.Log("Frame: " + Time.frameCount + " " + "Enabled Fire");
+            DebugHelper.Log("Enabled Fire");
             ChangeMovementProperties(fireMaxSpeed, fireAcceleration, fireDeceleration);
             p_spriteRenderer.color = Color.red;
             pressedFire = false;
@@ -90,7 +90,7 @@ public class PlayerState : Elements
         if (pressedWater)
         {
             element = elements.water;
-            Debug.Log("Frame: " + Time.frameCount + " " + "Enabled Water");
+            DebugHelper.Log("Enabled Water");
             ChangeMovementProperties(waterMaxSpeed, waterAcceleration, waterDeceleration);
             p_spriteRenderer.color = Color.blue;
             pressedWater = false;
@@ -99,7 +99,7 @@ public class PlayerState : Elements
         if (pressedEarth)
         {
             element = elements.earth;
-            Debug.Log("Frame: " + Time.frameCount + " " + "Enabled Earth");
+            DebugHelper.Log("Enabled Earth");
             ChangeMovementProperties(earthMaxSpeed, earthAcceleration, earthDeceleration);
             p_spriteRenderer.color = Color.green;
             pressedEarth = false;
@@ -108,7 +108,7 @@ public class PlayerState : Elements
         if (pressedAir)
         {
             element = elements.air;
-            Debug.Log("Frame: " + Time.frameCount + " " + "Enabled Air");
+            DebugHelper.Log("Enabled Air");
             ChangeMovementProperties(airMaxSpeed, airAcceleration, airDeceleration);
             p_spriteRenderer.color = Color.gray;
             pressedAir = false;
@@ -139,7 +139,7 @@ public class PlayerState : Elements
             //if the scene loaded isn't the current scene in the save file, load the scene in the save file
             if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName(data.sceneName))
             {
-                Debug.Log("Frame: " + Time.frameCount + " " + "Loaded scene from the save file, uncheck loadCheckpointFromSavedScene in the PlayerState script if this was not intended");
+                DebugHelper.Log("Loaded scene from the save file, uncheck loadCheckpointFromSavedScene in the PlayerState script if this was not intended");
                 SceneManager.LoadScene(data.sceneName);
             }
             element = (elements)data.element;

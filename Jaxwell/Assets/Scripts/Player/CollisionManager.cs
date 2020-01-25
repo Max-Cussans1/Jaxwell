@@ -47,14 +47,14 @@ public class CollisionManager : MonoBehaviour
     {
         if (coyoteTimeActive)
         {
-            Debug.Log("Frame: " + Time.frameCount + " " + "Coyote time is active");
+            DebugHelper.Log("Coyote time is active");
             isGrounded = true;
 
             //start counting down our coyote time
             tempCoyoteTime -= Time.deltaTime;
             if(tempCoyoteTime <= 0)
             {
-                Debug.Log("Frame: " + Time.frameCount + " " + "Coyote time ended");
+                DebugHelper.Log("Coyote time ended");
                 coyoteTimeActive = false;
                 //set isGrounded to false when coyote time is over
                 isGrounded = false;
@@ -65,7 +65,7 @@ public class CollisionManager : MonoBehaviour
             //if we jump disable coyote time straight away
             if (jumped)
             {
-                Debug.Log("Frame: " + Time.frameCount + " " + "Coyote time no longer active because we jumped during coyote time");
+                DebugHelper.Log("Coyote time no longer active because we jumped during coyote time");
                 coyoteTimeActive = false;
                 //set isGrounded to false when coyote time is over
                 isGrounded = false;
@@ -143,7 +143,7 @@ public class CollisionManager : MonoBehaviour
         if (hit.collider != null)
         {
             //print what the raycast hit to console and where the object is
-            Debug.Log("Frame: " + Time.frameCount + " " + "Raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
+            DebugHelper.Log("Raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
             isGroundedCheck = true;
         }
         else
@@ -163,7 +163,7 @@ public class CollisionManager : MonoBehaviour
             if (hitLeft.collider != null)
             {
                 //print what the raycast hit to console and where the object is
-                Debug.Log("Frame: " + Time.frameCount + " " + "Left raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
+                DebugHelper.Log("Left raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
                 isGroundedCheck = true;
             }
             else
@@ -183,7 +183,7 @@ public class CollisionManager : MonoBehaviour
                 if (hitRight.collider != null)
                 {
                     //print what the raycast hit to console and where the object is
-                    Debug.Log("Frame: " + Time.frameCount + " " + "Right raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
+                    DebugHelper.Log("Right raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
                     isGroundedCheck = true;
                 }
             }
@@ -191,7 +191,7 @@ public class CollisionManager : MonoBehaviour
         //if we're not grounded or against any walls after doing a ground check enable coyote time
         if(!isGroundedCheck && !isAgainstWallLeft && !isAgainstWallRight)
         {
-            Debug.Log("Frame: " + Time.frameCount + " " + "Raycasts to check if we're grounded from " + p_collider.gameObject + " didn't hit anything, enabling coyote time");
+            DebugHelper.Log("Raycasts to check if we're grounded from " + p_collider.gameObject + " didn't hit anything, enabling coyote time");
             coyoteTimeActive = true;
         }
         return isGroundedCheck;
@@ -216,7 +216,7 @@ public class CollisionManager : MonoBehaviour
         if (hit.collider != null)
         {
             //print what the raycast hit to console and where the object is
-            Debug.Log("Frame: " + Time.frameCount + " " + "Raycast to check if we can pre-jump " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
+            DebugHelper.Log("Raycast to check if we can pre-jump " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
             shouldJump = true;
         }
         else
@@ -235,7 +235,7 @@ public class CollisionManager : MonoBehaviour
             if (hitLeft.collider != null)
             {
                 //print what the raycast hit to console and where the object is
-                Debug.Log("Frame: " + Time.frameCount + " " + "Left raycast to check if we can pre-jump " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
+                DebugHelper.Log("Left raycast to check if we can pre-jump " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
                 shouldJump = true;
             }
             else
@@ -254,7 +254,7 @@ public class CollisionManager : MonoBehaviour
                 if (hitRight.collider != null)
                 {
                     //print what the raycast hit to console and where the object is
-                    Debug.Log("Frame: " + Time.frameCount + " " + "Right raycast to check if we can pre-jump from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
+                    DebugHelper.Log("Right raycast to check if we can pre-jump from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
                     shouldJump = true;
                 }
             }
@@ -283,7 +283,7 @@ public class CollisionManager : MonoBehaviour
         if (grabRightHit.collider != null)
         {
             //print what the raycast hit to console and where the object is
-            Debug.Log("Frame: " + Time.frameCount + " " + "Grab raycast right from centre hit " + grabRightHit.collider.gameObject + " at " + grabRightHit.point);
+            DebugHelper.Log("Grab raycast right from centre hit " + grabRightHit.collider.gameObject + " at " + grabRightHit.point);
             isWallCheck = true;
 
         }
@@ -304,7 +304,7 @@ public class CollisionManager : MonoBehaviour
             if (grabRightHitBottom.collider != null)
             {
                 //print what the raycast hit to console and where the object is
-                Debug.Log("Frame: " + Time.frameCount + " " + "Grab raycast right from bottom hit " + grabRightHitBottom.collider.gameObject + " at " + grabRightHitBottom.point);
+                DebugHelper.Log("Grab raycast right from bottom hit " + grabRightHitBottom.collider.gameObject + " at " + grabRightHitBottom.point);
                 isWallCheck = true;
 
             }
@@ -325,7 +325,7 @@ public class CollisionManager : MonoBehaviour
                 if (grabRightHitTop.collider != null)
                 {
                     //print what the raycast hit to console and where the object is
-                    Debug.Log("Frame: " + Time.frameCount + " " + "Grab raycast right from top hit " + grabRightHitTop.collider.gameObject + " at " + grabRightHitTop.point);
+                    DebugHelper.Log("Grab raycast right from top hit " + grabRightHitTop.collider.gameObject + " at " + grabRightHitTop.point);
                     isWallCheck = true;
 
                 }             
@@ -355,7 +355,7 @@ public class CollisionManager : MonoBehaviour
         if (grabLeftHit.collider != null)
         {
             //print what the raycast hit to console and where the object is
-            Debug.Log("Frame: " + Time.frameCount + " " + "Grab raycast left from centre hit " + grabLeftHit.collider.gameObject + " at " + grabLeftHit.point);
+            DebugHelper.Log("Grab raycast left from centre hit " + grabLeftHit.collider.gameObject + " at " + grabLeftHit.point);
             isWallCheck = true;
 
         }
@@ -376,7 +376,7 @@ public class CollisionManager : MonoBehaviour
             if (grabLeftHitBottom.collider != null)
             {
                 //print what the raycast hit to console and where the object is
-                Debug.Log("Frame: " + Time.frameCount + " " + "Grab raycast left from bottom hit " + grabLeftHitBottom.collider.gameObject + " at " + grabLeftHitBottom.point);
+                DebugHelper.Log("Grab raycast left from bottom hit " + grabLeftHitBottom.collider.gameObject + " at " + grabLeftHitBottom.point);
                 isWallCheck = true;
 
             }
@@ -397,7 +397,7 @@ public class CollisionManager : MonoBehaviour
                 if (grabLeftHitTop.collider != null)
                 {
                     //print what the raycast hit to console and where the object is
-                    Debug.Log("Frame: " + Time.frameCount + " " + "Grab raycast left top hit " + grabLeftHitTop.collider.gameObject + " at " + grabLeftHitTop.point);
+                    DebugHelper.Log("Grab raycast left top hit " + grabLeftHitTop.collider.gameObject + " at " + grabLeftHitTop.point);
                     isWallCheck = true;
 
                 }

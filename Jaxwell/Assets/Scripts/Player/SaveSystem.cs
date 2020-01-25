@@ -14,12 +14,12 @@ public static class SaveSystem
         if (File.Exists(path))
         {
             FileStream stream = new FileStream(path, FileMode.Create);
-            Debug.Log("Frame: " + Time.frameCount + " " + "Overwritten a save file in " + path);
+            DebugHelper.Log("Overwritten a save file in " + path);
 
             PlayerData playerData = new PlayerData(player);
-            Debug.Log("Frame: " + Time.frameCount + " " + "Saved scene: " + playerData.sceneName);
-            Debug.Log("Frame: " + Time.frameCount + " " + "Saved element: " + playerData.element);
-            Debug.Log("Frame: " + Time.frameCount + " " + "Saved position: " + playerData.position[0] + ", " + playerData.position[1] + ", " + playerData.position[2]);
+            DebugHelper.Log("Saved scene: " + playerData.sceneName);
+            DebugHelper.Log("Saved element: " + playerData.element);
+            DebugHelper.Log("Saved position: " + playerData.position[0] + ", " + playerData.position[1] + ", " + playerData.position[2]);
 
             //write to the file
             formatter.Serialize(stream, playerData);
@@ -28,7 +28,7 @@ public static class SaveSystem
         else
         {
             FileStream stream = new FileStream(path, FileMode.Create);
-            Debug.Log("Frame: " + Time.frameCount + " " + "Created a new save file in " + path);
+            DebugHelper.Log("Created a new save file in " + path);
 
             PlayerData playerData = new PlayerData(player);
 
@@ -44,7 +44,7 @@ public static class SaveSystem
 
         if(File.Exists(path))
         {
-            Debug.Log("Frame: " + Time.frameCount + " " + "Loading data from " + path);
+            DebugHelper.Log("Loading data from " + path);
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
@@ -56,7 +56,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.Log("Frame: " + Time.frameCount + " " + "No save file found in " + path + ", loading a new game");
+            DebugHelper.Log("No save file found in " + path + ", loading a new game");
             return null;
         }
     }

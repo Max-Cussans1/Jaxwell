@@ -42,7 +42,7 @@ public class JumpScript : MonoBehaviour
         //call our jump function in fixedupdate so it's consistent across machines
         if (preJump)
         {
-            Debug.Log("Frame: " + Time.frameCount + " " + "Jumping from pre-jump");
+            DebugHelper.Log("Jumping from pre-jump");
             Jump(jumpHeight);
             pressedPreJump = false;
             preJump = false;
@@ -53,7 +53,7 @@ public class JumpScript : MonoBehaviour
         //call our jump function in fixedupdate so it's consistent across machines
         if (pressedJump)
         {
-            Debug.Log("Frame: " + Time.frameCount + " " + "Jumping from a normal jump");
+            DebugHelper.Log("Jumping from a normal jump");
             Jump(jumpHeight);
             pressedJump = false;
             CollisionManager.jumped = true;
