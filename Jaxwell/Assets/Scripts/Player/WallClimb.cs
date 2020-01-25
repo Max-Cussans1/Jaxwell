@@ -75,8 +75,9 @@ public class WallClimb : MonoBehaviour
         {
             Grab(p_rigidbody);
         }
-        if(!grabbing && !EarthDash.pressedDashToEarth && !dashScript.dashing && p_rigidbody.gravityScale != initialGravityScale)
+        if(!EarthDash.pressedDashToEarth && !grabbing && !dashScript.dashing && p_rigidbody.gravityScale != initialGravityScale)
         {
+            Debug.Log("Setting initial gravity scale in wallclimb script");
             //set initial gravity scale back since we removed it to have a smooth fall speed
             p_rigidbody.gravityScale = initialGravityScale;
         }

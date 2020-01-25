@@ -59,7 +59,7 @@ public class InputManager : MonoBehaviour
             }
 
             if (!disableEarthInput)
-            {
+            {             
                 //manage input when we press earth
                 if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetAxis("RightTrigger") > 0)
                 {

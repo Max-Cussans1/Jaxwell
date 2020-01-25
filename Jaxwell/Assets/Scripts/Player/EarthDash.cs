@@ -27,25 +27,21 @@ public class EarthDash : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(CollisionManager.isGrounded || WallClimb.grabbing)
-        {
-            pressedDashToEarth = false;
-            forceApplied = false;
-        }
-
-        //if we change element after dashing or we are grounded set gravity back to normal
+        //if we change element after dashing or we are grounded set gravity and drag back to normal
         if((playerstate.element != Elements.elements.earth && forceApplied) || CollisionManager.isGrounded)
         {
             earthDashEnded = true;
+            forceApplied = false;
         }
     }
 
     void FixedUpdate()
     {
-        if(pressedDashToEarth && !forceApplied)
+        if(pressedDashToEarth && !forceApplied && playerstate.element == Elements.elements.earth)
         {
             DashToEarth(p_rigidbody, earthDashSpeed);
             forceApplied = true;
+            pressedDashToEarth = false;
         }
 
         if(earthDashEnded)
