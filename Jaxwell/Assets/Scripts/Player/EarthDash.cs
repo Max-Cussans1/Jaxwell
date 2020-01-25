@@ -58,9 +58,14 @@ public class EarthDash : MonoBehaviour
     {
         //disable gravity
         rigidbody.gravityScale = 0;
-        //zero out x and y velocity
-        rigidbody.velocity = new Vector2(0, 0);
 
+        //if we are travelling upwards
+        if (rigidbody.velocity.y > 0)
+        {
+            //zero out x and y velocity to make the dash more sudden
+            rigidbody.velocity = new Vector2(0, 0);
+        }
+        //if we are travelling downwards already, we add the force to the current speed so we will never be slowing down
         //add a force for our downward dash
         rigidbody.AddForce(new Vector2(0, -speed), ForceMode2D.Impulse);
     }
