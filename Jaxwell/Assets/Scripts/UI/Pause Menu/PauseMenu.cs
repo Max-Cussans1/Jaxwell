@@ -26,7 +26,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        DebugHelper.Log("Resumed from pause menu");
+        DebugHelper.Log("Pressed resume from pause menu");
         Time.timeScale = 1;
         pauseMenuUI.SetActive(false);
         isPaused = false;
@@ -34,7 +34,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        DebugHelper.Log("Paused");
+        DebugHelper.Log("Game paused");
         Time.timeScale = 0;
         pauseMenuUI.SetActive(true);
         isPaused = true;
