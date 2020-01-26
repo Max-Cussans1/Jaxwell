@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeScale != 0)
+        if (!PauseMenu.isPaused)
         {
             if (!disableFireInput)
             {
@@ -110,20 +110,6 @@ public class InputManager : MonoBehaviour
                 {
                     jumpScript.pressedPreJump = true;
                 }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {            
-            if(Time.timeScale == 1)
-            {
-                DebugHelper.Log("Paused");
-                Time.timeScale = 0;
-            }
-            else if (Time.timeScale == 0)
-            {
-                DebugHelper.Log("Unpaused");
-                Time.timeScale = 1;
             }
         }
     }

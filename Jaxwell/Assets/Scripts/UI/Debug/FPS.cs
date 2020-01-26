@@ -15,7 +15,7 @@ public class FPS : MonoBehaviour
 
     void Update()
     {
-        fps = 1.0f / Time.deltaTime;
+        fps = 1.0f / Time.unscaledDeltaTime;
         currentfps.text = "FPS: " + fps.ToString();
     }
 }
