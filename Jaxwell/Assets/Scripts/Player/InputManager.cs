@@ -38,7 +38,7 @@ public class InputManager : MonoBehaviour
             if (!disableFireInput)
             {
                 //manage input when we press fire
-                if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetAxis("LeftTrigger") > 0)
+                if (Input.GetKeyDown(KeyCode.Keypad1) || (Input.GetAxis("LeftTrigger") > 0 && Input.GetAxis("RightTrigger") == 0))
                 {
                     //if we aren't in fire already, dash
                     if (playerState.element != Elements.elements.fire && dashScript.canDash)
@@ -61,7 +61,7 @@ public class InputManager : MonoBehaviour
             if (!disableEarthInput)
             {             
                 //manage input when we press earth
-                if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetAxis("RightTrigger") > 0)
+                if (Input.GetKeyDown(KeyCode.Keypad3) || (Input.GetAxis("RightTrigger") > 0 && Input.GetAxis("LeftTrigger") == 0))
                 {
                     //if we aren't in earth already, earth dash
                     if (playerState.element != Elements.elements.earth)
