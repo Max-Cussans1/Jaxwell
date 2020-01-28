@@ -7,6 +7,7 @@ public class CollisionManager : MonoBehaviour
     public static bool isGrounded = false;
     public static bool isAgainstWallLeft = false;
     public static bool isAgainstWallRight = false;
+    public static GameObject groundedObject = null;
     JumpScript jumpScript;
 
     [SerializeField] float coyoteTime = 0.1f;
@@ -86,6 +87,10 @@ public class CollisionManager : MonoBehaviour
             preJump = false;
         }
 
+        if(!isGrounded && groundedObject != null)
+        {
+            groundedObject = null;
+        }
     }
 
     //run checks when we collide with something
@@ -145,6 +150,7 @@ public class CollisionManager : MonoBehaviour
             //print what the raycast hit to console and where the object is
             DebugHelper.Log("Raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
             isGroundedCheck = true;
+            groundedObject = hit.collider.gameObject;
         }
         else
         {
@@ -165,6 +171,7 @@ public class CollisionManager : MonoBehaviour
                 //print what the raycast hit to console and where the object is
                 DebugHelper.Log("Left raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
                 isGroundedCheck = true;
+                groundedObject = hitLeft.collider.gameObject;
             }
             else
             {
@@ -185,6 +192,7 @@ public class CollisionManager : MonoBehaviour
                     //print what the raycast hit to console and where the object is
                     DebugHelper.Log("Right raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
                     isGroundedCheck = true;
+                    groundedObject = hitRight.collider.gameObject;
                 }
             }
         }

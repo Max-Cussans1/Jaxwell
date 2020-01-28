@@ -54,6 +54,11 @@ public class EarthDash : MonoBehaviour
 
     void DashToEarth(Rigidbody2D rigidbody, float speed)
     {
+        Platform platform = null;
+        if (CollisionManager.groundedObject != null)
+        {
+            platform = CollisionManager.groundedObject.GetComponent<Platform>();
+        }
         //disable gravity & drag
         rigidbody.gravityScale = 0;
         rigidbody.drag = 0;
@@ -65,8 +70,21 @@ public class EarthDash : MonoBehaviour
             rigidbody.velocity = new Vector2(0, 0);
         }
         //if we are travelling downwards already, we add the force to the current speed so we will never be slowing down
+        //if we're on a platform
+        if (platform != null)
+        {
+            //check if the platform is not earth
+            if(!Elements.ElementCheck(platform.element, Elements.elements.earth))
+            {
+                //if it's not earth, disable the platform's collider before we dash
+                platform.GetComponent<BoxCollider2D>().enabled = false;
+                DebugHelper.Log("Disabled collision for the platform underneath us before earth dash because it wasn't an earth platform");
+            }
+        }
+
         //add a force for our downward dash
         rigidbody.AddForce(new Vector2(0, -speed), ForceMode2D.Impulse);
+        DebugHelper.Log("Earth dash used");
     }
 
     void HandleEarthDashEnd(Rigidbody2D rigidbody)

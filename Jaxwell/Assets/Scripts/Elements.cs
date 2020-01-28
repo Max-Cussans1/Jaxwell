@@ -13,7 +13,7 @@ public class Elements : MonoBehaviour
     };
 
     //returns true if the same element
-    public bool ElementCheck(elements thisElement, elements otherElement)
+    public static bool ElementCheck(elements thisElement, elements otherElement)
     {
         if (otherElement == thisElement)
         {
