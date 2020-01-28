@@ -31,8 +31,11 @@ public class MoveScript : MonoBehaviour
         //set bools for movement in update so we're instantly detecting input
         if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
         {
-            direction = directions.right;
-            acceleratingRight = true;
+            if (!WallClimb.grabbing)
+            {
+                direction = directions.right;
+                acceleratingRight = true;
+            }
         }
         if (Input.GetKeyUp(KeyCode.D) || Input.GetAxis("Horizontal") <= 0)
         {
@@ -41,8 +44,11 @@ public class MoveScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
         {
-            direction = directions.left;
-            acceleratingLeft = true;
+            if (!WallClimb.grabbing)
+            {
+                direction = directions.left;
+                acceleratingLeft = true;
+            }
         }
         if (Input.GetKeyUp(KeyCode.A) || Input.GetAxis("Horizontal") >= 0)
         {

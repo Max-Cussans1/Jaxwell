@@ -10,6 +10,7 @@ public class WallClimb : MonoBehaviour
     DashScript dashScript;
 
     [SerializeField] float timeToWaitBeforeSliding = 0.5f;
+    [SerializeField] float timeToUnstick = 0.5f;
     [SerializeField] float grabbingFallSpeed = -0.1f;
     [SerializeField] float wallJumpHeight = 15.0f;
     [SerializeField] float wallJumpHorizontalForce = 3.0f;
@@ -21,6 +22,7 @@ public class WallClimb : MonoBehaviour
 
     float tempTimeToWaitBeforeSliding;
     float temptimeToIgnoreDecelerationForWallJump;
+    float temptimeToUnstick;
     public static bool ignoreDecelerationForWallJump = false;
 
     void Start()
@@ -29,8 +31,10 @@ public class WallClimb : MonoBehaviour
         playerstate = GetComponent<PlayerState>();
         dashScript = GetComponent<DashScript>();
         initialGravityScale = p_rigidbody.gravityScale;
+
         tempTimeToWaitBeforeSliding = timeToWaitBeforeSliding;
         temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;
+        temptimeToUnstick = timeToUnstick;
     }
 
     void Update()
@@ -44,6 +48,48 @@ public class WallClimb : MonoBehaviour
                 //count down to slide
                 tempTimeToWaitBeforeSliding -= Time.deltaTime;
             }
+
+            if ((Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0) && CollisionManager.isAgainstWallLeft)
+            {
+                if (temptimeToUnstick > 0)
+                {
+                    temptimeToUnstick -= Time.deltaTime;
+                    if (temptimeToUnstick <= 0)
+                    {
+                        grabbing = false;
+                    }
+                }
+                DebugHelper.Log("Unstick time remaining: " + temptimeToUnstick);
+            }
+            if ((Input.GetKeyUp(KeyCode.D) || Input.GetAxis("Horizontal") <= 0) && CollisionManager.isAgainstWallLeft)
+            {
+                if (temptimeToUnstick != timeToUnstick)
+                {
+                    temptimeToUnstick = timeToUnstick;
+                    DebugHelper.Log("Unstick time reset due to releasing right input");
+                }
+            }
+
+            if ((Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0) && CollisionManager.isAgainstWallRight)
+            {
+                if (temptimeToUnstick > 0)
+                {
+                    temptimeToUnstick -= Time.deltaTime;
+                    if (temptimeToUnstick <= 0)
+                    {
+                        grabbing = false;
+                    }
+                }
+                DebugHelper.Log("Unstick time remaining: " + temptimeToUnstick);
+            }
+            if ((Input.GetKeyUp(KeyCode.A) || Input.GetAxis("Horizontal") >= 0) && CollisionManager.isAgainstWallRight)
+            {
+                if (temptimeToUnstick != timeToUnstick)
+                {
+                    temptimeToUnstick = timeToUnstick;
+                    DebugHelper.Log("Unstick time reset due to releasing left input");
+                }
+            }
         }
         else
         {
@@ -54,6 +100,12 @@ public class WallClimb : MonoBehaviour
                 tempTimeToWaitBeforeSliding = timeToWaitBeforeSliding;
                 DebugHelper.Log("Wall grab hang time reset");
             }
+            if (temptimeToUnstick != timeToUnstick)
+            {
+                temptimeToUnstick = timeToUnstick;
+                DebugHelper.Log("Unstick time reset due to grabbing being false");
+            }
+
         }          
 
         if(ignoreDecelerationForWallJump)

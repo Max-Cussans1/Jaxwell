@@ -6518,6 +6518,11 @@ PrefabInstance:
       propertyPath: disableAirInput
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940909, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: timeToUnstick
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}
 --- !u!1001 &3161751803186032655
