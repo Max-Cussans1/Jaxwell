@@ -111,6 +111,12 @@ public class InputManager : MonoBehaviour
                     jumpScript.pressedPreJump = true;
                 }
             }
+
+            if (Input.GetKeyDown("`"))
+            {
+                jumpScript.usedAirJump = false;
+                DebugHelper.Log("Reset air jump with debug");
+            }
         }
     }
 }
