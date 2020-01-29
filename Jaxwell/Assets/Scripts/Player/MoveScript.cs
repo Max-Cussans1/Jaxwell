@@ -8,8 +8,8 @@ public class MoveScript : MonoBehaviour
     public float acceleration = 0.3f;
     public float deceleration = 0.3f;
 
-    public enum directions { left,right};
-    public directions direction = directions.right;
+    //bool for which direction we're going, true if going right, false if going left
+    public static bool movingRight = true;
 
     bool acceleratingRight = false;
     bool acceleratingLeft = false;
@@ -31,9 +31,9 @@ public class MoveScript : MonoBehaviour
         //set bools for movement in update so we're instantly detecting input
         if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
         {
+            movingRight = true;
             if (!WallClimb.grabbing)
             {
-                direction = directions.right;
                 acceleratingRight = true;
             }
         }
@@ -44,9 +44,9 @@ public class MoveScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
         {
+            movingRight = false;
             if (!WallClimb.grabbing)
             {
-                direction = directions.left;
                 acceleratingLeft = true;
             }
         }

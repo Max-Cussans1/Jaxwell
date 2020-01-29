@@ -41,13 +41,13 @@ public class DashScript : MonoBehaviour
         if (pressedDash)
         {
             //check which direction we're going from the movescript
-            switch (movescript.direction)
+            switch (MoveScript.movingRight)
             {
-                case MoveScript.directions.left:
+                case false:
                     pressedDashLeft = true;
                     break;
 
-                case MoveScript.directions.right:
+                case true:
                     pressedDashRight = true;
                     break;
 
@@ -107,6 +107,7 @@ public class DashScript : MonoBehaviour
     void DashRight(Rigidbody2D rigidbody, float speed)
     {
         DebugHelper.Log("Dashed Right");
+        WallClimb.grabbing = false;
         //set x and y velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, 0.0f);
         dashing = true;
@@ -127,6 +128,7 @@ public class DashScript : MonoBehaviour
     void DashLeft(Rigidbody2D rigidbody, float speed)
     {
         DebugHelper.Log("Dashed Left");
+        WallClimb.grabbing = false;
         //set x and y velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, 0.0f);
         dashing = true;
