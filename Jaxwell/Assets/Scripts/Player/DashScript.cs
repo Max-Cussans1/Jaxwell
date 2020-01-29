@@ -151,5 +151,6 @@ public class DashScript : MonoBehaviour
         rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
         //change the gravity scale back to the one we have in editor
         rigidbody.gravityScale = initialGravityScale;
+        DebugHelper.Log("Reset gravity after dash ended");
     }
 }

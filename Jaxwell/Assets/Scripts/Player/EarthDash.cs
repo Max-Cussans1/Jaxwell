@@ -12,7 +12,7 @@ public class EarthDash : MonoBehaviour
     [SerializeField] float earthDashSpeed = 20.0f;
 
     public static bool pressedDashToEarth = false;
-    bool forceApplied;
+    bool forceApplied = false;
     bool earthDashEnded = false;
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class EarthDash : MonoBehaviour
     void Update()
     {
         //if we change element after dashing or we are grounded set gravity and drag back to normal
-        if((playerstate.element != Elements.elements.earth && forceApplied) || CollisionManager.isGrounded)
+        if((playerstate.element != Elements.elements.earth) && forceApplied || (playerstate.element == Elements.elements.earth && CollisionManager.isGrounded))
         {
             earthDashEnded = true;
             forceApplied = false;
@@ -89,6 +89,7 @@ public class EarthDash : MonoBehaviour
 
     void HandleEarthDashEnd(Rigidbody2D rigidbody)
     {
+        DebugHelper.Log("Resetting gravity because earth dash ended");
         //reset gravity & drag
         rigidbody.gravityScale = initialGravityScale;
         rigidbody.drag = initialDrag;
