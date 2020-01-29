@@ -47,10 +47,16 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitToMainMenu()
     {
-        DebugHelper.Log("Pressed quit from pause menu");
+        DebugHelper.Log("Pressed quit to main menu from pause menu");
         pauseMenuUI.SetActive(false);
         isPaused = false;
         Time.timeScale = 1;
         SceneManager.LoadScene("Main_Menu");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        DebugHelper.Log("Pressed quit game from pause menu");
     }
 }
