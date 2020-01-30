@@ -8,6 +8,7 @@ public class EarthDash : MonoBehaviour
     PlayerState playerstate;
     float initialGravityScale;
     float initialDrag;
+    DashScript dashScript;
 
     [SerializeField] float earthDashSpeed = 20.0f;
 
@@ -20,6 +21,7 @@ public class EarthDash : MonoBehaviour
     {
         p_rigidbody = GetComponent<Rigidbody2D>();
         playerstate = GetComponent<PlayerState>();
+        dashScript = GetComponent<DashScript>();
         initialGravityScale = p_rigidbody.gravityScale;
         initialDrag = p_rigidbody.drag;
     }
@@ -28,7 +30,7 @@ public class EarthDash : MonoBehaviour
     void Update()
     {
         //if we change element after dashing or we are grounded set gravity and drag back to normal
-        if((playerstate.element != Elements.elements.earth) && forceApplied || (playerstate.element == Elements.elements.earth && CollisionManager.isGrounded))
+        if((playerstate.element != Elements.elements.earth) && forceApplied || (playerstate.element == Elements.elements.earth && CollisionManager.isGrounded && !dashScript.dashing))
         {
             earthDashEnded = true;
             forceApplied = false;
