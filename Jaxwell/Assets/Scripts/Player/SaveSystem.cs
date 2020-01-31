@@ -30,7 +30,11 @@ public static class SaveSystem
             FileStream stream = new FileStream(path, FileMode.Create);
             DebugHelper.Log("Created a new save file in " + path);
 
+
             PlayerData playerData = new PlayerData(player);
+            DebugHelper.Log("Saved scene: " + playerData.sceneName);
+            DebugHelper.Log("Saved element: " + playerData.element);
+            DebugHelper.Log("Saved position: " + playerData.position[0] + ", " + playerData.position[1] + ", " + playerData.position[2]);
 
             //write to the file
             formatter.Serialize(stream, playerData);
@@ -38,10 +42,8 @@ public static class SaveSystem
         }
     }
 
-    public static PlayerData Load()
+    public static PlayerData Load(string path)
     {
-        string path = Application.persistentDataPath + "/player.jxw";
-
         if(File.Exists(path))
         {
             DebugHelper.Log("Loading data from " + path);

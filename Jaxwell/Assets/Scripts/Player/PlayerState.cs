@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerState : Elements
-{    
+{
+    string saveFilePath;
     //change to the element we want to start with in editor
     public elements element = 0;
     elements platformElement;
@@ -39,6 +40,8 @@ public class PlayerState : Elements
 
     void Start()
     {
+        saveFilePath = Application.persistentDataPath + "/player.jxw";
+
         currentCheckpoint = transform.position;
         //temp solution changing colour until we get sprites/anims
         p_spriteRenderer = GetComponent<SpriteRenderer>();
@@ -130,11 +133,11 @@ public class PlayerState : Elements
 
     void Load()
     {
-        PlayerData data = SaveSystem.Load();        
+        PlayerData data = SaveSystem.Load(saveFilePath);        
         //temp initialization
         Vector3 position = currentCheckpoint;
         //if we have a save file
-        if (SaveSystem.Load() != null)
+        if (data != null)
         {
             //if the scene loaded isn't the current scene in the save file, load the scene in the save file
             if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName(data.sceneName))
@@ -148,6 +151,7 @@ public class PlayerState : Elements
             position.y = data.position[1];
             position.z = data.position[2];
         }
+
         transform.position = position;
     }
 }

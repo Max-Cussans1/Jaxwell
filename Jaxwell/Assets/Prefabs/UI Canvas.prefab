@@ -721,7 +721,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 20560
+  m_Text: Frame Count
 --- !u!114 &5048098222013301852
 MonoBehaviour:
   m_ObjectHideFlags: 0
