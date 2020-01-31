@@ -30,7 +30,7 @@ public class EarthDash : MonoBehaviour
     void Update()
     {
         //if we change element after dashing or we are grounded set gravity and drag back to normal
-        if((playerstate.element != Elements.elements.earth) && forceApplied || (playerstate.element == Elements.elements.earth && CollisionManager.isGrounded && !dashScript.dashing))
+        if((playerstate.element != Elements.elements.earth && playerstate.element != Elements.elements.fire) && forceApplied || (playerstate.element == Elements.elements.earth && CollisionManager.isGrounded))
         {
             earthDashEnded = true;
             forceApplied = false;
@@ -46,7 +46,7 @@ public class EarthDash : MonoBehaviour
             pressedDashToEarth = false;
         }
 
-        if(earthDashEnded)
+        if(earthDashEnded && !dashScript.dashing)
         {            
             HandleEarthDashEnd(p_rigidbody);
             earthDashEnded = false;
