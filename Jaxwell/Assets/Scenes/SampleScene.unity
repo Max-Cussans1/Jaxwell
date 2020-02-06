@@ -434,6 +434,21 @@ PrefabInstance:
       propertyPath: horizontalOscillationSpeed
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: breakable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: element
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: breakableOnEarthDash
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3bdeefc3fba0564d895ebfed0a1ddbb, type: 3}
 --- !u!1001 &614940011
@@ -683,6 +698,11 @@ PrefabInstance:
     - target: {fileID: 1672730365152476594, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: breakableOnEarthDash
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6527,6 +6547,11 @@ PrefabInstance:
         type: 3}
       propertyPath: timeToUnstick
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930405940970940907, guid: df717aa74021de842b9d7cf6aa074f44,
+        type: 3}
+      propertyPath: dashCooldown
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}

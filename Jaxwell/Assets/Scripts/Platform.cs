@@ -13,6 +13,10 @@ public class Platform : Elements
     float startX;
     float startY;
 
+    bool broken = false;
+    float timeToDestroyAfterBreak = 2.5f;
+
+    [SerializeField] bool breakableOnEarthDash = false;
     [SerializeField] bool oscillateVertically = false;
     [SerializeField] bool oscillateUpwardsFirst = false;
     [SerializeField] bool oscillateHorizontally = false;
@@ -85,18 +89,53 @@ public class Platform : Elements
 
     void FixedUpdate()
     {
-        if(oscillateVertically)
+        if (!broken)
         {
-            oscillateY(ref oscillateUpwardsFirst, startY, verticalOscillationSpeed, ref tempYOscillationPauseTime);
-        }
-        if(oscillateHorizontally)
-        {
-            oscillateX(ref oscillateRightFirst, startX, horizontalOscillationSpeed, ref tempXOscillationPauseTime);
+            if (oscillateVertically)
+            {
+                oscillateY(ref oscillateUpwardsFirst, startY, verticalOscillationSpeed, ref tempYOscillationPauseTime);
+            }
+            if (oscillateHorizontally)
+            {
+                oscillateX(ref oscillateRightFirst, startX, horizontalOscillationSpeed, ref tempXOscillationPauseTime);
+            }
         }
     }
 
-    //returns true if in range
-    bool DistanceCheck(Vector2 position, Vector2 otherPosition, float distance)
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject == player)
+        {
+            if (!EarthDash.earthDashEnded && breakableOnEarthDash && playerstate.element == Elements.elements.earth)
+            {
+                p_collider.enabled = false;
+                DebugHelper.Log(this.gameObject + " had collision disabled because it was broken from earthdash");
+                broken = true;
+                DebugHelper.Log(this.gameObject + " is being destroyed because it was broken from earthdash");
+                Destroy(gameObject, timeToDestroyAfterBreak);                                
+            }
+            else if(oscillateHorizontally || oscillateVertically)
+            {
+                collision.transform.parent = this.transform;
+                DebugHelper.Log("Player transform is being parented by " + this.gameObject + " because it is oscillating");
+            }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject == player)
+        {
+            if (oscillateHorizontally || oscillateVertically)
+            {
+                collision.transform.parent = null;
+                DebugHelper.Log("Player transform is being unparented by " + this.gameObject + " because the player has left the platform");
+            }
+        }
+    }
+
+        //returns true if in range
+        bool DistanceCheck(Vector2 position, Vector2 otherPosition, float distance)
     {
         //using sqrmagnitude saves a square root call which can be expensive
         if ((otherPosition - position).sqrMagnitude < distance * distance)
@@ -166,7 +205,6 @@ public class Platform : Elements
                 {
                     startDirection = false;
                     delay = horizontalOscillationPauseTime;
-                    DebugHelper.Log("x position = " + transform.position.x + " distance = " + (start - horizontalOscillationDistance));
                 }
             }
         }
@@ -185,7 +223,6 @@ public class Platform : Elements
                 {
                     startDirection = true;
                     delay = horizontalOscillationPauseTime;
-                    DebugHelper.Log("x position = " + transform.position.x + " distance = " + (start + horizontalOscillationDistance));
                 }
             }
         }

@@ -14,7 +14,7 @@ public class EarthDash : MonoBehaviour
 
     public static bool pressedDashToEarth = false;
     bool forceApplied = false;
-    bool earthDashEnded = false;
+    public static bool earthDashEnded = true;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +80,7 @@ public class EarthDash : MonoBehaviour
             {
                 //if it's not earth or neutral, disable the platform's collider before we dash
                 platform.GetComponent<BoxCollider2D>().enabled = false;
-                DebugHelper.Log("Disabled collision for the platform underneath us before earth dash because it wasn't an earth platform");
+                DebugHelper.Log("Disabled collision for " + platform.gameObject + " earth dash because it wasn't an earth platform");
             }
         }
 
