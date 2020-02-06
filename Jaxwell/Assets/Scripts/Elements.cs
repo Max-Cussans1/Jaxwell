@@ -9,7 +9,8 @@ public class Elements : MonoBehaviour
         fire,
         water,
         earth,
-        air
+        air,
+        neutral
     };
 
     //returns true if the same element
