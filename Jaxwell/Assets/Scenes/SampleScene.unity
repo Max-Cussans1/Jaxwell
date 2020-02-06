@@ -352,12 +352,12 @@ PrefabInstance:
     - target: {fileID: 1672730365152476594, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.51
+      value: -13.92
       objectReference: {fileID: 0}
     - target: {fileID: 1672730365152476594, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.61
+      value: -0.45
       objectReference: {fileID: 0}
     - target: {fileID: 1672730365152476594, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
         type: 3}
@@ -403,6 +403,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: oscillateVertically
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: oscillateUpwardsFirst
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: verticalOscillationSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: oscillateHorizontally
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: oscillateRightFirst
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: horizontalOscillationSpeed
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3bdeefc3fba0564d895ebfed0a1ddbb, type: 3}
