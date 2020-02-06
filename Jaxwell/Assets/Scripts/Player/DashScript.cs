@@ -7,6 +7,7 @@ public class DashScript : MonoBehaviour
     Rigidbody2D p_rigidbody;
 
     MoveScript movescript;
+    PlayerState playerState;
 
     [SerializeField] float dashSpeed = 30.0f;
     [SerializeField] float dashCooldown = 2.0f;
@@ -29,6 +30,8 @@ public class DashScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerState = GetComponent<PlayerState>();
+
         p_rigidbody = GetComponent<Rigidbody2D>();
         initialGravityScale = p_rigidbody.gravityScale;
         movescript = GetComponent<MoveScript>();
@@ -72,7 +75,7 @@ public class DashScript : MonoBehaviour
         {
             tempDashDuration -= Time.deltaTime;
             //check if duration has completed
-            if (tempDashDuration <= 0)
+            if (tempDashDuration <= 0 || playerState.element != Elements.elements.fire)
             {
                 dashing = false;
                 //set this bool to handle dash end physics in fixedupdate
