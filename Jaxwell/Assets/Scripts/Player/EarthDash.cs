@@ -76,9 +76,9 @@ public class EarthDash : MonoBehaviour
         if (platform != null)
         {
             //check if the platform is not earth
-            if(!Elements.ElementCheck(platform.element, Elements.elements.earth))
+            if(!Elements.ElementCheck(platform.element, Elements.elements.earth) && platform.element != Elements.elements.neutral)
             {
-                //if it's not earth, disable the platform's collider before we dash
+                //if it's not earth or neutral, disable the platform's collider before we dash
                 platform.GetComponent<BoxCollider2D>().enabled = false;
                 DebugHelper.Log("Disabled collision for the platform underneath us before earth dash because it wasn't an earth platform");
             }

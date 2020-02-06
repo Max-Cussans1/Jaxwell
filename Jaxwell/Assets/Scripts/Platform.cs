@@ -62,19 +62,23 @@ public class Platform : Elements
     // Update is called once per frame
     void Update()
     {
-        //check if the player is close
-        if(DistanceCheck(player.transform.position, transform.position, rangeToCollide))
+        //if element is neutral we never want to disable colliders
+        if (element != elements.neutral)
         {
-            //check if we're the same element, disable collision if not
-            if (ElementCheck(element, playerstate.element))
+            //check if the player is close
+            if (DistanceCheck(player.transform.position, transform.position, rangeToCollide))
             {
-                p_collider.enabled = true;
-                DebugHelper.Log(this.gameObject + " had collider enabled because player is the same element and in range");
-            }
-            else
-            {
-                p_collider.enabled = false;
-                DebugHelper.Log(this.gameObject + " had collider disabled because player is a different element and in range");
+                //check if we're the same element, disable collision if not
+                if (ElementCheck(element, playerstate.element))
+                {
+                    p_collider.enabled = true;
+                    DebugHelper.Log(this.gameObject + " had collider enabled because player is the same element and in range");
+                }
+                else
+                {
+                    p_collider.enabled = false;
+                    DebugHelper.Log(this.gameObject + " had collider disabled because player is a different element and in range");
+                }
             }
         }
     }
