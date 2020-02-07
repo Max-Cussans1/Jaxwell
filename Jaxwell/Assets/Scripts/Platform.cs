@@ -15,8 +15,10 @@ public class Platform : Elements
 
     bool broken = false;
     float timeToDestroyAfterBreak = 2.5f;
+    float heightDashEnded;
 
     [SerializeField] bool breakableOnEarthDash = false;
+    [SerializeField] float dashDistanceRequiredToBreak = 6.0f;
     [SerializeField] bool oscillateVertically = false;
     [SerializeField] bool oscillateUpwardsFirst = false;
     [SerializeField] bool oscillateHorizontally = false;
@@ -108,11 +110,18 @@ public class Platform : Elements
         {
             if (!EarthDash.earthDashEnded && breakableOnEarthDash && playerstate.element == Elements.elements.earth)
             {
-                p_collider.enabled = false;
-                DebugHelper.Log(this.gameObject + " had collision disabled because it was broken from earthdash");
-                broken = true;
-                DebugHelper.Log(this.gameObject + " is being destroyed because it was broken from earthdash");
-                Destroy(gameObject, timeToDestroyAfterBreak);                                
+                heightDashEnded = player.transform.position.y;
+                DebugHelper.Log("Travelled " + (EarthDash.heightDashedAt - heightDashEnded) + " units with earth dash trying to break a platform");
+
+                //check we travelled the distance we want and if we did break the platform
+                if (EarthDash.heightDashedAt - heightDashEnded >= dashDistanceRequiredToBreak)
+                {
+                    p_collider.enabled = false;
+                    DebugHelper.Log(this.gameObject + " had collision disabled because it was broken from earthdash");
+                    broken = true;
+                    DebugHelper.Log(this.gameObject + " is being destroyed because it was broken from earthdash");
+                    Destroy(gameObject, timeToDestroyAfterBreak);
+                }
             }
             else if(oscillateHorizontally || oscillateVertically)
             {
