@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    PlayerState player;    
+    PlayerState player;
+    Health health;    
 
     public Vector3 position;
 
@@ -12,6 +13,7 @@ public class Checkpoint : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<PlayerState>();
+        health = FindObjectOfType<Health>();
         position = transform.position;
     }
 
@@ -23,7 +25,8 @@ public class Checkpoint : MonoBehaviour
         {
             if (other.gameObject == player.gameObject)
             {                
-                player.currentCheckpoint = position;
+                //use variable in health script to handle checkpoints because that's where we're handling respawning
+                health.currentCheckpoint = position;
                 DebugHelper.Log("New save at " + position);
                 player.Save();
             }

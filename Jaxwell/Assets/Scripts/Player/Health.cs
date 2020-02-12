@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    PlayerState player;
+    Rigidbody2D rigidbody;
+
+    public Vector3 currentCheckpoint;
 
     public bool dead = false;
 
@@ -13,8 +15,10 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        player = FindObjectOfType<PlayerState>();
+        rigidbody = GetComponent<Rigidbody2D>();
         initialHealth = health;
+        //add a safety checkpoint where the object starts
+        currentCheckpoint = transform.position;
     }
 
     public void TakeDamage(int damage)
@@ -26,7 +30,7 @@ public class Health : MonoBehaviour
             dead = true;
             DebugHelper.Log(this.gameObject + " died at " + transform.position + "!");
             //DEAD STUFF
-            Respawn(player.currentCheckpoint);
+            Respawn(currentCheckpoint);
         }
     }
 
@@ -44,7 +48,10 @@ public class Health : MonoBehaviour
 
         //reset health and move player to respawn location
         ResetHealth();
-        player.transform.position = respawnPosition;
+        //reset speed of the object
+        rigidbody.velocity = new Vector2(0, 0);
+        //reset position to the respawn position
+        transform.position = respawnPosition;
 
         DebugHelper.Log(this.gameObject + " respawned at " + respawnPosition);
     }
