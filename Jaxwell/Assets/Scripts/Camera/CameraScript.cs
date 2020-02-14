@@ -11,15 +11,26 @@ public class CameraScript : MonoBehaviour
     public float orthographicCameraSizeOnToggle = 25.0f;
     private float originalOrthographicCameraSize;
 
+    PlayerState playerState;
+
     bool cameraSizeToggled = false;
 
     //change as needed
     public float height = -10.0f;
 
+    float shakeDistanceX = 0.2f;
+    float shakeDistanceY = 0.2f;
+    [SerializeField] float shakeDuration = 0.1f;
+    float tempShakeDuration;
+    bool cameraShake = false;
+
     void Start()
     {
         mainCamera = this.GetComponent<Camera>();
         originalOrthographicCameraSize = mainCamera.orthographicSize;
+        tempShakeDuration = shakeDuration;
+
+        playerState = player.GetComponent<PlayerState>();
     }
 
     void Update()
@@ -42,5 +53,33 @@ public class CameraScript : MonoBehaviour
                 cameraSizeToggled = false;
             }
         }
+
+        //if we dashed a distance of more than 1.0f
+        if(EarthDash.earthDashEnded && playerState.element == Elements.elements.earth && EarthDash.heightDashedAt - player.position.y > 1.0f)
+        {
+            if (tempShakeDuration > 0)
+            {
+                CameraShake(shakeDistanceX, shakeDistanceY);
+
+                tempShakeDuration -= Time.deltaTime;
+            }
+        }
+
+        //reset the duration after we change out of earth
+        if(playerState.element != Elements.elements.earth && tempShakeDuration <= 0)
+        {
+            tempShakeDuration = shakeDuration;
+        }
+    }
+
+    void CameraShake(float distanceX, float distanceY)
+    {
+        float rdistanceX = Random.Range(-distanceX, distanceX);
+        float rdistanceY = Random.Range(-distanceY, distanceY);
+        
+        float floatX = transform.position.x + rdistanceX;
+        float floatY = transform.position.y + rdistanceY;
+        transform.position = new Vector3(floatX, floatY, height);
+        DebugHelper.Log("Camera shook with " + rdistanceX + " as the X value and " + rdistanceY + " as the Y value");
     }
 }
