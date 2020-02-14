@@ -57,6 +57,11 @@ public class CameraScript : MonoBehaviour
         //if we dashed a distance of more than 1.0f
         if(EarthDash.earthDashEnded && playerState.element == Elements.elements.earth && EarthDash.heightDashedAt - player.position.y > 1.0f)
         {
+            cameraShake = true;
+        }
+
+        if(cameraShake)
+        {
             if (tempShakeDuration > 0)
             {
                 CameraShake(shakeDistanceX, shakeDistanceY);
@@ -64,11 +69,11 @@ public class CameraScript : MonoBehaviour
                 tempShakeDuration -= Time.deltaTime;
             }
         }
-
         //reset the duration after we change out of earth
         if(playerState.element != Elements.elements.earth && tempShakeDuration <= 0)
         {
             tempShakeDuration = shakeDuration;
+            cameraShake = false;
         }
     }
 
@@ -79,6 +84,7 @@ public class CameraScript : MonoBehaviour
         
         float floatX = transform.position.x + rdistanceX;
         float floatY = transform.position.y + rdistanceY;
+
         transform.position = new Vector3(floatX, floatY, height);
         DebugHelper.Log("Camera shook with " + rdistanceX + " as the X value and " + rdistanceY + " as the Y value");
     }

@@ -66,6 +66,8 @@ public class InputManager : MonoBehaviour
                     //if we aren't in earth already, earth dash
                     if (playerState.element != Elements.elements.earth)
                     {
+                        EarthDash.heightDashedAt = transform.position.y;
+                        DebugHelper.Log("Y coordinate when we dashed was " + EarthDash.heightDashedAt);
                         EarthDash.pressedDashToEarth = true;
                     }
 

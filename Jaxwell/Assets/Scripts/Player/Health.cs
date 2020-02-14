@@ -5,6 +5,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     Rigidbody2D rigidbody;
+    PlayerState player;
 
     public Vector3 currentCheckpoint;
 
@@ -16,6 +17,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        player = GetComponent<PlayerState>();
         initialHealth = health;
         //add a safety checkpoint where the object starts
         currentCheckpoint = transform.position;
@@ -44,8 +46,8 @@ public class Health : MonoBehaviour
 
     void Respawn(Vector3 respawnPosition)
     {
-        //TODO: ADD ELEMENT WE WANT TO RESPAWN AS
-
+        //respawn player as water for now
+        player.pressedWater = true;
         //reset health and move player to respawn location
         ResetHealth();
         //reset speed of the object

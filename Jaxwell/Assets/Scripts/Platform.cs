@@ -116,6 +116,7 @@ public class Platform : Elements
                 //check we travelled the distance we want and if we did break the platform
                 if (EarthDash.heightDashedAt - heightDashEnded >= dashDistanceRequiredToBreak)
                 {
+                    EarthDash.earthDashEnded = true;
                     p_collider.enabled = false;
                     DebugHelper.Log(this.gameObject + " had collision disabled because it was broken from earthdash");
                     broken = true;
