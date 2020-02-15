@@ -72,6 +72,7 @@ public class PlayerState : Elements
         }
         if (SaveManager.currentSavePath != null)
         {
+            //save at the start of the level
             Save();
         }
     }
