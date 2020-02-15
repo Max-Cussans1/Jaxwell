@@ -43,8 +43,6 @@ public class EarthDash : MonoBehaviour
     {
         if(pressedDashToEarth && !forceApplied && playerstate.element == Elements.elements.earth)
         {
-            heightDashedAt = transform.position.y;
-            DebugHelper.Log("Y coordinate when we dashed was " + heightDashedAt);
             DashToEarth(p_rigidbody, earthDashSpeed);
             forceApplied = true;
             pressedDashToEarth = false;
