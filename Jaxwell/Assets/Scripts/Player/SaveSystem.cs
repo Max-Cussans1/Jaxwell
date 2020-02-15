@@ -5,12 +5,10 @@ using UnityEngine;
 public static class SaveSystem
 {
 
-    public static void Save(PlayerState player)
+    public static void Save(PlayerState player, string path)
     {
         //use binary formatters for saving since it's difficult to edit
         BinaryFormatter formatter = new BinaryFormatter();
-        //unity function that gets a persistent data path regardless of OS, create save and file extension
-        string path = Application.persistentDataPath + "/save1.jxw";
 
         if (File.Exists(path))
         {

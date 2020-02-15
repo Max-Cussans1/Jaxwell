@@ -27,7 +27,6 @@ public class ScenePortal : MonoBehaviour
                 {
                     DebugHelper.Log("Entered scene transition from " + SceneManager.GetActiveScene().name + " to " + destinationScene);
                     SceneManager.LoadScene(destinationScene);
-                    player.Save();
                 }
                 else
                 {

@@ -13,7 +13,7 @@ public class Checkpoint : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<PlayerState>();
-        health = FindObjectOfType<Health>();
+        health = player.GetComponent<Health>();
         position = transform.position;
     }
 
@@ -27,8 +27,12 @@ public class Checkpoint : MonoBehaviour
             {                
                 //use variable in health script to handle checkpoints because that's where we're handling respawning
                 health.currentCheckpoint = position;
-                DebugHelper.Log("New save at " + position);
-                player.Save();
+                player.currentCheckpointSave = position;
+                DebugHelper.Log("New checkpoint at " + position);
+                if (SaveManager.currentSavePath != null)
+                {
+                    player.Save();
+                }
             }
         }
     }

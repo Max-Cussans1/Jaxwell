@@ -5,12 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerState : Elements
 {
-    string saveFilePath;
     //change to the element we want to start with in editor
     public elements element = 0;
     elements platformElement;
-
-    [SerializeField] bool loadCheckpointFromSavedScene = false;
 
     [SerializeField] float fireMaxSpeed = 3.0f;
     [SerializeField] float fireAcceleration = 0.3f;
@@ -36,21 +33,14 @@ public class PlayerState : Elements
     public bool pressedEarth = false;
     public bool pressedAir = false;
 
-    public Vector3 currentCheckpoint;
+    public Vector3 currentCheckpointSave;
 
     void Start()
-    {
-        saveFilePath = SaveManager.currentSavePath;
-
-        currentCheckpoint = transform.position;
+    {        
+        currentCheckpointSave = transform.position;
         //temp solution changing colour until we get sprites/anims
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         moveScript = GetComponent<MoveScript>();
-
-        if (loadCheckpointFromSavedScene)
-        {
-            Load();
-        }
 
         if (element == elements.fire)
         {
@@ -75,7 +65,15 @@ public class PlayerState : Elements
             ChangeMovementProperties(airMaxSpeed, airAcceleration, airDeceleration);
             p_spriteRenderer.color = Color.gray;
         }
-
+        if(SaveManager.loadingGame)
+        {
+            transform.position = SaveManager.position;
+            SaveManager.loadingGame = false;
+        }
+        if (SaveManager.currentSavePath != null)
+        {
+            Save();
+        }
     }
 
     // Update is called once per frame
@@ -128,30 +126,6 @@ public class PlayerState : Elements
 
     public void Save()
     {
-        SaveSystem.Save(this);
-    }
-
-    void Load()
-    {
-        PlayerData data = SaveSystem.Load(saveFilePath);        
-        //temp initialization
-        Vector3 position = currentCheckpoint;
-        //if we have a save file
-        if (data != null)
-        {
-            //if the scene loaded isn't the current scene in the save file, load the scene in the save file
-            if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName(data.sceneName))
-            {
-                DebugHelper.Log("Loaded scene from the save file, uncheck loadCheckpointFromSavedScene in the PlayerState script if this was not intended");
-                SceneManager.LoadScene(data.sceneName);
-            }
-            element = (elements)data.element;
-
-            position.x = data.position[0];
-            position.y = data.position[1];
-            position.z = data.position[2];
-        }
-
-        transform.position = position;
+        SaveSystem.Save(this, SaveManager.currentSavePath);
     }
 }

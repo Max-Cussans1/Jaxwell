@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class NewGameMenu : MonoBehaviour
+public class ContinueMenu : MonoBehaviour
 {
-    public GameObject confirmationScreen;
-    public Text confirmationScreenText;
-
     public static string savePath1;
     public static string savePath2;
     public static string savePath3;
@@ -38,7 +35,7 @@ public class NewGameMenu : MonoBehaviour
         save2 = SaveSystem.Load(savePath2);
         save3 = SaveSystem.Load(savePath3);
 
-        if(save1 != null)
+        if (save1 != null)
         {
             saveText1.text = save1.sceneName;
             save1Empty = false;
@@ -62,16 +59,38 @@ public class NewGameMenu : MonoBehaviour
         SceneManager.LoadScene("Level_001");
     }
 
+    public void LoadGame()
+    {
+         PlayerData save = SaveSystem.Load(SaveManager.currentSavePath);
+
+         //if we have a save file
+         if (save != null)
+         {
+            SaveManager.loadingGame = true;
+
+            SaveManager.position.x = save.position[0];
+            SaveManager.position.y = save.position[1];
+            SaveManager.position.z = save.position[2];
+
+            //if the scene loaded isn't the current scene in the save file, load the scene in the save file
+            if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName(save.sceneName))
+             {
+                 DebugHelper.Log("Loaded scene from the save file " + SaveManager.currentSavePath);
+                 SceneManager.LoadScene(save.sceneName);
+             }
+         
+         }         
+    }
+
     public void Save1Chosen()
     {
         SaveManager.currentSavePath = savePath1;
         if (!save1Empty)
         {
-            confirmationScreen.SetActive(true);
-            confirmationScreenText.text = "Are you sure you want to overwrite the save slot in save slot 1?";
+            LoadGame();
         }
         else
-        {            
+        {
             NewGame();
             DebugHelper.Log("No save slot in save 1, starting new game with the savepath " + savePath1);
         }
@@ -82,11 +101,10 @@ public class NewGameMenu : MonoBehaviour
         SaveManager.currentSavePath = savePath2;
         if (!save2Empty)
         {
-            confirmationScreen.SetActive(true);
-            confirmationScreenText.text = "Are you sure you want to overwrite the save slot in save slot 2?";
+            LoadGame();
         }
         else
-        {            
+        {
             NewGame();
             DebugHelper.Log("No save slot in save 2, starting new game with the savepath " + savePath2);
         }
@@ -97,11 +115,10 @@ public class NewGameMenu : MonoBehaviour
         SaveManager.currentSavePath = savePath3;
         if (!save3Empty)
         {
-            confirmationScreen.SetActive(true);
-            confirmationScreenText.text = "Are you sure you want to overwrite the save slot in save slot 3?";
+            LoadGame();
         }
         else
-        {            
+        {
             NewGame();
             DebugHelper.Log("No save slot in save 3, starting new game with the savepath " + savePath3);
         }

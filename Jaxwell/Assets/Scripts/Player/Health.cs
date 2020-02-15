@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    Rigidbody2D rigidbody;
+    Rigidbody2D rb;
     PlayerState player;
 
     public Vector3 currentCheckpoint;
@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         player = GetComponent<PlayerState>();
         initialHealth = health;
         //add a safety checkpoint where the object starts
@@ -51,7 +51,7 @@ public class Health : MonoBehaviour
         //reset health and move player to respawn location
         ResetHealth();
         //reset speed of the object
-        rigidbody.velocity = new Vector2(0, 0);
+        rb.velocity = new Vector2(0, 0);
         //reset position to the respawn position
         transform.position = respawnPosition;
 
