@@ -4,12 +4,13 @@ using UnityEngine;
 
 public static class SaveSystem
 {
+
     public static void Save(PlayerState player)
     {
         //use binary formatters for saving since it's difficult to edit
         BinaryFormatter formatter = new BinaryFormatter();
         //unity function that gets a persistent data path regardless of OS, create save and file extension
-        string path = Application.persistentDataPath + "/player.jxw";
+        string path = Application.persistentDataPath + "/save1.jxw";
 
         if (File.Exists(path))
         {
@@ -58,7 +59,7 @@ public static class SaveSystem
         }
         else
         {
-            DebugHelper.Log("No save file found in " + path + ", loading a new game");
+            DebugHelper.Log("No save file found in " + path);
             return null;
         }
     }

@@ -40,7 +40,7 @@ public class PlayerState : Elements
 
     void Start()
     {
-        saveFilePath = Application.persistentDataPath + "/player.jxw";
+        saveFilePath = SaveManager.currentSavePath;
 
         currentCheckpoint = transform.position;
         //temp solution changing colour until we get sprites/anims
