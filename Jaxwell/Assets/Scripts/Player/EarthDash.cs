@@ -41,7 +41,7 @@ public class EarthDash : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(pressedDashToEarth && !forceApplied && playerstate.element == Elements.elements.earth)
+        if(pressedDashToEarth && !forceApplied)
         {
             DashToEarth(p_rigidbody, earthDashSpeed);
             forceApplied = true;

@@ -9,11 +9,14 @@ public class InputManager : MonoBehaviour
     JumpScript jumpScript;
     PlayerState playerState;
     WallClimb wallClimb;
+    Rigidbody2D p_rigidbody;
 
     public bool disableFireInput = false;
     public bool disableWaterInput = false;
     public bool disableEarthInput = false;
     public bool disableAirInput = false;
+
+    public static bool preJump = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,7 @@ public class InputManager : MonoBehaviour
         jumpScript = GetComponent<JumpScript>();
         playerState = GetComponent<PlayerState>();    
         wallClimb = GetComponent<WallClimb>();
+        p_rigidbody = GetComponent<Rigidbody2D>();
 
         DebugHelper.Log("Fire input = " + !disableFireInput + ". If this was unintended check the variables on the InputManager script");
         DebugHelper.Log("Water input = " + !disableWaterInput + ". If this was unintended check the variables on the InputManager script");
@@ -107,11 +111,17 @@ public class InputManager : MonoBehaviour
                     wallClimb.pressedWallJump = true;
                 }
 
-                //if we're in pre-jump range (about to land)
-                if(CollisionManager.preJump)
+                //when we're falling check if we can pre-jump
+                if (p_rigidbody.velocity.y < 0 && !CollisionManager.isGrounded && !WallClimb.grabbing && playerState.element != Elements.elements.earth)
                 {
-                    jumpScript.pressedPreJump = true;
+                    preJump = true;
                 }
+
+                if (CollisionManager.isGrounded || playerState.element == Elements.elements.earth)
+                {
+                    preJump = false;
+                }
+
             }
 
             if (Input.GetKeyDown("`"))

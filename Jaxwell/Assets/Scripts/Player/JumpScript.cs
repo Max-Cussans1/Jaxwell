@@ -5,6 +5,8 @@ using UnityEngine;
 public class JumpScript : MonoBehaviour
 {
     [SerializeField] float jumpHeight = 15.0f;
+    [SerializeField] float preJumpTime = 0.2f;
+    float tempPreJumpTime;
 
     PlayerState playerstate;
     Rigidbody2D p_rigidbody;
@@ -21,6 +23,7 @@ public class JumpScript : MonoBehaviour
     {
         p_rigidbody = GetComponent<Rigidbody2D>();
         playerstate = GetComponent<PlayerState>();
+        tempPreJumpTime = preJumpTime;
     }
 
     // Update is called once per frame
@@ -31,9 +34,19 @@ public class JumpScript : MonoBehaviour
             usedAirJump = false;
         }
 
-        if(CollisionManager.isGrounded && pressedPreJump)
+        if(CollisionManager.isGrounded && InputManager.preJump)
         {
             preJump = true;
+        }
+
+        if(InputManager.preJump)
+        {
+            tempPreJumpTime -= Time.deltaTime;
+            if(tempPreJumpTime <= 0)
+            {
+                tempPreJumpTime = preJumpTime;
+                InputManager.preJump = false;
+            }
         }
     }
 
@@ -44,7 +57,8 @@ public class JumpScript : MonoBehaviour
         {
             DebugHelper.Log("Jumping from pre-jump");
             Jump(jumpHeight);
-            pressedPreJump = false;
+            InputManager.preJump = false;
+            tempPreJumpTime = preJumpTime;
             preJump = false;
             pressedJump = false;
             CollisionManager.jumped = true;
