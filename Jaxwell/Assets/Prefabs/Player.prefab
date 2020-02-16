@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 2930405940970940908}
   - component: {fileID: 73580602}
   - component: {fileID: 73580601}
+  - component: {fileID: 5279375911639913464}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -155,7 +156,6 @@ MonoBehaviour:
   maxSpeed: 3
   acceleration: 0.3
   deceleration: 0.1
-  direction: 1
 --- !u!114 &2930405940970940900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coyoteTime: 0.1
-  preJumpDistanceModifier: 3
-  drawPreJumpRaycastDebug: 0
   drawGroundedRaycastDebug: 0
   drawWallCheckRaycastDebug: 0
 --- !u!114 &2930405940970940907
@@ -204,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 45
+  preJumpTime: 0.2
   pressedAirJump: 0
   usedAirJump: 0
   pressedJump: 0
@@ -237,7 +236,7 @@ MonoBehaviour:
   pressedWater: 0
   pressedEarth: 0
   pressedAir: 0
-  currentCheckpoint: {x: 0, y: 0, z: 0}
+  currentCheckpointSave: {x: 0, y: 0, z: 0}
 --- !u!114 &2930405940970940909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToWaitBeforeSliding: 0.5
+  timeToUnstick: 0.5
   grabbingFallSpeed: -0.7
   wallJumpHeight: 20
   wallJumpHorizontalForce: 25
@@ -300,3 +300,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d851582ab7a4240aca1ec1561a37b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableFireInput: 0
+  disableWaterInput: 0
+  disableEarthInput: 0
+  disableAirInput: 0
+--- !u!114 &5279375911639913464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2930405940970940903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b2dfb4a8a240d478d708bc005990df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCheckpoint: {x: 0, y: 0, z: 0}
+  dead: 0
+  health: 100
