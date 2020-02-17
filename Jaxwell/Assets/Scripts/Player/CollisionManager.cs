@@ -49,14 +49,15 @@ public class CollisionManager : MonoBehaviour
             groundedLastFrame = true;
         }
 
-        if(!isGrounded)
+        if(!isGrounded && groundedLastFrame)
         {
-            i++;
+            //i is the buffer for the frame, increment only if we're not grounded this frame
             if(i == 1)
             {
                 groundedLastFrame = false;
                 i = 0;
             }
+            i++;
         }
 
         if (coyoteTimeActive)
@@ -201,7 +202,7 @@ public class CollisionManager : MonoBehaviour
         //if we're not grounded or against any walls after doing a ground check enable coyote time
         if(groundedLastFrame && !isGroundedCheck && !isAgainstWallLeft && !isAgainstWallRight)
         {
-            DebugHelper.Log("Raycasts to check if we're grounded from " + p_collider.gameObject + " didn't hit anything, enabling coyote time");
+            DebugHelper.Log("Raycasts to check if we're grounded from " + p_collider.gameObject + " didn't hit anything and we were grounded last frame, enabling coyote time");
             coyoteTimeActive = true;
         }
         return isGroundedCheck;

@@ -64,16 +64,21 @@ public class CameraScript : MonoBehaviour
         {
             if (tempShakeDuration > 0)
             {
+                DebugHelper.Log("Camera started shaking");
                 CameraShake(shakeDistanceX, shakeDistanceY);
 
                 tempShakeDuration -= Time.deltaTime;
             }
         }
+        if(tempShakeDuration < 0)
+        {
+            cameraShake = false;
+            DebugHelper.Log("Camera stopped shaking");
+        }
         //reset the duration after we change out of earth
-        if(playerState.element != Elements.elements.earth && cameraShake)
+        if(playerState.element != Elements.elements.earth && !cameraShake)
         {
             tempShakeDuration = shakeDuration;
-            cameraShake = false;
         }
     }
 
