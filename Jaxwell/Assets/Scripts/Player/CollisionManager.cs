@@ -20,8 +20,10 @@ public class CollisionManager : MonoBehaviour
 
     float tempCoyoteTime;
     bool coyoteTimeActive = false;
+    bool groundedLastFrame = false;
     public static bool jumped = false;
     public static bool preJump = false;
+    private int i = 0;
 
     BoxCollider2D p_collider;
     Rigidbody2D p_rigidbody;
@@ -42,6 +44,21 @@ public class CollisionManager : MonoBehaviour
 
     void Update()
     {
+        if(isGrounded)
+        {
+            groundedLastFrame = true;
+        }
+
+        if(!isGrounded)
+        {
+            i++;
+            if(i == 1)
+            {
+                groundedLastFrame = false;
+                i = 0;
+            }
+        }
+
         if (coyoteTimeActive)
         {
             DebugHelper.Log("Coyote time is active");
@@ -182,7 +199,7 @@ public class CollisionManager : MonoBehaviour
             }
         }
         //if we're not grounded or against any walls after doing a ground check enable coyote time
-        if(!isGroundedCheck && !isAgainstWallLeft && !isAgainstWallRight)
+        if(groundedLastFrame && !isGroundedCheck && !isAgainstWallLeft && !isAgainstWallRight)
         {
             DebugHelper.Log("Raycasts to check if we're grounded from " + p_collider.gameObject + " didn't hit anything, enabling coyote time");
             coyoteTimeActive = true;

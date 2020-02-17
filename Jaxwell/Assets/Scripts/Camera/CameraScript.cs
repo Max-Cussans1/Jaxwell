@@ -54,8 +54,8 @@ public class CameraScript : MonoBehaviour
             }
         }
 
-        //if we dashed a distance of more than 1.0f
-        if(EarthDash.earthDashEnded && playerState.element == Elements.elements.earth && EarthDash.heightDashedAt - player.position.y > 1.0f)
+        //if we dashed a distance of more than 1.0f and are grounded
+        if(EarthDash.earthDashEnded && playerState.element == Elements.elements.earth && CollisionManager.isGrounded && EarthDash.heightDashedAt - player.position.y > 1.0f)
         {
             cameraShake = true;
         }
@@ -70,7 +70,7 @@ public class CameraScript : MonoBehaviour
             }
         }
         //reset the duration after we change out of earth
-        if(playerState.element != Elements.elements.earth && tempShakeDuration <= 0)
+        if(playerState.element != Elements.elements.earth && cameraShake)
         {
             tempShakeDuration = shakeDuration;
             cameraShake = false;
