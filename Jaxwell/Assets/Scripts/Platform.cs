@@ -124,7 +124,7 @@ public class Platform : Elements
                     Destroy(gameObject, timeToDestroyAfterBreak);
                 }
             }
-            else if(oscillateHorizontally || oscillateVertically)
+            else if(CollisionManager.groundedObject == this.gameObject && (oscillateHorizontally || oscillateVertically))
             {
                 collision.transform.parent = this.transform;
                 DebugHelper.Log("Player transform is being parented by " + this.gameObject + " because it is oscillating");
