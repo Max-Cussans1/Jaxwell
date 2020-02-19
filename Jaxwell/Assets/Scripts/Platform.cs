@@ -2,12 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Platform : Elements
 {
     BoxCollider2D p_collider;
     GameObject player;
     BoxCollider2D player_collider;
     PlayerState playerstate;
+
+    [SerializeField] bool levelDesignDebug = false;
+
+    //variables to store the current coords to get the debug values
+    Vector2 topL;
+    Vector2 topR;
+    Vector2 bottomL;
+    Vector2 bottomR;
+
+    //variables for debug boxes
+    Vector2 vUpTopR;
+    Vector2 vUpTopL;
+    Vector2 vUpBottomR;
+    Vector2 vUpBottomL;
+
+    Vector2 vDownTopR;
+    Vector2 vDownTopL;
+    Vector2 vDownBottomR;
+    Vector2 vDownBottomL;
+
+    Vector2 hLeftTopR;
+    Vector2 hLeftTopL;
+    Vector2 hLeftBottomR;
+    Vector2 hLeftBottomL;
+
+    Vector2 hRightTopR;
+    Vector2 hRightTopL;
+    Vector2 hRightBottomR;
+    Vector2 hRightBottomL;
+
 
     float rangeToCollide;
     float startX;
@@ -86,6 +117,16 @@ public class Platform : Elements
                     DebugHelper.Log(this.gameObject + " had collider disabled because player is a different element and in range");
                 }
             }
+        }
+
+        if(levelDesignDebug)
+        {
+            topL = new Vector2(transform.position.x - (transform.localScale.x) / 2, transform.position.y + (transform.localScale.y) / 2);
+            topR = new Vector2(transform.position.x + (transform.localScale.x) / 2, transform.position.y + (transform.localScale.y) / 2);
+            bottomL = new Vector2(transform.position.x - (transform.localScale.x) / 2, transform.position.y - (transform.localScale.y) / 2);
+            bottomR = new Vector2(transform.position.x + (transform.localScale.x) / 2, transform.position.y - (transform.localScale.y) / 2);
+
+            DrawPlatformOscillationDebug();
         }
     }
 
@@ -235,6 +276,53 @@ public class Platform : Elements
                     delay = horizontalOscillationPauseTime;
                 }
             }
+        }
+    }
+
+    void DrawPlatformOscillationDebug()
+    {
+        if (oscillateVertically)
+        {
+            //get the coords for top and bottom boxes (where the platforms will be after oscillating)
+            vUpTopL = new Vector2(topL.x, topL.y + verticalOscillationDistance);
+            vUpTopR = new Vector2(topR.x, topR.y + verticalOscillationDistance);
+            vUpBottomL = new Vector2(bottomL.x, bottomL.y + verticalOscillationDistance);
+            vUpBottomR = new Vector2(bottomR.x, bottomR.y + verticalOscillationDistance);
+
+            vDownTopL = new Vector2(topL.x, topL.y - verticalOscillationDistance);
+            vDownTopR = new Vector2(topR.x, topR.y - verticalOscillationDistance);
+            vDownBottomL = new Vector2(bottomL.x, bottomL.y - verticalOscillationDistance);
+            vDownBottomR = new Vector2(bottomR.x, bottomR.y - verticalOscillationDistance);
+
+            //platform at top of its oscillation
+            Debug.DrawRay(transform.position, Vector2.up * verticalOscillationDistance, Color.yellow, 0.0f);
+
+            DebugHelper.DrawBox(vUpTopL, vUpTopR, vUpBottomL, vUpBottomR, Color.green);
+            DebugHelper.DrawBox(vDownTopL, vDownTopR, vDownBottomL, vDownBottomR, Color.red);
+
+            //platform at bottom of its oscillation
+            Debug.DrawRay(transform.position, -Vector2.up * verticalOscillationDistance, Color.yellow, 0.0f);
+        }
+        if(oscillateHorizontally)
+        {
+            hLeftTopL = new Vector2(topL.x - horizontalOscillationDistance, topL.y);
+            hLeftTopR = new Vector2(topR.x - horizontalOscillationDistance, topR.y);
+            hLeftBottomL = new Vector2(bottomL.x - horizontalOscillationDistance, bottomL.y);
+            hLeftBottomR = new Vector2(bottomR.x - horizontalOscillationDistance, bottomR.y);
+
+            hRightTopL = new Vector2(topL.x + horizontalOscillationDistance, topL.y);
+            hRightTopR = new Vector2(topR.x + horizontalOscillationDistance, topR.y);
+            hRightBottomL = new Vector2(bottomL.x + horizontalOscillationDistance, bottomL.y);
+            hRightBottomR = new Vector2(bottomR.x + horizontalOscillationDistance, bottomR.y);
+
+            //platform at left of its oscillation
+            Debug.DrawRay(transform.position, Vector2.right * horizontalOscillationDistance, Color.yellow, 0.0f);
+
+            DebugHelper.DrawBox(hLeftTopL, hLeftTopR, hLeftBottomL, hLeftBottomR, Color.red);
+            DebugHelper.DrawBox(hRightTopL, hRightTopR, hRightBottomL, hRightBottomR, Color.green);
+
+            //platform at right of its oscillation
+            Debug.DrawRay(transform.position, -Vector2.right * horizontalOscillationDistance, Color.yellow, 0.0f);
         }
     }
 
