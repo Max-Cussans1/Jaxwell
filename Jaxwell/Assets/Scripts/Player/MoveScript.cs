@@ -79,7 +79,7 @@ public class MoveScript : MonoBehaviour
     //function to move right
     void AccelerateRight(Rigidbody2D rigidbody, float accelerationValue, float maximumSpeed)
     {
-        if (rigidbody.velocity.x < 0)
+        if (rigidbody.velocity.x < 0 && !WallClimb.ignoreDecelerationForWallJump)
         {
             rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         }
@@ -98,7 +98,7 @@ public class MoveScript : MonoBehaviour
     //function to move left
     void AccelerateLeft(Rigidbody2D rigidbody, float accelerationValue, float maximumSpeed)
     {
-        if(rigidbody.velocity.x > 0)
+        if(rigidbody.velocity.x > 0&& !WallClimb.ignoreDecelerationForWallJump)
         {
             rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         }
