@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveScript : MonoBehaviour
 {
     public float maxSpeed = 3.0f;
+    float tempMaxSpeed;
     public float acceleration = 0.3f;
     public float deceleration = 0.3f;
 
@@ -32,8 +33,19 @@ public class MoveScript : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
         {
             movingRight = true;
+
             if (!WallClimb.grabbing)
             {
+                //if we're using joystick to getaxis (Keys are also used to determine input.getaxis) limit max speed based on joystick position
+                if ((!Input.GetKey(KeyCode.D) && Input.GetAxis("Horizontal") > 0))
+                {
+                    tempMaxSpeed = maxSpeed * Input.GetAxis("Horizontal");
+                }
+                else
+                {
+                    tempMaxSpeed = maxSpeed;
+                }
+
                 acceleratingRight = true;
             }
         }
@@ -45,8 +57,19 @@ public class MoveScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
         {
             movingRight = false;
+
             if (!WallClimb.grabbing)
             {
+                //if we're using joystick to getaxis (Keys are also used to determine input.getaxis) limit max speed based on joystick position
+                if ((!Input.GetKey(KeyCode.A) && Input.GetAxis("Horizontal") < 0))
+                {
+                    tempMaxSpeed = maxSpeed * -Input.GetAxis("Horizontal");
+                }
+                else
+                {
+                    tempMaxSpeed = maxSpeed;
+                }
+
                 acceleratingLeft = true;
             }
         }
@@ -60,25 +83,27 @@ public class MoveScript : MonoBehaviour
     void FixedUpdate()
     {
         //handle movement in fixedupdate to be consistent at all framerates
-        if(acceleratingRight && !dashScript.dashing)
+        if (acceleratingRight && !dashScript.dashing)
         {
-            AccelerateRight(p_rigidbody, acceleration, maxSpeed);
+            AccelerateRight(p_rigidbody, acceleration, tempMaxSpeed);
         }
 
-        if(acceleratingLeft && !dashScript.dashing)
+        if (acceleratingLeft && !dashScript.dashing)
         {
-            AccelerateLeft(p_rigidbody, acceleration, maxSpeed);
+            AccelerateLeft(p_rigidbody, acceleration, tempMaxSpeed);
         }
 
         if(!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
         {
             Decelerate(p_rigidbody, deceleration);
         }
+
     }
 
     //function to move right
     void AccelerateRight(Rigidbody2D rigidbody, float accelerationValue, float maximumSpeed)
     {
+        //if we're moving left and want to accelerate right reset speed
         if (rigidbody.velocity.x < 0 && !WallClimb.ignoreDecelerationForWallJump)
         {
             rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
@@ -86,7 +111,7 @@ public class MoveScript : MonoBehaviour
         //check if we're going above top speed and set it to top speed if we are
         if (rigidbody.velocity.x + accelerationValue > maximumSpeed)
         {
-            rigidbody.velocity = new Vector2(maxSpeed, rigidbody.velocity.y);
+            rigidbody.velocity = new Vector2(maximumSpeed, rigidbody.velocity.y);
         }
         else
         {
@@ -98,14 +123,15 @@ public class MoveScript : MonoBehaviour
     //function to move left
     void AccelerateLeft(Rigidbody2D rigidbody, float accelerationValue, float maximumSpeed)
     {
-        if(rigidbody.velocity.x > 0&& !WallClimb.ignoreDecelerationForWallJump)
+        //if we're moving right and want to accelerate left reset speed
+        if(rigidbody.velocity.x > 0 && !WallClimb.ignoreDecelerationForWallJump)
         {
             rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         }
         //check if we're going above top speed and set it to top speed if we are
         if (rigidbody.velocity.x - accelerationValue < -maximumSpeed)
         {
-            rigidbody.velocity = new Vector2(-maxSpeed, rigidbody.velocity.y);
+            rigidbody.velocity = new Vector2(-maximumSpeed, rigidbody.velocity.y);
         }
         else
         {
