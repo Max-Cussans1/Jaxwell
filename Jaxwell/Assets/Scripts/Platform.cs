@@ -308,12 +308,11 @@ public class Platform : Elements
 
             //platform at top of its oscillation
             Debug.DrawRay(transform.position, Vector2.up * verticalOscillationDistance, Color.yellow, 0.0f);
-
             DebugHelper.DrawBox(vUpTopL, vUpTopR, vUpBottomL, vUpBottomR, Color.green);
-            DebugHelper.DrawBox(vDownTopL, vDownTopR, vDownBottomL, vDownBottomR, Color.red);
 
             //platform at bottom of its oscillation
             Debug.DrawRay(transform.position, -Vector2.up * verticalOscillationDistance, Color.yellow, 0.0f);
+            DebugHelper.DrawBox(vDownTopL, vDownTopR, vDownBottomL, vDownBottomR, Color.red);
         }
         if(oscillateHorizontally)
         {
@@ -329,12 +328,11 @@ public class Platform : Elements
 
             //platform at left of its oscillation
             Debug.DrawRay(transform.position, Vector2.right * horizontalOscillationDistance, Color.yellow, 0.0f);
-
             DebugHelper.DrawBox(hLeftTopL, hLeftTopR, hLeftBottomL, hLeftBottomR, Color.red);
-            DebugHelper.DrawBox(hRightTopL, hRightTopR, hRightBottomL, hRightBottomR, Color.green);
 
             //platform at right of its oscillation
             Debug.DrawRay(transform.position, -Vector2.right * horizontalOscillationDistance, Color.yellow, 0.0f);
+            DebugHelper.DrawBox(hRightTopL, hRightTopR, hRightBottomL, hRightBottomR, Color.green);
         }
     }
 
