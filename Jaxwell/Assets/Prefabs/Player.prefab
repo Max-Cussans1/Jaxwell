@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashSpeed: 70
-  dashCooldown: 0
+  dashCooldown: 2
   dashDuration: 0.3
   dashing: 0
   canDash: 0
