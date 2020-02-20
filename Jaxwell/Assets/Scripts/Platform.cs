@@ -173,6 +173,18 @@ public class Platform : Elements
         }
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject == player)
+        {
+            if (WallClimb.grabbing && (oscillateHorizontally || oscillateVertically))
+            {
+                collision.transform.parent = this.transform;
+                DebugHelper.Log("Player transform is being parented by " + this.gameObject + " because it is oscillating and player is grabbing");
+            }
+        }
+    }
+
     void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject == player)
