@@ -18,12 +18,16 @@ public class MoveScript : MonoBehaviour
     Rigidbody2D p_rigidbody;
     DashScript dashScript;
 
+    //animator
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         //cache rigidbody at the start of the game
         p_rigidbody = GetComponent<Rigidbody2D>();
         dashScript = GetComponent<DashScript>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -33,6 +37,7 @@ public class MoveScript : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
         {
             movingRight = true;
+            animator.SetBool("moveRight", movingRight);
 
             if (!WallClimb.grabbing)
             {
@@ -46,6 +51,8 @@ public class MoveScript : MonoBehaviour
                     tempMaxSpeed = maxSpeed;
                 }
 
+                animator.SetFloat("Speed", tempMaxSpeed);
+
                 acceleratingRight = true;
             }
         }
@@ -57,6 +64,7 @@ public class MoveScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
         {
             movingRight = false;
+            animator.SetBool("moveRight", movingRight);
 
             if (!WallClimb.grabbing)
             {
@@ -86,16 +94,21 @@ public class MoveScript : MonoBehaviour
         if (acceleratingRight && !dashScript.dashing)
         {
             AccelerateRight(p_rigidbody, acceleration, tempMaxSpeed);
+
+            animator.SetFloat("Speed", tempMaxSpeed);
         }
 
         if (acceleratingLeft && !dashScript.dashing)
         {
             AccelerateLeft(p_rigidbody, acceleration, tempMaxSpeed);
+
+            animator.SetFloat("Speed", tempMaxSpeed);
         }
 
         if(!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
         {
             Decelerate(p_rigidbody, deceleration);
+            animator.SetFloat("Speed", 0.0f);
         }
 
     }
