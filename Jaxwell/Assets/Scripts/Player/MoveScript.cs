@@ -37,7 +37,7 @@ public class MoveScript : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
         {
             movingRight = true;
-            animator.SetBool("movingRight", movingRight);
+            animator.SetBool("moveRight", movingRight);
 
             if (!WallClimb.grabbing)
             {
@@ -64,7 +64,7 @@ public class MoveScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
         {
             movingRight = false;
-            animator.SetBool("movingRight", movingRight);
+            animator.SetBool("moveRight", movingRight);
 
             if (!WallClimb.grabbing)
             {
