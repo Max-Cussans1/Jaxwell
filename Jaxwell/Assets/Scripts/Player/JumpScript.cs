@@ -18,9 +18,13 @@ public class JumpScript : MonoBehaviour
 
     bool preJump = false;
 
+    //animator
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         p_rigidbody = GetComponent<Rigidbody2D>();
         playerstate = GetComponent<PlayerState>();
         tempPreJumpTime = preJumpTime;
@@ -47,6 +51,11 @@ public class JumpScript : MonoBehaviour
                 tempPreJumpTime = preJumpTime;
                 InputManager.preJump = false;
             }
+        }
+
+        if (CollisionManager.isGrounded && !preJump && !pressedJump)
+        {
+            animator.SetBool("jump", false);
         }
     }
 
@@ -84,6 +93,7 @@ public class JumpScript : MonoBehaviour
 
     void Jump(float height)
     {
+        animator.SetBool("jump", true);
         //set y velocity to 0 to make our jump more reliable (if we just add the force it will take into account how fast we're falling)
         p_rigidbody.velocity = new Vector2(p_rigidbody.velocity.x, 0.0f);
 

@@ -25,8 +25,12 @@ public class WallClimb : MonoBehaviour
     float temptimeToUnstick;
     public static bool ignoreDecelerationForWallJump = false;
 
+    //animator
+    Animator animator;
+
     void Start()
     {
+        animator = GetComponent<Animator>();
         p_rigidbody = GetComponent<Rigidbody2D>();
         playerstate = GetComponent<PlayerState>();
         dashScript = GetComponent<DashScript>();
@@ -43,10 +47,26 @@ public class WallClimb : MonoBehaviour
         if((CollisionManager.isAgainstWallRight || CollisionManager.isAgainstWallLeft) && !CollisionManager.isGrounded && playerstate.element == Elements.elements.water)
         {
             grabbing = true;
+            if (CollisionManager.isAgainstWallLeft && tempTimeToWaitBeforeSliding > 0)
+            {
+                animator.SetTrigger("grabLeft");
+            }
+            if (CollisionManager.isAgainstWallRight && tempTimeToWaitBeforeSliding > 0)
+            {
+                animator.SetTrigger("grabRight");
+            }
+
+            animator.SetBool("wallJump", false);
+
             if (tempTimeToWaitBeforeSliding > 0)
             {
                 //count down to slide
                 tempTimeToWaitBeforeSliding -= Time.deltaTime;
+            }
+            else
+            {
+                animator.SetBool("sliding", true);
+                animator.ResetTrigger("grab");
             }
 
             if ((Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0) && CollisionManager.isAgainstWallLeft)
@@ -94,6 +114,8 @@ public class WallClimb : MonoBehaviour
         else
         {
             grabbing = false;
+            animator.ResetTrigger("grab");
+            animator.SetBool("sliding", false);
             //reset the timer to start sliding
             if (tempTimeToWaitBeforeSliding != timeToWaitBeforeSliding)
             {                
@@ -119,6 +141,7 @@ public class WallClimb : MonoBehaviour
                 temptimeToIgnoreDecelerationForWallJump = timeToIgnoreDecelerationForWallJump;
             }
         }
+
     }
 
     void FixedUpdate()
@@ -171,6 +194,7 @@ public class WallClimb : MonoBehaviour
 
     void WallJump(Rigidbody2D rigidbody, int direction)
     {
+        animator.SetBool("wallJump", true);
         rigidbody.velocity = new Vector2(0, 0);
         //add a force in x and y direction to jump off the wall
         rigidbody.AddForce(new Vector2(wallJumpHorizontalForce * direction, wallJumpHeight), ForceMode2D.Impulse);

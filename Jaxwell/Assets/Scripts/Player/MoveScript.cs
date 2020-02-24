@@ -78,6 +78,8 @@ public class MoveScript : MonoBehaviour
                     tempMaxSpeed = maxSpeed;
                 }
 
+                animator.SetFloat("Speed", tempMaxSpeed);
+
                 acceleratingLeft = true;
             }
         }
@@ -86,6 +88,10 @@ public class MoveScript : MonoBehaviour
             acceleratingLeft = false;
         }
 
+        if (!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
+        {
+            animator.SetFloat("Speed", 0.0f);
+        }
     }
 
     void FixedUpdate()
@@ -94,21 +100,16 @@ public class MoveScript : MonoBehaviour
         if (acceleratingRight && !dashScript.dashing)
         {
             AccelerateRight(p_rigidbody, acceleration, tempMaxSpeed);
-
-            animator.SetFloat("Speed", tempMaxSpeed);
         }
 
         if (acceleratingLeft && !dashScript.dashing)
         {
             AccelerateLeft(p_rigidbody, acceleration, tempMaxSpeed);
-
-            animator.SetFloat("Speed", tempMaxSpeed);
         }
 
         if(!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
         {
             Decelerate(p_rigidbody, deceleration);
-            animator.SetFloat("Speed", 0.0f);
         }
 
     }
