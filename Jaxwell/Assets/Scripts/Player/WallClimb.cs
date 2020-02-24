@@ -50,10 +50,12 @@ public class WallClimb : MonoBehaviour
             if (CollisionManager.isAgainstWallLeft && tempTimeToWaitBeforeSliding > 0)
             {
                 animator.SetTrigger("grabLeft");
+                animator.SetBool("grabbing", true);
             }
             if (CollisionManager.isAgainstWallRight && tempTimeToWaitBeforeSliding > 0)
             {
                 animator.SetTrigger("grabRight");
+                animator.SetBool("grabbing", true);
             }
 
             animator.SetBool("wallJump", false);
@@ -65,8 +67,10 @@ public class WallClimb : MonoBehaviour
             }
             else
             {
-                animator.SetBool("sliding", true);
-                animator.ResetTrigger("grab");
+                animator.ResetTrigger("grabLeft");
+                animator.ResetTrigger("grabRight");
+                animator.SetBool("grabbing", false);
+                animator.SetBool("sliding", true);                
             }
 
             if ((Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0) && CollisionManager.isAgainstWallLeft)
@@ -77,6 +81,9 @@ public class WallClimb : MonoBehaviour
                     if (temptimeToUnstick <= 0)
                     {
                         grabbing = false;
+                        animator.ResetTrigger("grabLeft");
+                        animator.SetBool("grabbing", false);
+                        animator.SetBool("sliding", false);
                     }
                 }
                 DebugHelper.Log("Unstick time remaining: " + temptimeToUnstick);
@@ -98,6 +105,9 @@ public class WallClimb : MonoBehaviour
                     if (temptimeToUnstick <= 0)
                     {
                         grabbing = false;
+                        animator.ResetTrigger("grabRight");
+                        animator.SetBool("grabbing", false);
+                        animator.SetBool("sliding", false);
                     }
                 }
                 DebugHelper.Log("Unstick time remaining: " + temptimeToUnstick);
@@ -114,7 +124,9 @@ public class WallClimb : MonoBehaviour
         else
         {
             grabbing = false;
-            animator.ResetTrigger("grab");
+            animator.ResetTrigger("grabLeft");
+            animator.ResetTrigger("grabRight");
+            animator.SetBool("grabbing", false);
             animator.SetBool("sliding", false);
             //reset the timer to start sliding
             if (tempTimeToWaitBeforeSliding != timeToWaitBeforeSliding)
@@ -163,12 +175,16 @@ public class WallClimb : MonoBehaviour
             {
                 //jump in left direction if we're against a wall to the right
                 WallJump(p_rigidbody, -1);
+                MoveScript.movingRight = false;
+                animator.SetBool("moveRight", MoveScript.movingRight);
             }
 
             if (CollisionManager.isAgainstWallLeft)
             {
                 //jump in right direction if we're against a wall to the left
                 WallJump(p_rigidbody, 1);
+                MoveScript.movingRight = true;
+                animator.SetBool("moveRight", MoveScript.movingRight);
             }
             pressedWallJump = false;
         }
