@@ -11,11 +11,11 @@ public class DashScript : MonoBehaviour
     PlayerState playerState;
 
     [SerializeField] float dashSpeed = 30.0f;
-    [SerializeField] float dashCooldown = 2.0f;
+    public float dashCooldown = 2.0f;
     [SerializeField] float dashDuration = 0.1f;
 
     float initialGravityScale;
-    private float tempDashCooldown;
+    public float tempDashCooldown;
     private float tempDashDuration;
 
     bool pressedDashLeft = false;

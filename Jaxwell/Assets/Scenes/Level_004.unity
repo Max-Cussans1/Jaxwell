@@ -695,6 +695,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4219006506519560579, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: playerState
+      value: 
+      objectReference: {fileID: 2052497211}
+    - target: {fileID: 4219006506519560579, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: dashScript
+      value: 
+      objectReference: {fileID: 2052497212}
+    - target: {fileID: 4651610033006753774, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4690905443143191236, guid: 311bff2b7141d924f8a5bb078ac03e08,
         type: 3}
       propertyPath: m_Name
@@ -1549,6 +1564,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}
+--- !u!114 &2052497211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
+    type: 3}
+  m_PrefabInstance: {fileID: 2052497210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c969c3554eea18d4a9f3e199aee900d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2052497212 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2930405940970940907, guid: df717aa74021de842b9d7cf6aa074f44,
+    type: 3}
+  m_PrefabInstance: {fileID: 2052497210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82379f34494487243ad49544349712c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6828613210811144656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29737,5 +29776,5 @@ Transform:
   m_Children:
   - {fileID: 9057570908526816055}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
