@@ -7,6 +7,7 @@ public class DashScript : MonoBehaviour
     Rigidbody2D p_rigidbody;
 
     MoveScript movescript;
+    JumpScript jumpScript;
     PlayerState playerState;
 
     [SerializeField] float dashSpeed = 30.0f;
@@ -35,6 +36,7 @@ public class DashScript : MonoBehaviour
         p_rigidbody = GetComponent<Rigidbody2D>();
         initialGravityScale = p_rigidbody.gravityScale;
         movescript = GetComponent<MoveScript>();
+        jumpScript = GetComponent<JumpScript>();
     }
 
     // Update is called once per frame
@@ -75,7 +77,7 @@ public class DashScript : MonoBehaviour
         {
             tempDashDuration -= Time.deltaTime;
             //check if duration has completed
-            if (tempDashDuration <= 0 || playerState.element != Elements.elements.fire)
+            if (tempDashDuration <= 0 || playerState.element != Elements.elements.fire || jumpScript.pressedJump)
             {
                 dashing = false;
                 //set this bool to handle dash end physics in fixedupdate
