@@ -17,7 +17,7 @@ public class ElementsUI : Elements
     public GameObject air;
 
     public Image dashCooldown;
-    bool dashOnCooldown = false;
+    public static bool beginDashCD = false;
 
     Outline fireActive;
     Outline waterActive;
@@ -76,9 +76,16 @@ public class ElementsUI : Elements
             airActive.enabled = true;
         }
 
-        if(dashScript.tempDashCooldown < dashScript.dashCooldown)
+        if(beginDashCD)
         {
-            ;
+            dashCooldown.fillAmount = 1.0f;
+            beginDashCD = false;
+        }
+
+
+        if (!dashScript.canDash)
+        {
+            dashCooldown.fillAmount -= 1.0f / dashScript.dashCooldown * Time.deltaTime;
         }
     }
 }

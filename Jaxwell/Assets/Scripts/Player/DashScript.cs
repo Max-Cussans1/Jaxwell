@@ -122,6 +122,7 @@ public class DashScript : MonoBehaviour
 
         //Set on cooldown
         canDash = false;
+        ElementsUI.beginDashCD = true;
 
         //set gravity to 0 so short sharp dash in air
         rigidbody.gravityScale = 0;
@@ -143,6 +144,7 @@ public class DashScript : MonoBehaviour
 
         //Set on cooldown
         canDash = false;
+        ElementsUI.beginDashCD = true;
 
         //set gravity to 0 so short sharp dash in air
         rigidbody.gravityScale = 0;

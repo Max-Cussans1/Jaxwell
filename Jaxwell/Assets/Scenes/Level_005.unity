@@ -1209,6 +1209,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2287768094802450695, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: playerState
+      value: 
+      objectReference: {fileID: 943262816}
+    - target: {fileID: 2287768094802450695, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: dashScript
+      value: 
+      objectReference: {fileID: 943262818}
     - target: {fileID: 4219006506519560579, guid: 311bff2b7141d924f8a5bb078ac03e08,
         type: 3}
       propertyPath: playerState
@@ -1423,7 +1433,7 @@ Transform:
   m_Children:
   - {fileID: 468637729556798793}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &468637728861706874
 Grid:
