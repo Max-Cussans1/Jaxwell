@@ -33,14 +33,14 @@ public class Health : MonoBehaviour
             dead = true;
             DebugHelper.Log(this.gameObject + " died at " + transform.position + "!");
             //DEAD STUFF
-            if (lives > 0)
-            {
+            //if (lives > 0)
+            //{
                 Respawn(currentCheckpoint);
-            }
-            else
-            {
-                //GAME OVER
-            }
+            //}
+            //else
+            //{
+            //    //GAME OVER
+            //}
         }
     }
 
@@ -55,6 +55,7 @@ public class Health : MonoBehaviour
     void Respawn(Vector3 respawnPosition)
     {
         lives--;
+        HealthUI.updateHealthUI = true;
         //respawn player as water for now
         player.pressedWater = true;
         //reset health and move player to respawn location
