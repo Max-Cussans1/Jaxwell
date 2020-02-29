@@ -37,7 +37,11 @@ public class GameOver : MonoBehaviour
         Health.lives = 4;
         HealthUI.updateHealthUI = true;
 
-        player.transform.position = SaveManager.position;
+        if (SaveManager.currentSavePath != null)
+        {
+            PlayerData temp = SaveSystem.Load(SaveManager.currentSavePath);
+            player.transform.position = new Vector2(temp.position[0], temp.position[1]);
+        }
 
         gameOver = false;
         gameOverUI.SetActive(false);
