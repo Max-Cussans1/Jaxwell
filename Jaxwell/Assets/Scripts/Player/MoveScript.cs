@@ -33,64 +33,67 @@ public class MoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //set bools for movement in update so we're instantly detecting input
-        if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
+        if (!PauseMenu.isPaused && !GameOver.gameOver)
         {
-            movingRight = true;
-            animator.SetBool("moveRight", movingRight);
-
-            if (!WallClimb.grabbing)
+            //set bools for movement in update so we're instantly detecting input
+            if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
             {
-                //if we're using joystick to getaxis (Keys are also used to determine input.getaxis) limit max speed based on joystick position
-                if ((!Input.GetKey(KeyCode.D) && Input.GetAxis("Horizontal") > 0))
-                {
-                    tempMaxSpeed = maxSpeed * Input.GetAxis("Horizontal");
-                }
-                else
-                {
-                    tempMaxSpeed = maxSpeed;
-                }
+                movingRight = true;
+                animator.SetBool("moveRight", movingRight);
 
-                animator.SetFloat("Speed", tempMaxSpeed);
+                if (!WallClimb.grabbing)
+                {
+                    //if we're using joystick to getaxis (Keys are also used to determine input.getaxis) limit max speed based on joystick position
+                    if ((!Input.GetKey(KeyCode.D) && Input.GetAxis("Horizontal") > 0))
+                    {
+                        tempMaxSpeed = maxSpeed * Input.GetAxis("Horizontal");
+                    }
+                    else
+                    {
+                        tempMaxSpeed = maxSpeed;
+                    }
 
-                acceleratingRight = true;
+                    animator.SetFloat("Speed", tempMaxSpeed);
+
+                    acceleratingRight = true;
+                }
             }
-        }
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetAxis("Horizontal") <= 0)
-        {
-            acceleratingRight = false;
-        }
-
-        if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
-        {
-            movingRight = false;
-            animator.SetBool("moveRight", movingRight);
-
-            if (!WallClimb.grabbing)
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetAxis("Horizontal") <= 0)
             {
-                //if we're using joystick to getaxis (Keys are also used to determine input.getaxis) limit max speed based on joystick position
-                if ((!Input.GetKey(KeyCode.A) && Input.GetAxis("Horizontal") < 0))
-                {
-                    tempMaxSpeed = maxSpeed * -Input.GetAxis("Horizontal");
-                }
-                else
-                {
-                    tempMaxSpeed = maxSpeed;
-                }
-
-                animator.SetFloat("Speed", tempMaxSpeed);
-
-                acceleratingLeft = true;
+                acceleratingRight = false;
             }
-        }
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetAxis("Horizontal") >= 0)
-        {
-            acceleratingLeft = false;
-        }
 
-        if (!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
-        {
-            animator.SetFloat("Speed", 0.0f);
+            if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
+            {
+                movingRight = false;
+                animator.SetBool("moveRight", movingRight);
+
+                if (!WallClimb.grabbing)
+                {
+                    //if we're using joystick to getaxis (Keys are also used to determine input.getaxis) limit max speed based on joystick position
+                    if ((!Input.GetKey(KeyCode.A) && Input.GetAxis("Horizontal") < 0))
+                    {
+                        tempMaxSpeed = maxSpeed * -Input.GetAxis("Horizontal");
+                    }
+                    else
+                    {
+                        tempMaxSpeed = maxSpeed;
+                    }
+
+                    animator.SetFloat("Speed", tempMaxSpeed);
+
+                    acceleratingLeft = true;
+                }
+            }
+            if (Input.GetKeyUp(KeyCode.A) || Input.GetAxis("Horizontal") >= 0)
+            {
+                acceleratingLeft = false;
+            }
+
+            if (!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
+            {
+                animator.SetFloat("Speed", 0.0f);
+            }
         }
     }
 

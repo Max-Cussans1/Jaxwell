@@ -13,11 +13,11 @@ public class PauseMenu : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7"))
         {
-            if(isPaused)
+            if(isPaused && !GameOver.gameOver)
             {
                 Resume();
             }
-            else
+            else if(!GameOver.gameOver)
             {
                 Pause();
             }
@@ -48,6 +48,7 @@ public class PauseMenu : MonoBehaviour
     public void QuitToMainMenu()
     {
         DebugHelper.Log("Pressed quit to main menu from pause menu");
+        Health.lives = 4;
         pauseMenuUI.SetActive(false);
         isPaused = false;
         Time.timeScale = 1;

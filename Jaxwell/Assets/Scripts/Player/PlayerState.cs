@@ -33,11 +33,8 @@ public class PlayerState : Elements
     public bool pressedEarth = false;
     public bool pressedAir = false;
 
-    public Vector3 currentCheckpointSave;
-
     void Start()
     {        
-        currentCheckpointSave = transform.position;
         //temp solution changing colour until we get sprites/anims
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         moveScript = GetComponent<MoveScript>();

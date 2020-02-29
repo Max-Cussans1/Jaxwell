@@ -23,8 +23,8 @@ public class PlayerData
         element = (int)player.element;
         //populate the position array with our player's position
         position = new float[3];
-        position[0] = player.currentCheckpointSave.x;
-        position[1] = player.currentCheckpointSave.y;
-        position[2] = player.currentCheckpointSave.z;
+        position[0] = player.transform.position.x;
+        position[1] = player.transform.position.y;
+        position[2] = player.transform.position.z;
     }
 }

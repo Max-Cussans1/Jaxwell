@@ -27,12 +27,8 @@ public class Checkpoint : MonoBehaviour
             {                
                 //use variable in health script to handle checkpoints because that's where we're handling respawning
                 health.currentCheckpoint = position;
-                player.currentCheckpointSave = position;
+                //player.currentCheckpointSave = position;
                 DebugHelper.Log("New checkpoint at " + position);
-                if (SaveManager.currentSavePath != null)
-                {
-                    player.Save();
-                }
             }
         }
     }
