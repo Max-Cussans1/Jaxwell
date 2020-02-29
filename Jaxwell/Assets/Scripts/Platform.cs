@@ -119,7 +119,7 @@ public class Platform : Elements
             }
         }
 
-        if(levelDesignDebug)
+        if(levelDesignDebug && !Application.isPlaying)
         {
             topL = new Vector2(transform.position.x - (transform.localScale.x) / 2, transform.position.y + (transform.localScale.y) / 2);
             topR = new Vector2(transform.position.x + (transform.localScale.x) / 2, transform.position.y + (transform.localScale.y) / 2);
@@ -128,19 +128,16 @@ public class Platform : Elements
 
             DrawPlatformOscillationDebug();
         }
-    }
 
-    void FixedUpdate()
-    {
-        if (!broken)
+        if (!broken && Application.isPlaying)
         {
             if (oscillateVertically)
             {
-                oscillateY(ref oscillateUpwardsFirst, startY, verticalOscillationSpeed, ref tempYOscillationPauseTime);
+                oscillateY(ref oscillateUpwardsFirst, startY, verticalOscillationSpeed * Time.deltaTime, ref tempYOscillationPauseTime);
             }
             if (oscillateHorizontally)
             {
-                oscillateX(ref oscillateRightFirst, startX, horizontalOscillationSpeed, ref tempXOscillationPauseTime);
+                oscillateX(ref oscillateRightFirst, startX, horizontalOscillationSpeed * Time.deltaTime, ref tempXOscillationPauseTime);
             }
         }
     }
@@ -214,7 +211,7 @@ public class Platform : Elements
     void oscillateY(ref bool startDirection, float start, float speed, ref float delay)
     {
         //if the start direction is true (up) and we're not at the max position
-        if(startDirection && transform.position.y < start + verticalOscillationDistance)
+        if(startDirection && transform.position.y <= start + verticalOscillationDistance)
         {
             //check if the position change will be above the max distance
             if (!(transform.position.y + speed > start + verticalOscillationDistance))
@@ -223,8 +220,10 @@ public class Platform : Elements
             }
             else
             {
+                transform.position = new Vector2(transform.position.x, start + verticalOscillationDistance);
+
                 delay -= Time.deltaTime;
-                if(delay < 0)
+                if(delay <= 0)
                 {
                     startDirection = false;
                     delay = verticalOscillationPauseTime;
@@ -232,7 +231,7 @@ public class Platform : Elements
             }
         }
 
-        if(!startDirection && transform.position.y > start - verticalOscillationDistance)
+        if(!startDirection && transform.position.y >= start - verticalOscillationDistance)
         {
             //check if the position change will be below the negative max distance
             if (!(transform.position.y - speed < start - verticalOscillationDistance))
@@ -241,8 +240,10 @@ public class Platform : Elements
             }
             else
             {
+                transform.position = new Vector2(transform.position.x, start - verticalOscillationDistance);
+
                 delay -= Time.deltaTime;
-                if (delay < 0)
+                if (delay <= 0)
                 {
                     startDirection = true;
                     delay = verticalOscillationPauseTime;
@@ -254,7 +255,7 @@ public class Platform : Elements
     void oscillateX(ref bool startDirection, float start, float speed, ref float delay)
     {
         //if the start direction is true (right) and we're not at the max position
-        if (startDirection && transform.position.x < start + horizontalOscillationDistance)
+        if (startDirection && transform.position.x <= start + horizontalOscillationDistance)
         {
             //check if the position change will be above the max distance
             if (!(transform.position.x + speed > start + horizontalOscillationDistance))
@@ -263,6 +264,8 @@ public class Platform : Elements
             }
             else
             {
+                transform.position = new Vector2(start + horizontalOscillationDistance, transform.position.y);
+
                 delay -= Time.deltaTime;
                 if (delay < 0)
                 {
@@ -272,7 +275,7 @@ public class Platform : Elements
             }
         }
 
-        if (!startDirection && transform.position.x > start - horizontalOscillationDistance)
+        if (!startDirection && transform.position.x >= start - horizontalOscillationDistance)
         {
             //check if the position change will be below the negative max distance
             if (!(transform.position.x - speed < start - horizontalOscillationDistance))
@@ -281,6 +284,8 @@ public class Platform : Elements
             }
             else
             {
+                transform.position = new Vector2(start - horizontalOscillationDistance, transform.position.y);
+
                 delay -= Time.deltaTime;
                 if (delay < 0)
                 {

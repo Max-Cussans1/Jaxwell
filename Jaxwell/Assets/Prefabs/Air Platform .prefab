@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7831050061220130199}
   - component: {fileID: 7831050061220130198}
   - component: {fileID: 3765172569662790615}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 'Air Platform '
   m_TagString: Air
   m_Icon: {fileID: 0}
@@ -161,4 +161,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc1caae1f9827a42be1560ff18b8f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelDesignDebug: 0
+  breakableOnEarthDash: 0
+  dashDistanceRequiredToBreak: 6
+  oscillateVertically: 0
+  oscillateUpwardsFirst: 0
+  oscillateHorizontally: 0
+  oscillateRightFirst: 0
+  verticalOscillationDistance: 5
+  verticalOscillationSpeed: 0.05
+  verticalOscillationPauseTime: 3
+  horizontalOscillationDistance: 5
+  horizontalOscillationSpeed: 0.05
+  horizontalOscillationPauseTime: 3
   element: 3

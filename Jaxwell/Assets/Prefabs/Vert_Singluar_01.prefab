@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1612677566006726246}
   - component: {fileID: 1612677566006726247}
   - component: {fileID: 2439949735216060985}
-  m_Layer: 0
-  m_Name: Singular moving platform
+  m_Layer: 9
+  m_Name: Vert_Singluar_01
   m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc1caae1f9827a42be1560ff18b8f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelDesignDebug: 0
   breakableOnEarthDash: 0
   dashDistanceRequiredToBreak: 6
   oscillateVertically: 1
