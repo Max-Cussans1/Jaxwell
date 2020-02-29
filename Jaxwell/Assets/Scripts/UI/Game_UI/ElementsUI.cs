@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 public class ElementsUI : Elements
 {
     public PlayerState playerState;
     public DashScript dashScript;
+    public JumpScript jumpScript;
 
     public GameObject movingRightArrow;
     public GameObject movingLeftArrow;
@@ -19,6 +21,8 @@ public class ElementsUI : Elements
     public Image dashCooldown;
     public static bool beginDashCD = false;
 
+    public Image jumpAvailable;
+
     Outline fireActive;
     Outline waterActive;
     Outline earthActive;
@@ -26,6 +30,11 @@ public class ElementsUI : Elements
 
     void Start()
     {
+        //check the scripts have been assigned in editor
+        Assert.IsNotNull(playerState, "Player State was null, ensure the player GameObject for Player State is assigned in the UI ElementsBar");
+        Assert.IsNotNull(dashScript, "Dash Script was null, ensure the player GameObject for Dash Script is assigned in the UI ElementsBar");
+        Assert.IsNotNull(jumpScript, "Jump Script was null, ensure the player GameObject for Jump Script is assigned in the UI ElementsBar");
+
         fireActive = fire.GetComponent<Outline>();
         waterActive = water.GetComponent<Outline>();
         earthActive = earth.GetComponent<Outline>();
@@ -86,6 +95,15 @@ public class ElementsUI : Elements
         if (!dashScript.canDash)
         {
             dashCooldown.fillAmount -= 1.0f / dashScript.dashCooldown * Time.deltaTime;
+        }
+
+        if(jumpScript.usedAirJump)
+        {
+            jumpAvailable.enabled = true;
+        }
+        else
+        {
+            jumpAvailable.enabled = false;
         }
     }
 }
