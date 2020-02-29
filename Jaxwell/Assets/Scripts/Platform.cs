@@ -54,10 +54,12 @@ public class Platform : Elements
     [SerializeField] bool oscillateUpwardsFirst = false;
     [SerializeField] bool oscillateHorizontally = false;
     [SerializeField] bool oscillateRightFirst = false;
-    [SerializeField] float verticalOscillationDistance = 5.0f;
+    [SerializeField] float upwardOscillationDistance = 5.0f;
+    [SerializeField] float downwardOscillationDistance = 5.0f;
     [SerializeField] float verticalOscillationSpeed = 0.05f;
     [SerializeField] float verticalOscillationPauseTime = 3.0f;
-    [SerializeField] float horizontalOscillationDistance = 5.0f;
+    [SerializeField] float leftOscillationDistance = 5.0f;
+    [SerializeField] float rightOscillationDistance = 5.0f;
     [SerializeField] float horizontalOscillationSpeed = 0.05f;
     [SerializeField] float horizontalOscillationPauseTime = 3.0f;
 
@@ -211,16 +213,16 @@ public class Platform : Elements
     void oscillateY(ref bool startDirection, float start, float speed, ref float delay)
     {
         //if the start direction is true (up) and we're not at the max position
-        if(startDirection && transform.position.y <= start + verticalOscillationDistance)
+        if(startDirection && transform.position.y <= start + upwardOscillationDistance)
         {
             //check if the position change will be above the max distance
-            if (!(transform.position.y + speed > start + verticalOscillationDistance))
+            if (!(transform.position.y + speed > start + upwardOscillationDistance))
             {
                 transform.position = new Vector2(transform.position.x, transform.position.y + speed);
             }
             else
             {
-                transform.position = new Vector2(transform.position.x, start + verticalOscillationDistance);
+                transform.position = new Vector2(transform.position.x, start + upwardOscillationDistance);
 
                 delay -= Time.deltaTime;
                 if(delay <= 0)
@@ -231,16 +233,16 @@ public class Platform : Elements
             }
         }
 
-        if(!startDirection && transform.position.y >= start - verticalOscillationDistance)
+        if(!startDirection && transform.position.y >= start - downwardOscillationDistance)
         {
             //check if the position change will be below the negative max distance
-            if (!(transform.position.y - speed < start - verticalOscillationDistance))
+            if (!(transform.position.y - speed < start - downwardOscillationDistance))
             {
                 transform.position = new Vector2(transform.position.x, transform.position.y - speed);
             }
             else
             {
-                transform.position = new Vector2(transform.position.x, start - verticalOscillationDistance);
+                transform.position = new Vector2(transform.position.x, start - downwardOscillationDistance);
 
                 delay -= Time.deltaTime;
                 if (delay <= 0)
@@ -255,16 +257,16 @@ public class Platform : Elements
     void oscillateX(ref bool startDirection, float start, float speed, ref float delay)
     {
         //if the start direction is true (right) and we're not at the max position
-        if (startDirection && transform.position.x <= start + horizontalOscillationDistance)
+        if (startDirection && transform.position.x <= start + rightOscillationDistance)
         {
             //check if the position change will be above the max distance
-            if (!(transform.position.x + speed > start + horizontalOscillationDistance))
+            if (!(transform.position.x + speed > start + rightOscillationDistance))
             {
                 transform.position = new Vector2(transform.position.x + speed, transform.position.y);
             }
             else
             {
-                transform.position = new Vector2(start + horizontalOscillationDistance, transform.position.y);
+                transform.position = new Vector2(start + rightOscillationDistance, transform.position.y);
 
                 delay -= Time.deltaTime;
                 if (delay < 0)
@@ -275,16 +277,16 @@ public class Platform : Elements
             }
         }
 
-        if (!startDirection && transform.position.x >= start - horizontalOscillationDistance)
+        if (!startDirection && transform.position.x >= start - leftOscillationDistance)
         {
             //check if the position change will be below the negative max distance
-            if (!(transform.position.x - speed < start - horizontalOscillationDistance))
+            if (!(transform.position.x - speed < start - leftOscillationDistance))
             {
                 transform.position = new Vector2(transform.position.x - speed, transform.position.y);
             }
             else
             {
-                transform.position = new Vector2(start - horizontalOscillationDistance, transform.position.y);
+                transform.position = new Vector2(start - leftOscillationDistance, transform.position.y);
 
                 delay -= Time.deltaTime;
                 if (delay < 0)
@@ -301,42 +303,42 @@ public class Platform : Elements
         if (oscillateVertically)
         {
             //get the coords for top and bottom boxes (where the platforms will be after oscillating)
-            vUpTopL = new Vector2(topL.x, topL.y + verticalOscillationDistance);
-            vUpTopR = new Vector2(topR.x, topR.y + verticalOscillationDistance);
-            vUpBottomL = new Vector2(bottomL.x, bottomL.y + verticalOscillationDistance);
-            vUpBottomR = new Vector2(bottomR.x, bottomR.y + verticalOscillationDistance);
+            vUpTopL = new Vector2(topL.x, topL.y + upwardOscillationDistance);
+            vUpTopR = new Vector2(topR.x, topR.y + upwardOscillationDistance);
+            vUpBottomL = new Vector2(bottomL.x, bottomL.y + upwardOscillationDistance);
+            vUpBottomR = new Vector2(bottomR.x, bottomR.y + upwardOscillationDistance);
 
-            vDownTopL = new Vector2(topL.x, topL.y - verticalOscillationDistance);
-            vDownTopR = new Vector2(topR.x, topR.y - verticalOscillationDistance);
-            vDownBottomL = new Vector2(bottomL.x, bottomL.y - verticalOscillationDistance);
-            vDownBottomR = new Vector2(bottomR.x, bottomR.y - verticalOscillationDistance);
+            vDownTopL = new Vector2(topL.x, topL.y - downwardOscillationDistance);
+            vDownTopR = new Vector2(topR.x, topR.y - downwardOscillationDistance);
+            vDownBottomL = new Vector2(bottomL.x, bottomL.y - downwardOscillationDistance);
+            vDownBottomR = new Vector2(bottomR.x, bottomR.y - downwardOscillationDistance);
 
             //platform at top of its oscillation
-            Debug.DrawRay(transform.position, Vector2.up * verticalOscillationDistance, Color.yellow, 0.0f);
+            Debug.DrawRay(transform.position, Vector2.up * upwardOscillationDistance, Color.yellow, 0.0f);
             DebugHelper.DrawBox(vUpTopL, vUpTopR, vUpBottomL, vUpBottomR, Color.green);
 
             //platform at bottom of its oscillation
-            Debug.DrawRay(transform.position, -Vector2.up * verticalOscillationDistance, Color.yellow, 0.0f);
+            Debug.DrawRay(transform.position, -Vector2.up * downwardOscillationDistance, Color.yellow, 0.0f);
             DebugHelper.DrawBox(vDownTopL, vDownTopR, vDownBottomL, vDownBottomR, Color.red);
         }
         if(oscillateHorizontally)
         {
-            hLeftTopL = new Vector2(topL.x - horizontalOscillationDistance, topL.y);
-            hLeftTopR = new Vector2(topR.x - horizontalOscillationDistance, topR.y);
-            hLeftBottomL = new Vector2(bottomL.x - horizontalOscillationDistance, bottomL.y);
-            hLeftBottomR = new Vector2(bottomR.x - horizontalOscillationDistance, bottomR.y);
+            hLeftTopL = new Vector2(topL.x - leftOscillationDistance, topL.y);
+            hLeftTopR = new Vector2(topR.x - leftOscillationDistance, topR.y);
+            hLeftBottomL = new Vector2(bottomL.x - leftOscillationDistance, bottomL.y);
+            hLeftBottomR = new Vector2(bottomR.x - leftOscillationDistance, bottomR.y);
 
-            hRightTopL = new Vector2(topL.x + horizontalOscillationDistance, topL.y);
-            hRightTopR = new Vector2(topR.x + horizontalOscillationDistance, topR.y);
-            hRightBottomL = new Vector2(bottomL.x + horizontalOscillationDistance, bottomL.y);
-            hRightBottomR = new Vector2(bottomR.x + horizontalOscillationDistance, bottomR.y);
+            hRightTopL = new Vector2(topL.x + rightOscillationDistance, topL.y);
+            hRightTopR = new Vector2(topR.x + rightOscillationDistance, topR.y);
+            hRightBottomL = new Vector2(bottomL.x + rightOscillationDistance, bottomL.y);
+            hRightBottomR = new Vector2(bottomR.x + rightOscillationDistance, bottomR.y);
 
             //platform at left of its oscillation
-            Debug.DrawRay(transform.position, Vector2.right * horizontalOscillationDistance, Color.yellow, 0.0f);
+            Debug.DrawRay(transform.position, -Vector2.right * leftOscillationDistance, Color.yellow, 0.0f);
             DebugHelper.DrawBox(hLeftTopL, hLeftTopR, hLeftBottomL, hLeftBottomR, Color.red);
 
             //platform at right of its oscillation
-            Debug.DrawRay(transform.position, -Vector2.right * horizontalOscillationDistance, Color.yellow, 0.0f);
+            Debug.DrawRay(transform.position, Vector2.right * rightOscillationDistance, Color.yellow, 0.0f);
             DebugHelper.DrawBox(hRightTopL, hRightTopR, hRightBottomL, hRightBottomR, Color.green);
         }
     }

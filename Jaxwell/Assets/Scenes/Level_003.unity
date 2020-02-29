@@ -1325,13 +1325,15 @@ MonoBehaviour:
   breakableOnEarthDash: 0
   dashDistanceRequiredToBreak: 6
   oscillateVertically: 1
-  oscillateUpwardsFirst: 0
+  oscillateUpwardsFirst: 1
   oscillateHorizontally: 0
   oscillateRightFirst: 0
-  verticalOscillationDistance: 2
+  upwardOscillationDistance: 3
+  downwardOscillationDistance: 0
   verticalOscillationSpeed: 30
-  verticalOscillationPauseTime: 0.3
-  horizontalOscillationDistance: 5
+  verticalOscillationPauseTime: 2
+  leftOscillationDistance: 5
+  rightOscillationDistance: 5
   horizontalOscillationSpeed: 0.05
   horizontalOscillationPauseTime: 3
   element: 4
@@ -1458,7 +1460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326426982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.098, y: -7.8, z: 0}
+  m_LocalPosition: {x: -23.06, y: -8.41, z: 0}
   m_LocalScale: {x: 3.0011733, y: 9.076683, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1927,7 +1929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672730365427820425}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.098, y: 5.49, z: 0}
+  m_LocalPosition: {x: -23.06, y: 6.71, z: 0}
   m_LocalScale: {x: 3.0011733, y: 9.076683, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2000,13 +2002,15 @@ MonoBehaviour:
   breakableOnEarthDash: 0
   dashDistanceRequiredToBreak: 6
   oscillateVertically: 1
-  oscillateUpwardsFirst: 1
+  oscillateUpwardsFirst: 0
   oscillateHorizontally: 0
   oscillateRightFirst: 0
-  verticalOscillationDistance: 2
+  upwardOscillationDistance: 0
+  downwardOscillationDistance: 3
   verticalOscillationSpeed: 30
-  verticalOscillationPauseTime: 0.3
-  horizontalOscillationDistance: 5
+  verticalOscillationPauseTime: 2
+  leftOscillationDistance: 5
+  rightOscillationDistance: 5
   horizontalOscillationSpeed: 0.05
   horizontalOscillationPauseTime: 3
   element: 4
