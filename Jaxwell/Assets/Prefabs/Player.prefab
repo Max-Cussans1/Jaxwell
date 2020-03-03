@@ -186,6 +186,7 @@ MonoBehaviour:
   dashSpeed: 70
   dashCooldown: 2
   dashDuration: 0.3
+  tempDashCooldown: 0
   dashing: 0
   canDash: 0
   pressedDash: 0
@@ -232,11 +233,16 @@ MonoBehaviour:
   airMaxSpeed: 10
   airAcceleration: 0.7
   airDeceleration: 0.85
+  fireSprite: {fileID: 0}
+  waterSprite: {fileID: -6500447855205292230, guid: a582465626efae54ba580bd498e28468,
+    type: 3}
+  earthSprite: {fileID: 4517817969562854941, guid: 3c5a236f6a355a8448fe2cd6c553ee00,
+    type: 3}
+  airSprite: {fileID: 0}
   pressedFire: 0
   pressedWater: 0
   pressedEarth: 0
   pressedAir: 0
-  currentCheckpointSave: {x: 0, y: 0, z: 0}
 --- !u!114 &2930405940970940909
 MonoBehaviour:
   m_ObjectHideFlags: 0

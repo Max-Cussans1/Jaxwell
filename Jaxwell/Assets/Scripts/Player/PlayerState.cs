@@ -28,14 +28,23 @@ public class PlayerState : Elements
     MoveScript moveScript;
     SpriteRenderer p_spriteRenderer;
 
+    public Sprite fireSprite;
+    public Sprite waterSprite;
+    public Sprite earthSprite;
+    public Sprite airSprite;
+
     public bool pressedFire = false;
     public bool pressedWater = false;
     public bool pressedEarth = false;
     public bool pressedAir = false;
 
+    //animator
+    Animator animator;
+
     void Start()
-    {        
+    {
         //temp solution changing colour until we get sprites/anims
+        animator = GetComponent<Animator>();
         p_spriteRenderer = GetComponent<SpriteRenderer>();
         moveScript = GetComponent<MoveScript>();
 
@@ -49,12 +58,14 @@ public class PlayerState : Elements
         {
             ChangeMovementProperties(waterMaxSpeed, waterAcceleration, waterDeceleration);
             p_spriteRenderer.color = Color.blue;
+            p_spriteRenderer.sprite = waterSprite;
         }
 
         if (element == elements.earth)
         {
             ChangeMovementProperties(earthMaxSpeed, earthAcceleration, earthDeceleration);
             p_spriteRenderer.color = Color.green;
+            p_spriteRenderer.sprite = earthSprite;
         }
 
         if (element == elements.air)
@@ -83,6 +94,10 @@ public class PlayerState : Elements
             DebugHelper.Log("Enabled Fire");
             ChangeMovementProperties(fireMaxSpeed, fireAcceleration, fireDeceleration);
             p_spriteRenderer.color = Color.red;
+            animator.ResetTrigger("pressedWater");
+            animator.ResetTrigger("pressedEarth");
+            animator.ResetTrigger("pressedAir");
+            animator.SetTrigger("pressedFire");
             pressedFire = false;
         }
 
@@ -92,6 +107,11 @@ public class PlayerState : Elements
             DebugHelper.Log("Enabled Water");
             ChangeMovementProperties(waterMaxSpeed, waterAcceleration, waterDeceleration);
             p_spriteRenderer.color = Color.blue;
+            p_spriteRenderer.sprite = waterSprite;
+            animator.ResetTrigger("pressedFire");
+            animator.ResetTrigger("pressedEarth");
+            animator.ResetTrigger("pressedAir");
+            animator.SetTrigger("pressedWater");
             pressedWater = false;
         }
 
@@ -101,6 +121,11 @@ public class PlayerState : Elements
             DebugHelper.Log("Enabled Earth");
             ChangeMovementProperties(earthMaxSpeed, earthAcceleration, earthDeceleration);
             p_spriteRenderer.color = Color.green;
+            p_spriteRenderer.sprite = earthSprite;
+            animator.ResetTrigger("pressedFire");
+            animator.ResetTrigger("pressedWater");
+            animator.ResetTrigger("pressedAir");
+            animator.SetTrigger("pressedEarth");
             pressedEarth = false;
         }
 
@@ -110,6 +135,10 @@ public class PlayerState : Elements
             DebugHelper.Log("Enabled Air");
             ChangeMovementProperties(airMaxSpeed, airAcceleration, airDeceleration);
             p_spriteRenderer.color = Color.gray;
+            animator.ResetTrigger("pressedFire");
+            animator.ResetTrigger("pressedWater");
+            animator.ResetTrigger("pressedEarth");
+            animator.SetTrigger("pressedAir");
             pressedAir = false;
         }
     }
