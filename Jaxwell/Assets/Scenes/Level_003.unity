@@ -198,6 +198,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.6330919
       objectReference: {fileID: 0}
+    - target: {fileID: 5265019883827052343, guid: 1414e253bcad82946ade09f5e09bbc4f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265019883827052343, guid: 1414e253bcad82946ade09f5e09bbc4f,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1414e253bcad82946ade09f5e09bbc4f, type: 3}
 --- !u!1001 &94456966
@@ -1745,7 +1755,7 @@ Transform:
   m_LocalScale: {x: 3.0011733, y: 9.076683, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1465376000
 PrefabInstance:
@@ -2372,7 +2382,7 @@ Transform:
   m_LocalScale: {x: 3.0011733, y: 9.076683, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1672730365427820427
 SpriteRenderer:
@@ -66647,5 +66657,5 @@ Transform:
   m_Children:
   - {fileID: 6458474397655293050}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
