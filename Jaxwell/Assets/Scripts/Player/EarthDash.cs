@@ -59,9 +59,15 @@ public class EarthDash : MonoBehaviour
     void DashToEarth(Rigidbody2D rigidbody, float speed)
     {
         Platform platform = null;
+        SpriteRenderer spriteRenderer = null;
+        Color tempColor = Color.red;
+
         if (CollisionManager.groundedObject != null)
         {
             platform = CollisionManager.groundedObject.GetComponent<Platform>();
+            spriteRenderer = platform.GetComponent<SpriteRenderer>();
+            tempColor = spriteRenderer.color;
+            tempColor.a = Platform.alphaAmount;
         }
         //disable gravity & drag
         rigidbody.gravityScale = 0;
@@ -82,6 +88,7 @@ public class EarthDash : MonoBehaviour
             {
                 //if it's not earth or neutral, disable the platform's collider before we dash
                 platform.GetComponent<BoxCollider2D>().enabled = false;
+                spriteRenderer.color = tempColor;
                 DebugHelper.Log("Disabled collision for " + platform.gameObject + " earth dash because it wasn't an earth platform");
             }
         }

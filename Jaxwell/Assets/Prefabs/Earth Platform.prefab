@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -8383239846016255493, guid: 4b67e20245dcac145b8bd3988108e75e,
     type: 3}
-  m_Color: {r: 0.13721855, g: 0.6886792, b: 0.08121216, a: 1}
+  m_Color: {r: 0.13721855, g: 0.6886792, b: 0.08121216, a: 0.2}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -162,16 +162,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelDesignDebug: 0
+  element: 2
   breakableOnEarthDash: 0
   dashDistanceRequiredToBreak: 6
   oscillateVertically: 0
   oscillateUpwardsFirst: 0
   oscillateHorizontally: 0
   oscillateRightFirst: 0
-  verticalOscillationDistance: 5
+  upwardOscillationDistance: 5
+  downwardOscillationDistance: 5
+  leftOscillationDistance: 5
+  rightOscillationDistance: 5
   verticalOscillationSpeed: 0.05
-  verticalOscillationPauseTime: 3
-  horizontalOscillationDistance: 5
   horizontalOscillationSpeed: 0.05
+  verticalOscillationPauseTime: 3
   horizontalOscillationPauseTime: 3
-  element: 2

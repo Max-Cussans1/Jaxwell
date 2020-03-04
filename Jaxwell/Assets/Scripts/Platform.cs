@@ -9,7 +9,13 @@ public class Platform : Elements
     GameObject player;
     BoxCollider2D player_collider;
     PlayerState playerstate;
+    SpriteRenderer spriteRenderer;
+    Color alphaOriginal;
+    Color alphaTemp;
 
+    public static float alphaAmount = 0.2f;
+
+#if UNITY_EDITOR
     [Header("Debug")]
     [Tooltip("Enable to draw boxes of where the platform will oscillate")]
     [SerializeField] bool levelDesignDebug = false;
@@ -42,10 +48,13 @@ public class Platform : Elements
     Vector2 hRightBottomR;
     Vector2 hRightBottomL;
 
+#endif
 
     float rangeToCollide;
     float startX;
     float startY;
+
+    bool canBeSeenByCamera = false;
 
     bool broken = false;
     float timeToDestroyAfterBreak = 2.5f;
@@ -100,13 +109,19 @@ public class Platform : Elements
         tempYOscillationPauseTime = verticalOscillationPauseTime;
         tempXOscillationPauseTime = horizontalOscillationPauseTime;
 
-        //get platforms collider
+        //get platforms components
         p_collider = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        alphaOriginal = spriteRenderer.color;
+        alphaOriginal.a = 1.0f;
+        alphaTemp = spriteRenderer.color;
+        //value between 0-1 of alpha to change platforms to when we cant collide
+        alphaTemp.a = alphaAmount;
 
         //get player components
         player = GameObject.Find("Player");
         playerstate = player.GetComponent<PlayerState>();
-        player_collider = player.GetComponent<BoxCollider2D>();
+        player_collider = player.GetComponent<BoxCollider2D>();        
 
         //check if our platform is bigger in x or y direction
         //might want to change this in future to use a function that checks x and y positions separately
@@ -120,30 +135,43 @@ public class Platform : Elements
         }
     }
 
+    //called when can be seen by any camera
+    void OnBecameVisible()
+    {
+        canBeSeenByCamera = true;
+    }
+
+    //called when no longer seen by any camera
+    void OnBecameInvisible()
+    {
+        canBeSeenByCamera = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //if element is neutral we never want to disable colliders
-        if (element != elements.neutral)
+        if (canBeSeenByCamera && Application.isPlaying)
         {
-            //check if the player is close
-            if (DistanceCheck(player.transform.position, transform.position, rangeToCollide))
+            //if element is neutral we never want to disable colliders
+            if (element != elements.neutral)
             {
                 //check if we're the same element, disable collision if not
-                if (ElementCheck(element, playerstate.element))
+                if (ElementCheck(element, playerstate.element) && p_collider.enabled == false)
                 {
                     p_collider.enabled = true;
+                    spriteRenderer.color = alphaOriginal;
                     DebugHelper.Log(this.gameObject + " had collider enabled because player is the same element and in range");
                 }
-                else
+                else if (!ElementCheck(element, playerstate.element) && p_collider.enabled == true)
                 {
                     p_collider.enabled = false;
+                    spriteRenderer.color = alphaTemp;
                     DebugHelper.Log(this.gameObject + " had collider disabled because player is a different element and in range");
                 }
             }
         }
 
-        if(levelDesignDebug && !Application.isPlaying)
+        if (levelDesignDebug && !Application.isPlaying)
         {
             topL = new Vector2(transform.position.x - (transform.localScale.x) / 2, transform.position.y + (transform.localScale.y) / 2);
             topR = new Vector2(transform.position.x + (transform.localScale.x) / 2, transform.position.y + (transform.localScale.y) / 2);
