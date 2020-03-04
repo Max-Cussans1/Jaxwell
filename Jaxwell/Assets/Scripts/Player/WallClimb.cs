@@ -9,14 +9,24 @@ public class WallClimb : MonoBehaviour
     float initialGravityScale;
     DashScript dashScript;
 
+    [Header("Grabbing Settings")]
+    [Tooltip("Time in seconds to wait after grabbing before we start sliding down the wall")]
     [SerializeField] float timeToWaitBeforeSliding = 0.5f;
+    [Tooltip("Time in seconds we must hold down the input to unstick from the wall")]
     [SerializeField] float timeToUnstick = 0.5f;
+    [Tooltip("Speed to slide down the wall once we are sliding")]
     [SerializeField] float grabbingFallSpeed = -0.1f;
+
+    [Header("Wall Jump Settings")]
+    [Tooltip("Force to apply vertically to the wall jump")]
     [SerializeField] float wallJumpHeight = 15.0f;
+    [Tooltip("Force to apply horizontally to the wall jump")]
     [SerializeField] float wallJumpHorizontalForce = 3.0f;
+    [Tooltip("Time in seconds to ignore the deceleration function after the wall jump is initiated")]
     [SerializeField] float timeToIgnoreDecelerationForWallJump = 0.5f;
 
     public static bool grabbing = false;
+    [HideInInspector]
     public bool pressedWallJump = false;
     
 

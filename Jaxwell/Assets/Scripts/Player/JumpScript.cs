@@ -11,9 +11,13 @@ public class JumpScript : MonoBehaviour
     PlayerState playerstate;
     Rigidbody2D p_rigidbody;
 
+    [HideInInspector]
     public bool pressedAirJump = false;
+    [HideInInspector]
     public bool usedAirJump = false;
+    [HideInInspector]
     public bool pressedJump = false;
+    [HideInInspector]
     public bool pressedPreJump = false;
 
     bool preJump = false;

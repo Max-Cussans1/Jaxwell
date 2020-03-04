@@ -15,16 +15,20 @@ public class DashScript : MonoBehaviour
     [SerializeField] float dashDuration = 0.1f;
 
     float initialGravityScale;
+    [HideInInspector]
     public float tempDashCooldown;
     private float tempDashDuration;
 
     bool pressedDashLeft = false;
     bool pressedDashRight = false;
 
+    [HideInInspector]
     public bool dashing = false;
+    [HideInInspector]
     public bool canDash = true;
     bool dashJustEnded = false;
 
+    [HideInInspector]
     public bool pressedDash = false;
 
 

@@ -10,8 +10,14 @@ public class CollisionManager : MonoBehaviour
     public static GameObject groundedObject = null;
     JumpScript jumpScript;
 
+    [Header("Settings")]
+    [Tooltip("Time in seconds that the player can jump after they are no longer grounded")]
     [SerializeField] float coyoteTime = 0.1f;
+
+    [Header("Debug")]
+    [Tooltip("Draws raycasts to show where we are checking if we are grounded")]
     [SerializeField] bool drawGroundedRaycastDebug = false;
+    [Tooltip("Draws raycasts to show where we are checking if we are against a wall")]
     [SerializeField] bool drawWallCheckRaycastDebug = false;
 
     float raycastStartOffset;

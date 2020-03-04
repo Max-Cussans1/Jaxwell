@@ -10,7 +10,10 @@ public class Platform : Elements
     BoxCollider2D player_collider;
     PlayerState playerstate;
 
+    [Header("Debug")]
+    [Tooltip("Enable to draw boxes of where the platform will oscillate")]
     [SerializeField] bool levelDesignDebug = false;
+    [Space(25)]
 
     //variables to store the current coords to get the debug values
     Vector2 topL;
@@ -48,26 +51,45 @@ public class Platform : Elements
     float timeToDestroyAfterBreak = 2.5f;
     float heightDashEnded;
 
+    [Header("Element")]
+    //change to the element we need in editor
+    public elements element = 0;
+
+    [Header("Platform Breaking")]
     [SerializeField] bool breakableOnEarthDash = false;
     [SerializeField] float dashDistanceRequiredToBreak = 6.0f;
+
+    [Header("Oscillation Direction")]
+    [Tooltip("Platforms oscillating diagonally at different x and y speeds are not supported")]
     [SerializeField] bool oscillateVertically = false;
+    [Tooltip("Platforms oscillating diagonally at different x and y speeds are not supported")]
     [SerializeField] bool oscillateUpwardsFirst = false;
+    [Tooltip("Platforms oscillating diagonally at different x and y speeds are not supported")]
     [SerializeField] bool oscillateHorizontally = false;
+    [Tooltip("Platforms oscillating diagonally at different x and y speeds are not supported")]
     [SerializeField] bool oscillateRightFirst = false;
+
+    [Header("Oscillation Distance")]
     [SerializeField] float upwardOscillationDistance = 5.0f;
     [SerializeField] float downwardOscillationDistance = 5.0f;
-    [SerializeField] float verticalOscillationSpeed = 0.05f;
-    [SerializeField] float verticalOscillationPauseTime = 3.0f;
     [SerializeField] float leftOscillationDistance = 5.0f;
     [SerializeField] float rightOscillationDistance = 5.0f;
+
+    [Header("Oscillation Speed")]
+    [Tooltip("Speed * Time.DeltaTime to travel")]
+    [SerializeField] float verticalOscillationSpeed = 0.05f;
+    [Tooltip("Speed * Time.DeltaTime to travel")]
     [SerializeField] float horizontalOscillationSpeed = 0.05f;
+
+    [Header("Oscillation Pause Time")]
+    [Tooltip("How long to pause at the oscillation distance in seconds")]
+    [SerializeField] float verticalOscillationPauseTime = 3.0f;
+    [Tooltip("How long to pause at the oscillation distance in seconds")]
     [SerializeField] float horizontalOscillationPauseTime = 3.0f;
 
     float tempXOscillationPauseTime;
     float tempYOscillationPauseTime;
 
-    //change to the element we need in editor
-    public elements element = 0;
 
     // Start is called before the first frame update
     void Start()

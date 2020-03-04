@@ -9,37 +9,48 @@ public class PlayerState : Elements
     public elements element = 0;
     elements platformElement;
 
+    MoveScript moveScript;
+    SpriteRenderer p_spriteRenderer;
+
+    //animator
+    Animator animator;
+
+    [Header("Fire Speed/Acceleration")]
     [SerializeField] float fireMaxSpeed = 3.0f;
     [SerializeField] float fireAcceleration = 0.3f;
     [SerializeField] float fireDeceleration = 0.3f;
 
+    [Header("Water Speed/Acceleration")]
     [SerializeField] float waterMaxSpeed = 3.0f;
     [SerializeField] float waterAcceleration = 0.3f;
     [SerializeField] float waterDeceleration = 0.3f;
 
+    [Header("Earth Speed/Acceleration")]
     [SerializeField] float earthMaxSpeed = 1.5f;
     [SerializeField] float earthAcceleration = 0.05f;
     [SerializeField] float earthDeceleration = 0.3f;
 
+    [Header("Air Speed/Acceleration")]
     [SerializeField] float airMaxSpeed = 3.0f;
     [SerializeField] float airAcceleration = 0.3f;
     [SerializeField] float airDeceleration = 0.3f;
 
-    MoveScript moveScript;
-    SpriteRenderer p_spriteRenderer;
 
+    [Header("Element Sprites")]
     public Sprite fireSprite;
     public Sprite waterSprite;
     public Sprite earthSprite;
     public Sprite airSprite;
 
+    [HideInInspector]
     public bool pressedFire = false;
+    [HideInInspector]
     public bool pressedWater = false;
+    [HideInInspector]
     public bool pressedEarth = false;
+    [HideInInspector]
     public bool pressedAir = false;
 
-    //animator
-    Animator animator;
 
     void Start()
     {

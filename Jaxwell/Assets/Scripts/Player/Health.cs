@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
 
     public Vector3 currentCheckpoint;
 
+    [HideInInspector]
     public bool dead = false;
 
     public int health = 100;
