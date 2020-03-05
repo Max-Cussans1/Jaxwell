@@ -64,10 +64,13 @@ public class EarthDash : MonoBehaviour
 
         if (CollisionManager.groundedObject != null)
         {
-            platform = CollisionManager.groundedObject.GetComponent<Platform>();
-            spriteRenderer = platform.GetComponent<SpriteRenderer>();
-            tempColor = spriteRenderer.color;
-            tempColor.a = Platform.alphaAmount;
+            if (CollisionManager.groundedObject.GetComponent<Platform>() != null)
+            {
+                platform = CollisionManager.groundedObject.GetComponent<Platform>();
+                spriteRenderer = platform.GetComponent<SpriteRenderer>();
+                tempColor = spriteRenderer.color;
+                tempColor.a = Platform.alphaAmount;
+            }
         }
         //disable gravity & drag
         rigidbody.gravityScale = 0;
