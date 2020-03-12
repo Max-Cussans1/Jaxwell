@@ -158,6 +158,7 @@ public class Platform : Elements
             }
         }
 
+        #if UNITY_EDITOR
         if (levelDesignDebug && !Application.isPlaying)
         {
             topL = new Vector2(transform.position.x - (transform.localScale.x) / 2, transform.position.y + (transform.localScale.y) / 2);
@@ -167,6 +168,7 @@ public class Platform : Elements
 
             DrawPlatformOscillationDebug();
         }
+        #endif
 
         if (!broken && Application.isPlaying)
         {
@@ -321,6 +323,7 @@ public class Platform : Elements
         }
     }
 
+    #if UNITY_EDITOR
     void DrawPlatformOscillationDebug()
     {
         if (oscillateVertically)
@@ -365,5 +368,6 @@ public class Platform : Elements
             DebugHelper.DrawBox(hRightTopL, hRightTopR, hRightBottomL, hRightBottomR, Color.green);
         }
     }
+    #endif
 
 }
