@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 73580602}
   - component: {fileID: 73580601}
   - component: {fileID: 5279375911639913464}
+  - component: {fileID: 1661697987}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -220,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c969c3554eea18d4a9f3e199aee900d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: 1
+  element: 2
   fireMaxSpeed: 10
   fireAcceleration: 0.7
   fireDeceleration: 0.8
@@ -258,7 +259,7 @@ MonoBehaviour:
   timeToWaitBeforeSliding: 0.5
   timeToUnstick: 0.5
   grabbingFallSpeed: -0.7
-  wallJumpHeight: 30
+  wallJumpHeight: 25
   wallJumpHorizontalForce: 25
   timeToIgnoreDecelerationForWallJump: 0.5
   pressedWallJump: 0
@@ -311,6 +312,21 @@ MonoBehaviour:
   disableEarthInput: 0
   disableAirInput: 0
 --- !u!114 &5279375911639913464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2930405940970940903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b2dfb4a8a240d478d708bc005990df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCheckpoint: {x: 0, y: 0, z: 0}
+  dead: 0
+  health: 100
+--- !u!114 &1661697987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -428,7 +428,7 @@ PrefabInstance:
     - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
         type: 3}
       propertyPath: oscillateUpwardsFirst
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
         type: 3}
@@ -459,6 +459,16 @@ PrefabInstance:
         type: 3}
       propertyPath: downwardOscillationDistance
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: breakableOnEarthDash
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345156663618709986, guid: f3bdeefc3fba0564d895ebfed0a1ddbb,
+        type: 3}
+      propertyPath: element
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3bdeefc3fba0564d895ebfed0a1ddbb, type: 3}
