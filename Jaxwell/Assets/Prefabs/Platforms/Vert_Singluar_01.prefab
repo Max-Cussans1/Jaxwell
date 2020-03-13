@@ -162,16 +162,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelDesignDebug: 0
+  element: 4
   breakableOnEarthDash: 0
   dashDistanceRequiredToBreak: 6
   oscillateVertically: 1
   oscillateUpwardsFirst: 1
   oscillateHorizontally: 0
   oscillateRightFirst: 0
-  verticalOscillationDistance: 3
-  verticalOscillationSpeed: 0.1
-  verticalOscillationPauseTime: 0.5
-  horizontalOscillationDistance: 5
+  upwardOscillationDistance: 5
+  downwardOscillationDistance: 5
+  leftOscillationDistance: 5
+  rightOscillationDistance: 5
+  verticalOscillationSpeed: 5
   horizontalOscillationSpeed: 0.05
+  verticalOscillationPauseTime: 2
   horizontalOscillationPauseTime: 3
-  element: 4

@@ -1268,7 +1268,7 @@ PrefabInstance:
     - target: {fileID: 2439949735216060985, guid: 8215e73e83e9ad741b43b23d565bce98,
         type: 3}
       propertyPath: verticalOscillationPauseTime
-      value: 1.8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2439949735216060985, guid: 8215e73e83e9ad741b43b23d565bce98,
         type: 3}
@@ -1357,7 +1357,7 @@ PrefabInstance:
     - target: {fileID: 2439949735216060985, guid: 8215e73e83e9ad741b43b23d565bce98,
         type: 3}
       propertyPath: verticalOscillationPauseTime
-      value: 1.8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2439949735216060985, guid: 8215e73e83e9ad741b43b23d565bce98,
         type: 3}
@@ -1610,6 +1610,11 @@ PrefabInstance:
         type: 3}
       propertyPath: verticalOscillationPauseTime
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439949735216060985, guid: 8215e73e83e9ad741b43b23d565bce98,
+        type: 3}
+      propertyPath: horizontalOscillationSpeed
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8215e73e83e9ad741b43b23d565bce98, type: 3}

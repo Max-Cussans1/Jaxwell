@@ -259,7 +259,7 @@ MonoBehaviour:
   timeToWaitBeforeSliding: 0.5
   timeToUnstick: 0.5
   grabbingFallSpeed: -0.7
-  wallJumpHeight: 25
+  wallJumpHeight: 20
   wallJumpHorizontalForce: 25
   timeToIgnoreDecelerationForWallJump: 0.5
   pressedWallJump: 0
