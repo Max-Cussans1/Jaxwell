@@ -221,7 +221,7 @@ PrefabInstance:
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: m_Name
-      value: Tooltip_Trigger (2)
+      value: Tooltip_Trigger_JumpKey
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e5592414071be4eaf0a9b6295a99e5, type: 3}
@@ -407,12 +407,12 @@ PrefabInstance:
     - target: {fileID: 3029667899786801019, guid: 268af808ebcf40e4f9fb52d06dd1b335,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.64
+      value: 34.77
       objectReference: {fileID: 0}
     - target: {fileID: 3029667899786801019, guid: 268af808ebcf40e4f9fb52d06dd1b335,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.86
+      value: 2.79
       objectReference: {fileID: 0}
     - target: {fileID: 3029667899786801019, guid: 268af808ebcf40e4f9fb52d06dd1b335,
         type: 3}
@@ -561,7 +561,7 @@ PrefabInstance:
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: m_Name
-      value: Tooltip_Trigger (1)
+      value: Tooltip_Trigger_AirSwitch
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e5592414071be4eaf0a9b6295a99e5, type: 3}
@@ -45171,13 +45171,13 @@ PrefabInstance:
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: TooltipText
-      value: Only water form can stand on that - Switch by pressing Numpad 2 or Right
-        trigger
+      value: Only water form can stand on that platform- Switch by pressing Numpad
+        2 or Right bumper
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: m_Name
-      value: Tooltip_Trigger (3)
+      value: Tooltip_Trigger_WaterSWitch
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e5592414071be4eaf0a9b6295a99e5, type: 3}
@@ -45605,7 +45605,7 @@ PrefabInstance:
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: m_Name
-      value: Tooltip_Trigger
+      value: Tooltip_Trigger_Movement
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e5592414071be4eaf0a9b6295a99e5, type: 3}
