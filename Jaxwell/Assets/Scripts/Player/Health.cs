@@ -20,6 +20,8 @@ public class Health : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = GetComponent<PlayerState>();
+
+
         initialHealth = health;
         //add a safety checkpoint where the object starts
         currentCheckpoint = transform.position;

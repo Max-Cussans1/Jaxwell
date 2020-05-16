@@ -64,7 +64,7 @@ public class CameraScript : MonoBehaviour
         {
             if (tempShakeDuration > 0)
             {
-                DebugHelper.Log("Camera started shaking");
+                //DebugHelper.Log("Camera started shaking");
                 CameraShake(shakeDistanceX, shakeDistanceY);
 
                 tempShakeDuration -= Time.deltaTime;
@@ -73,7 +73,7 @@ public class CameraScript : MonoBehaviour
         if(tempShakeDuration < 0)
         {
             cameraShake = false;
-            DebugHelper.Log("Camera stopped shaking");
+            //DebugHelper.Log("Camera stopped shaking");
         }
         //reset the duration after we change out of earth
         if(playerState.element != Elements.elements.earth && !cameraShake)
@@ -91,6 +91,6 @@ public class CameraScript : MonoBehaviour
         float floatY = transform.position.y + rdistanceY;
 
         transform.position = new Vector3(floatX, floatY, height);
-        DebugHelper.Log("Camera shook with " + rdistanceX + " as the X value and " + rdistanceY + " as the Y value");
+       //DebugHelper.Log("Camera shook with " + rdistanceX + " as the X value and " + rdistanceY + " as the Y value");
     }
 }
