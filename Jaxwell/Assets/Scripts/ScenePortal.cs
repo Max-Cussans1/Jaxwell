@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ScenePortal : MonoBehaviour
 {
+    public LevelLoader levelLoader;
     public string destinationScene;
 
     PlayerState player;
@@ -26,7 +27,7 @@ public class ScenePortal : MonoBehaviour
                 if (destinationScene != null)
                 {
                     DebugHelper.Log("Entered scene transition from " + SceneManager.GetActiveScene().name + " to " + destinationScene);
-                    SceneManager.LoadScene(destinationScene);
+                    levelLoader.LoadLevel(destinationScene);
                 }
                 else
                 {
@@ -35,4 +36,5 @@ public class ScenePortal : MonoBehaviour
             }
         }
     }
+
 }

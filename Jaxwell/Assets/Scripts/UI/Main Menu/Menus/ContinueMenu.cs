@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ContinueMenu : MonoBehaviour
 {
+    public LevelLoader levelLoader;
+
     public static string savePath1;
     public static string savePath2;
     public static string savePath3;
@@ -56,7 +58,7 @@ public class ContinueMenu : MonoBehaviour
 
     public void NewGame()
     {
-        SceneManager.LoadScene("Level_001");
+        levelLoader.LoadLevel(("Level_001"));
     }
 
     public void LoadGame()
@@ -76,7 +78,7 @@ public class ContinueMenu : MonoBehaviour
             if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName(save.sceneName))
              {
                  DebugHelper.Log("Loaded scene from the save file " + SaveManager.currentSavePath);
-                 SceneManager.LoadScene(save.sceneName);
+                 levelLoader.LoadLevel((save.sceneName));
              }
          
          }         

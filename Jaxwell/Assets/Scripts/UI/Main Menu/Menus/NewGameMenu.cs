@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class NewGameMenu : MonoBehaviour
 {
+    public LevelLoader levelLoader;
     public GameObject confirmationScreen;
     public Text confirmationScreenText;
 
@@ -59,7 +60,7 @@ public class NewGameMenu : MonoBehaviour
 
     public void NewGame()
     {
-        SceneManager.LoadScene("Level_001");
+        levelLoader.LoadLevel("Level_001");
     }
 
     public void Save1Chosen()
