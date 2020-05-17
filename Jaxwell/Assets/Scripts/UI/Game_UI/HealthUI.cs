@@ -7,6 +7,7 @@ public class HealthUI : MonoBehaviour
 {
     Animator animator;
     public static bool updateHealthUI = false;
+    public static bool lifeGained = false;
 
     void Start()
     {
@@ -15,7 +16,12 @@ public class HealthUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(updateHealthUI)
+        if (lifeGained)
+        {
+            animator.SetTrigger("GainedLife");
+            lifeGained = false;
+        }
+        if (updateHealthUI)
         {
             animator.SetInteger("Lives", Health.lives);
         }

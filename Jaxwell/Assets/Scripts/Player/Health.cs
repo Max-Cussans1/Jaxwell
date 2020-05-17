@@ -70,4 +70,5 @@ public class Health : MonoBehaviour
 
         DebugHelper.Log(this.gameObject + " respawned at " + respawnPosition);
     }
+
 }

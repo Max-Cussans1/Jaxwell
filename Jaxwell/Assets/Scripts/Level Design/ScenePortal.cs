@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Assertions;
 
 public class ScenePortal : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class ScenePortal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Assert.IsNotNull(levelLoader, "Level Loader was null, ensure the Level Loader GameObject is assigned in the scene portal editor options");
         player = FindObjectOfType<PlayerState>();
     }
 
