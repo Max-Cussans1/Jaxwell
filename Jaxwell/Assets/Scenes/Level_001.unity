@@ -580,7 +580,7 @@ PrefabInstance:
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: TooltipText
-      value: Earth form cannot jump Switch to Air by pressing Numpad 4 or RB
+      value: Earth form cannot jump Switch to Air by pressing Numpad Enter or RB
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
@@ -45201,7 +45201,7 @@ PrefabInstance:
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: m_Name
-      value: Tooltip_Trigger_WaterSWitch
+      value: Tooltip_Trigger_WaterSwitch
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e5592414071be4eaf0a9b6295a99e5, type: 3}
@@ -45748,7 +45748,7 @@ PrefabInstance:
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: TooltipText
-      value: Move with A & S Or Left Thumb Stick
+      value: Move with A & D Or Left Thumb Stick
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
