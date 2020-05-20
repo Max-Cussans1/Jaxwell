@@ -226,7 +226,7 @@ Transform:
   - {fileID: 1098637244}
   - {fileID: 1543103021}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &252503399
 PrefabInstance:
@@ -437,7 +437,7 @@ PrefabInstance:
     - target: {fileID: 2995389645223415423, guid: 02f58302defdcb84dba504caba69f164,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2995389645223415423, guid: 02f58302defdcb84dba504caba69f164,
         type: 3}
@@ -615,7 +615,8 @@ PrefabInstance:
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: TooltipText
-      value: Air form allows you to clear huge gaps by siwitching in mid air
+      value: Air form allows you to clear huge gaps by switching to the form in mid
+        air.
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
@@ -859,7 +860,7 @@ PrefabInstance:
     - target: {fileID: 2287768095115473910, guid: 311bff2b7141d924f8a5bb078ac03e08,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2287768095115473910, guid: 311bff2b7141d924f8a5bb078ac03e08,
         type: 3}
@@ -1118,7 +1119,7 @@ PrefabInstance:
     - target: {fileID: 3029667899786801019, guid: 268af808ebcf40e4f9fb52d06dd1b335,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3029667899786801019, guid: 268af808ebcf40e4f9fb52d06dd1b335,
         type: 3}
@@ -1248,7 +1249,7 @@ Transform:
   - {fileID: 1281422695}
   - {fileID: 781279330}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &845572947
 PrefabInstance:
@@ -1300,7 +1301,7 @@ PrefabInstance:
     - target: {fileID: 2930405940970940910, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2930405940970940910, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
@@ -1400,7 +1401,7 @@ Transform:
   - {fileID: 1002963887}
   - {fileID: 1140636078}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &897530380
 PrefabInstance:
@@ -1550,7 +1551,7 @@ PrefabInstance:
     - target: {fileID: 5118507116496729686, guid: e4abe3cc099670148b6e8a752c52afa2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5118507116496729686, guid: e4abe3cc099670148b6e8a752c52afa2,
         type: 3}
@@ -24968,6 +24969,101 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2f27f9c7dc55346ad054f21eb878a5, type: 3}
+--- !u!1001 &1466632524
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -78.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530123, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1963792156}
+    - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 467102460}
+    - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: TooltipText
+      value: Both Fire and Air form have a cool down. Fire dash takes a few seconds
+        to recharge. Air's doudble jump only recharges when you land.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
+        type: 3}
+      propertyPath: m_Name
+      value: Tooltip_Trigger_Cooldowns
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63e5592414071be4eaf0a9b6295a99e5, type: 3}
 --- !u!4 &1543103021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2278875591457586493, guid: bd2f27f9c7dc55346ad054f21eb878a5,
@@ -25049,7 +25145,7 @@ PrefabInstance:
     - target: {fileID: 8058176972075473983, guid: 60f5d057f27d6af4faff89618be19376,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8058176972075473983, guid: 60f5d057f27d6af4faff89618be19376,
         type: 3}
@@ -25197,7 +25293,7 @@ Transform:
   - {fileID: 114696310}
   - {fileID: 277144148}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1963792156 stripped
 MonoBehaviour:
