@@ -401,6 +401,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 268af808ebcf40e4f9fb52d06dd1b335, type: 3}
+--- !u!20 &756563069 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8058176972075473982, guid: 60f5d057f27d6af4faff89618be19376,
+    type: 3}
+  m_PrefabInstance: {fileID: 1042154917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &784850897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -446,7 +452,7 @@ PrefabInstance:
     - target: {fileID: 4407164532556168185, guid: a98fa87e8f82f574abbd565d42134aa7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4407164532556168185, guid: a98fa87e8f82f574abbd565d42134aa7,
         type: 3}
@@ -673,7 +679,7 @@ PrefabInstance:
     - target: {fileID: 8058176972075473983, guid: 60f5d057f27d6af4faff89618be19376,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8058176972075473983, guid: 60f5d057f27d6af4faff89618be19376,
         type: 3}
@@ -1176,7 +1182,7 @@ PrefabInstance:
     - target: {fileID: 3663152947681396210, guid: 64b247880ae59074aa87f1053c0c8dfc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3663152947681396210, guid: 64b247880ae59074aa87f1053c0c8dfc,
         type: 3}
@@ -1544,7 +1550,7 @@ PrefabInstance:
     - target: {fileID: 3663152947681396210, guid: 64b247880ae59074aa87f1053c0c8dfc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3663152947681396210, guid: 64b247880ae59074aa87f1053c0c8dfc,
         type: 3}
@@ -51375,6 +51381,21 @@ PrefabInstance:
       propertyPath: jumpScript
       value: 
       objectReference: {fileID: 1663833255}
+    - target: {fileID: 2287768095115473910, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2287768095115473911, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 756563069}
+    - target: {fileID: 2884537186314336206, guid: 311bff2b7141d924f8a5bb078ac03e08,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4219006506519560579, guid: 311bff2b7141d924f8a5bb078ac03e08,
         type: 3}
       propertyPath: playerState
