@@ -36,6 +36,7 @@ public class Health : MonoBehaviour
             dead = true;
             DebugHelper.Log(this.gameObject + " died at " + transform.position + "!");
             lives--;
+            DebugHelper.Log("Player died. Lives left: " + lives);
             HealthUI.updateHealthUI = true;
 
             if (lives > 0)

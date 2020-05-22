@@ -22,6 +22,7 @@ public class LifePickup : MonoBehaviour
             if (other.gameObject == player.gameObject && Health.lives < 4)
             {
                 Health.lives++;
+                DebugHelper.Log("Picked up a life. Lives: " + Health.lives);
                 HealthUI.updateHealthUI = true;
                 HealthUI.lifeGained = true;
                 Destroy(this.gameObject);
