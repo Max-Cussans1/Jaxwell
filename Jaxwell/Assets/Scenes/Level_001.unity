@@ -45195,7 +45195,7 @@ PrefabInstance:
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: TooltipText
-      value: Only water form can stand on that platform- Switch by pressing Numpad
+      value: Only water form can stand on that platform - Switch by pressing Numpad
         2 or Right bumper
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
