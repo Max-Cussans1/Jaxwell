@@ -18,22 +18,22 @@ EditorBuildSettings:
     path: Assets/Scenes/Level_004.unity
     guid: 11740f659511f9442a16af1d04ba1607
   - enabled: 1
-    path: Assets/Scenes/Level_003.unity
+    path: Assets/Scenes/Redund_003.unity
     guid: 3ae2f400dd28f4140bca3b7fdfc8fb9f
   - enabled: 1
-    path: Assets/Scenes/Level_005.unity
+    path: Assets/Scenes/Redund_005.unity
     guid: b201761714257664da744c05f7361ccc
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Level_006.unity
+    path: Assets/Scenes/Level_003.unity
     guid: 26421f0899c60b94eb37d88c65ee26e5
   - enabled: 1
-    path: Assets/Scenes/Level_007.unity
+    path: Assets/Scenes/Level_006.unity
     guid: be3993308736ecb4f8f71677117c7dad
   - enabled: 1
-    path: Assets/Scenes/Level_008.unity
+    path: Assets/Scenes/Level_005.unity
     guid: 1ac81d71eed305345badb484e5c6c4bc
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e14e3431a6c157b4a9ac8d8ec206c7ad,
