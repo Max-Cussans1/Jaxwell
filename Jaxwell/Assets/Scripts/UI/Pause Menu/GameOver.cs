@@ -12,7 +12,7 @@ public class GameOver : MonoBehaviour
 
     void Start()
     {
-        Assert.IsNotNull(player, "Player was null, ensure the player GameObject for Player is assigned in the UI GameOver script");
+        Assert.IsNotNull(player, "Player was null, ensure the player GameObject for Player is assigned in the UI GameOver script in the UI Canvas");
     }
 
     // Update is called once per frame
