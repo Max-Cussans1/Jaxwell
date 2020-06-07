@@ -2289,17 +2289,16 @@ AnimatorStateMachine:
   - {fileID: 833460009836431575}
   - {fileID: 6647292144705206148}
   - {fileID: 7530420810334496057}
-  - {fileID: -403582762483064545}
   m_EntryTransitions:
   - {fileID: -8425003986864897304}
   m_StateMachineTransitions:
-  - first: {fileID: 7525537053535390553}
-    second: []
-  - first: {fileID: -234581290962093513}
+  - first: {fileID: 7330931920415623217}
     second: []
   - first: {fileID: -1619428114226327306}
     second: []
-  - first: {fileID: 7330931920415623217}
+  - first: {fileID: -234581290962093513}
+    second: []
+  - first: {fileID: 7525537053535390553}
     second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 120, y: -350, z: 0}
@@ -2825,31 +2824,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1101 &-403582762483064545
-AnimatorStateTransition:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: pressedEarth
-    m_EventTreshold: 0
-  m_DstStateMachine: {fileID: -234581290962093513}
-  m_DstState: {fileID: 0}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0
-  m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 0
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
 --- !u!1101 &-361623864620363373
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -3009,13 +2983,13 @@ AnimatorStateMachine:
   - {fileID: 1643452209300175423}
   - {fileID: -9025772807265046422}
   m_StateMachineTransitions:
+  - first: {fileID: 9027480242922575447}
+    second:
+    - {fileID: 7426594327497272033}
   - first: {fileID: 410469907966292339}
     second:
     - {fileID: -6058177490136269612}
     - {fileID: 2651042183863632809}
-  - first: {fileID: 9027480242922575447}
-    second:
-    - {fileID: 7426594327497272033}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 110, y: -300, z: 0}
   m_EntryPosition: {x: 30, y: -440, z: 0}
@@ -3092,73 +3066,73 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: moveRight
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: sliding
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: grabLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: grabRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: jump
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: wallJump
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: grabbing
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: pressedFire
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: pressedWater
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: pressedEarth
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: pressedAir
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Element Layer

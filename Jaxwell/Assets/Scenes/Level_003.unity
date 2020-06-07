@@ -25387,7 +25387,7 @@ PrefabInstance:
         type: 3}
       propertyPath: TooltipText
       value: Both Fire and Air form have a cool down. Fire dash takes a few seconds
-        to recharge. Air's doudble jump only recharges when you land.
+        to recharge. Air's double jump only recharges when you land.
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
