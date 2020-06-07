@@ -12,11 +12,13 @@ public class EarthDash : MonoBehaviour
 
     public static float heightDashedAt;
 
+
     [SerializeField] float earthDashSpeed = 20.0f;
 
     public static bool pressedDashToEarth = false;
     bool forceApplied = false;
     public static bool earthDashEnded = true;
+    bool dashedButNotHitFloor = false;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,11 @@ public class EarthDash : MonoBehaviour
             earthDashEnded = true;
             forceApplied = false;
         }
+
+        if(CollisionManager.isGrounded && dashedButNotHitFloor)
+        {
+            dashedButNotHitFloor = false;
+        }
     }
 
     void FixedUpdate()
@@ -52,6 +59,13 @@ public class EarthDash : MonoBehaviour
         {            
             HandleEarthDashEnd(p_rigidbody);
             earthDashEnded = false;
+        }
+
+        if(playerstate.element == Elements.elements.earth && !CollisionManager.isGrounded && !dashedButNotHitFloor)
+        {
+            DashToEarth(p_rigidbody, earthDashSpeed);
+            forceApplied = true;
+            dashedButNotHitFloor = true;
         }
         
     }
