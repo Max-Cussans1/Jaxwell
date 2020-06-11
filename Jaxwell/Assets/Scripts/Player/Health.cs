@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     Rigidbody2D rb;
     PlayerState player;
 
-    public Vector3 currentCheckpoint;
+    public static Vector3 currentCheckpoint;
 
     [HideInInspector]
     public bool dead = false;

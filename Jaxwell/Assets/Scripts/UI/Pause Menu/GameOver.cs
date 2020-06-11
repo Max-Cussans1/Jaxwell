@@ -41,6 +41,7 @@ public class GameOver : MonoBehaviour
         {
             PlayerData temp = SaveSystem.Load(SaveManager.currentSavePath);
             player.transform.position = new Vector2(temp.position[0], temp.position[1]);
+            Health.currentCheckpoint = player.transform.position;
         }
 
         gameOver = false;
