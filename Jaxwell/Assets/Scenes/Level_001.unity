@@ -580,7 +580,8 @@ PrefabInstance:
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: TooltipText
-      value: Earth form cannot jump Switch to Air by pressing Numpad Enter or RB
+      value: Earth form cannot jump Switch to Air by pressing Numpad Enter or Right
+        Bumper
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}

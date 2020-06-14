@@ -949,7 +949,8 @@ PrefabInstance:
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: TooltipText
-      value: Water form can wall jump - Use it to climb quickly upwards
+      value: Water form can wall jump - Use it to climb quickly upwards by tapping
+        space/A
       objectReference: {fileID: 0}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
@@ -1219,7 +1220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2dfb4a8a240d478d708bc005990df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCheckpoint: {x: 0, y: 0, z: 0}
   dead: 0
   health: 100
 --- !u!114 &1663833260 stripped
