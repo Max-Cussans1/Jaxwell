@@ -9,10 +9,12 @@ public class GameOver : MonoBehaviour
     public static bool gameOver = false;
     public GameObject gameOverUI;
     public PlayerState player;
+    Rigidbody2D playerrb;
 
     void Start()
     {
         Assert.IsNotNull(player, "Player was null, ensure the player GameObject for Player is assigned in the UI GameOver script in the UI Canvas");
+        playerrb = player.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,7 @@ public class GameOver : MonoBehaviour
         if (SaveManager.currentSavePath != null)
         {
             PlayerData temp = SaveSystem.Load(SaveManager.currentSavePath);
+            playerrb.velocity = new Vector3(0, 0, 0);
             player.transform.position = new Vector2(temp.position[0], temp.position[1]);
             Health.currentCheckpoint = player.transform.position;
         }
