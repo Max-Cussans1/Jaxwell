@@ -115,10 +115,32 @@ public class DashScript : MonoBehaviour
 
     void DashRight(Rigidbody2D rigidbody, float speed)
     {
-        DebugHelper.Log("Dashed Right");
+        Platform platform = null;
+
         WallClimb.grabbing = false;
+
+        if (CollisionManager.wallRightObject != null)
+        {
+            if (CollisionManager.wallRightObject.GetComponent<Platform>() != null)
+            {
+                platform = CollisionManager.wallRightObject.GetComponent<Platform>();
+            }
+        }
+
         //set x and y velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, 0.0f);
+
+        if (platform != null)
+        {
+            //check if the platform is not fire
+            if (!Elements.ElementCheck(platform.element, Elements.elements.fire) && platform.element != Elements.elements.neutral)
+            {
+                //if it's not fire or neutral, disable the platform's collider before we dash
+                platform.GetComponent<BoxCollider2D>().enabled = false;
+                DebugHelper.Log("Disabled collision for " + platform.gameObject + " right dash because it wasn't a fire platform");
+            }
+        }
+
         dashing = true;
 
         //add a force in the positive X direction to dash right
@@ -137,10 +159,32 @@ public class DashScript : MonoBehaviour
 
     void DashLeft(Rigidbody2D rigidbody, float speed)
     {
-        DebugHelper.Log("Dashed Left");
+        Platform platform = null;
+
         WallClimb.grabbing = false;
+
+        if (CollisionManager.wallLeftObject != null)
+        {
+            if (CollisionManager.wallLeftObject.GetComponent<Platform>() != null)
+            {
+                platform = CollisionManager.wallLeftObject.GetComponent<Platform>();
+            }
+        }
+
         //set x and y velocity to 0 to make our dash more reliable
         rigidbody.velocity = new Vector2(0.0f, 0.0f);
+
+        if (platform != null)
+        {
+            //check if the platform is not fire
+            if (!Elements.ElementCheck(platform.element, Elements.elements.fire) && platform.element != Elements.elements.neutral)
+            {
+                //if it's not fire or neutral, disable the platform's collider before we dash
+                platform.GetComponent<BoxCollider2D>().enabled = false;
+                DebugHelper.Log("Disabled collision for " + platform.gameObject + " left dash because it wasn't a fire platform");
+            }
+        }
+
         dashing = true;
 
         //add a force in the positive X direction to dash right

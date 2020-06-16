@@ -8,6 +8,9 @@ public class CollisionManager : MonoBehaviour
     public static bool isAgainstWallLeft = false;
     public static bool isAgainstWallRight = false;
     public static GameObject groundedObject = null;
+    public static GameObject wallRightObject = null;
+    public static GameObject wallLeftObject = null;
+
     JumpScript jumpScript;
 
     [Header("Settings")]
@@ -99,6 +102,16 @@ public class CollisionManager : MonoBehaviour
         if(!isGrounded && groundedObject != null)
         {
             groundedObject = null;
+        }
+
+        if(!isAgainstWallRight && wallRightObject != null)
+        {
+            wallRightObject = null;
+        }
+
+        if (!isAgainstWallLeft && wallLeftObject != null)
+        {
+            wallLeftObject = null;
         }
     }
 
@@ -236,6 +249,7 @@ public class CollisionManager : MonoBehaviour
             //print what the raycast hit to console and where the object is
             DebugHelper.Log("Grab raycast right from centre hit " + grabRightHit.collider.gameObject + " at " + grabRightHit.point);
             isWallCheck = true;
+            wallRightObject = grabRightHit.collider.gameObject;
 
         }
         else
@@ -257,6 +271,7 @@ public class CollisionManager : MonoBehaviour
                 //print what the raycast hit to console and where the object is
                 DebugHelper.Log("Grab raycast right from bottom hit " + grabRightHitBottom.collider.gameObject + " at " + grabRightHitBottom.point);
                 isWallCheck = true;
+                wallRightObject = grabRightHitBottom.collider.gameObject;
 
             }
             else
@@ -278,6 +293,7 @@ public class CollisionManager : MonoBehaviour
                     //print what the raycast hit to console and where the object is
                     DebugHelper.Log("Grab raycast right from top hit " + grabRightHitTop.collider.gameObject + " at " + grabRightHitTop.point);
                     isWallCheck = true;
+                    wallRightObject = grabRightHitTop.collider.gameObject;
 
                 }             
             }
@@ -308,6 +324,7 @@ public class CollisionManager : MonoBehaviour
             //print what the raycast hit to console and where the object is
             DebugHelper.Log("Grab raycast left from centre hit " + grabLeftHit.collider.gameObject + " at " + grabLeftHit.point);
             isWallCheck = true;
+            wallLeftObject = grabLeftHit.collider.gameObject;
 
         }
         else
@@ -329,7 +346,7 @@ public class CollisionManager : MonoBehaviour
                 //print what the raycast hit to console and where the object is
                 DebugHelper.Log("Grab raycast left from bottom hit " + grabLeftHitBottom.collider.gameObject + " at " + grabLeftHitBottom.point);
                 isWallCheck = true;
-
+                wallLeftObject = grabLeftHitBottom.collider.gameObject;
             }
             else
             {
@@ -350,6 +367,7 @@ public class CollisionManager : MonoBehaviour
                     //print what the raycast hit to console and where the object is
                     DebugHelper.Log("Grab raycast left top hit " + grabLeftHitTop.collider.gameObject + " at " + grabLeftHitTop.point);
                     isWallCheck = true;
+                    wallLeftObject = grabLeftHitTop.collider.gameObject;
 
                 }
             }
