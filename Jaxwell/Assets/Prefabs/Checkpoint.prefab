@@ -50,7 +50,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -71,6 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8623894e975ad4296506981a6bfcd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointPickupSFX: {fileID: 8300000, guid: 5eda74bead04a0646b92ed9932acc131, type: 3}
   position: {x: 0, y: 0, z: 0}
 --- !u!212 &3460241960102213107
 SpriteRenderer:

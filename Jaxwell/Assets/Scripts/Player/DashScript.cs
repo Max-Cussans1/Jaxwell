@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class DashScript : MonoBehaviour
 {
+    [SerializeField] AudioClip dashSFX;
+
     Rigidbody2D p_rigidbody;
 
     MoveScript movescript;
@@ -35,6 +38,8 @@ public class DashScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Assert.IsNotNull(dashSFX, "Dash SFX was null, ensure a sound is assigned to the dashScript on the player game object");
+
         playerState = GetComponent<PlayerState>();
 
         p_rigidbody = GetComponent<Rigidbody2D>();
@@ -145,6 +150,7 @@ public class DashScript : MonoBehaviour
 
         //add a force in the positive X direction to dash right
         rigidbody.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
+        AudioManager.instance.PlaySFX(dashSFX);
 
         //Set on cooldown
         canDash = false;
@@ -188,7 +194,8 @@ public class DashScript : MonoBehaviour
         dashing = true;
 
         //add a force in the positive X direction to dash right
-        rigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse); 
+        rigidbody.AddForce(new Vector2(-speed, 0), ForceMode2D.Impulse);
+        AudioManager.instance.PlaySFX(dashSFX);
 
         //Set on cooldown
         canDash = false;

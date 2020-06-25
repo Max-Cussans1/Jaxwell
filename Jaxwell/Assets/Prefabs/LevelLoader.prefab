@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transition: {fileID: 5118507114976653798}
+  music1: {fileID: 8300000, guid: 6f22dbe77a3b4674cbf8f06be460b582, type: 3}
+  music2: {fileID: 8300000, guid: 6f22dbe77a3b4674cbf8f06be460b582, type: 3}
   transitionTime: 1
 --- !u!1 &5118507116552120596
 GameObject:

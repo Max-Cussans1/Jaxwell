@@ -1,19 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Checkpoint : MonoBehaviour
 {
     PlayerState player;
-    //Health health;    
+
+    [SerializeField] AudioClip checkpointPickupSFX;
+
 
     public Vector3 position;
 
     // Start is called before the first frame update
     void Start()
     {
+        Assert.IsNotNull(checkpointPickupSFX, "Checkpoint Pickup SFX was null, ensure a sound is assigned to the checkpoint script");
         player = FindObjectOfType<PlayerState>();
-        //health = player.GetComponent<Health>();
         position = transform.position;
     }
 
@@ -24,11 +27,15 @@ public class Checkpoint : MonoBehaviour
         if (other.gameObject != null)
         {
             if (other.gameObject == player.gameObject)
-            {                
-                //use variable in health script to handle checkpoints because that's where we're handling respawning
-                Health.currentCheckpoint = position;
-                //player.currentCheckpointSave = position;
-                DebugHelper.Log("New checkpoint at " + position);
+            {
+                if (Health.currentCheckpoint != position)
+                {
+                    AudioManager.instance.PlaySFX(checkpointPickupSFX);
+                    //use variable in health script to handle checkpoints because that's where we're handling respawning
+                    Health.currentCheckpoint = position;
+                    //player.currentCheckpointSave = position;
+                    DebugHelper.Log("New checkpoint at " + position);
+                }
             }
         }
     }

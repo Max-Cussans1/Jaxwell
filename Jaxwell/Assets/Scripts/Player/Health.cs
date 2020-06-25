@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] AudioClip healthLossSFX;
+    [SerializeField] AudioClip deathSFX;
+
+
     Rigidbody2D rb;
     PlayerState player;
 
@@ -18,6 +23,9 @@ public class Health : MonoBehaviour
 
     void Start()
     {
+        Assert.IsNotNull(healthLossSFX, "Health Loss SFX was null, ensure a sound is assigned to the health script on the player game object");
+        Assert.IsNotNull(deathSFX, "Death SFX was null, ensure a sound is assigned to the health script on the player game object");
+
         rb = GetComponent<Rigidbody2D>();
         player = GetComponent<PlayerState>();
 
@@ -33,9 +41,11 @@ public class Health : MonoBehaviour
         DebugHelper.Log(this.gameObject + " took damage and is at " + health + " health");
         if (health <= 0)
         {
+            AudioManager.instance.PlaySFX(healthLossSFX);
             dead = true;
             DebugHelper.Log(this.gameObject + " died at " + transform.position + "!");
             lives--;
+
             DebugHelper.Log("Player died. Lives left: " + lives);
             HealthUI.updateHealthUI = true;
 
@@ -45,6 +55,7 @@ public class Health : MonoBehaviour
             }
             else
             {
+                AudioManager.instance.PlaySFX(deathSFX);
                 GameOver.gameOver = true;
             }
         }

@@ -121,4 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e864c4b82b93ce04ebe9cf67d8a73130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPickupSFX: {fileID: 8300000, guid: 6b5f21d2d9ea7d04293cc0392609a549, type: 3}
   player: {fileID: 0}
