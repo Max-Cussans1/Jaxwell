@@ -189,4 +189,13 @@ public class AudioManager : MonoBehaviour
         sfxVolume = volume;
         sfxSource.volume = volume;
     }
+
+    //use to ensure the sfx source only plays one clip i.e. for volume slider
+    public void PlaySoundOnce(AudioClip sfxClip)
+    {
+        if(!sfxSource.isPlaying)
+        {
+            sfxSource.PlayOneShot(sfxClip);
+        }
+    }
 }
