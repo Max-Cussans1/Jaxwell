@@ -11,6 +11,8 @@ public class InputManager : MonoBehaviour
     WallClimb wallClimb;
     Rigidbody2D p_rigidbody;
 
+    public static bool disableInput = false;
+
     public bool disableFireInput = false;
     public bool disableWaterInput = false;
     public bool disableEarthInput = false;
@@ -21,6 +23,7 @@ public class InputManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        disableInput = false;
         dashScript = GetComponent<DashScript>();
         earthDash = GetComponent<EarthDash>();
         jumpScript = GetComponent<JumpScript>();
@@ -37,7 +40,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PauseMenu.isPaused && !GameOver.gameOver)
+        if (!PauseMenu.isPaused && !GameOver.gameOver && !disableInput)
         {
             if (!disableFireInput)
             {

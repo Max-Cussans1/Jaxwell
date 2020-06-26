@@ -33,7 +33,7 @@ public class MoveScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PauseMenu.isPaused && !GameOver.gameOver)
+        if (!PauseMenu.isPaused && !GameOver.gameOver && !InputManager.disableInput)
         {
             //set bools for movement in update so we're instantly detecting input
             if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
@@ -99,22 +99,24 @@ public class MoveScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        //handle movement in fixedupdate to be consistent at all framerates
-        if (acceleratingRight && !dashScript.dashing)
+        if (!InputManager.disableInput)
         {
-            AccelerateRight(p_rigidbody, acceleration, tempMaxSpeed);
-        }
+            //handle movement in fixedupdate to be consistent at all framerates
+            if (acceleratingRight && !dashScript.dashing)
+            {
+                AccelerateRight(p_rigidbody, acceleration, tempMaxSpeed);
+            }
 
-        if (acceleratingLeft && !dashScript.dashing)
-        {
-            AccelerateLeft(p_rigidbody, acceleration, tempMaxSpeed);
-        }
+            if (acceleratingLeft && !dashScript.dashing)
+            {
+                AccelerateLeft(p_rigidbody, acceleration, tempMaxSpeed);
+            }
 
-        if(!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
-        {
-            Decelerate(p_rigidbody, deceleration);
+            if (!acceleratingRight && !acceleratingLeft && !dashScript.dashing && !WallClimb.ignoreDecelerationForWallJump)
+            {
+                Decelerate(p_rigidbody, deceleration);
+            }
         }
-
     }
 
     //function to move right
