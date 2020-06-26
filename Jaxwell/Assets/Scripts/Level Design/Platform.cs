@@ -188,9 +188,9 @@ public class Platform : Elements
     }
 
     void OnCollisionEnter2D(Collision2D collision)
-    {
+    {        
         if (collision.gameObject == player)
-        {
+        {            
             if (!EarthDash.earthDashEnded && breakableOnEarthDash && playerstate.element == Elements.elements.earth)
             {
                 heightDashEnded = player.transform.position.y;
@@ -209,7 +209,7 @@ public class Platform : Elements
             }
             else if(CollisionManager.groundedObject == this.gameObject && (oscillateHorizontally || oscillateVertically))
             {
-                collision.transform.parent = this.transform;
+                player.transform.parent = this.transform;
                 DebugHelper.Log("Player transform is being parented by " + this.gameObject + " because it is oscillating");
             }
         }
@@ -219,10 +219,10 @@ public class Platform : Elements
     {
         if (collision.gameObject == player)
         {
-            if (WallClimb.grabbing && (oscillateHorizontally || oscillateVertically))
+            if ((oscillateHorizontally || oscillateVertically) && collision.transform.parent != this.transform)
             {
                 collision.transform.parent = this.transform;
-                DebugHelper.Log("Player transform is being parented by " + this.gameObject + " because it is oscillating and player is grabbing");
+                DebugHelper.Log("Player transform is being parented by " + this.gameObject + " because it is oscillating and player is staying on it");
             }
         }
     }

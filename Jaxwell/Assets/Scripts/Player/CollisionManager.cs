@@ -11,6 +11,8 @@ public class CollisionManager : MonoBehaviour
     public static GameObject wallRightObject = null;
     public static GameObject wallLeftObject = null;
 
+    bool lastGroundedOutput = false;
+
     JumpScript jumpScript;
 
     [Header("Settings")]
@@ -102,6 +104,7 @@ public class CollisionManager : MonoBehaviour
         if(!isGrounded && groundedObject != null)
         {
             groundedObject = null;
+            lastGroundedOutput = false;
         }
 
         if(!isAgainstWallRight && wallRightObject != null)
@@ -113,19 +116,25 @@ public class CollisionManager : MonoBehaviour
         {
             wallLeftObject = null;
         }
+
+        if (groundedObject != null && !lastGroundedOutput)
+        {
+            DebugHelper.Log("Last Groundedobject = " + groundedObject);
+            lastGroundedOutput = true;
+        }
     }
 
     //run checks when we collide with something
     void OnCollisionEnter2D(Collision2D collision)
-    {        
+    {
+        isGrounded = GroundedCheck();
         isAgainstWallRight = WallCheckRight();
 
         //if we didn't hit anything with our raycasts to the right, try left   
         if (!isAgainstWallRight)
         {
             isAgainstWallLeft = WallCheckLeft();
-        }
-        isGrounded = GroundedCheck();
+        }        
     }
 
     //run wallcheck when we stay colliding with something
