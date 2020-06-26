@@ -52,6 +52,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         isPaused = false;
         Time.timeScale = 1;
+        //destroy audiomanager when going back to main menu so we dont get more than 1 instance
+        Destroy(AudioManager.instance.gameObject);
         SceneManager.LoadScene("Main_Menu");
     }
 

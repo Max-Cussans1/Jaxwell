@@ -24,6 +24,8 @@ public class ContinueMenu : MonoBehaviour
     bool save2Empty = true;
     bool save3Empty = true;
 
+    public AudioClip music;
+
     void Start()
     {
         savePath1 = Application.persistentDataPath + "/save1.jxw";
@@ -59,6 +61,7 @@ public class ContinueMenu : MonoBehaviour
     public void NewGame()
     {
         levelLoader.LoadLevel(("Level_001"));
+        AudioManager.instance.PlayMusic(music);
     }
 
     public void LoadGame()
@@ -79,7 +82,8 @@ public class ContinueMenu : MonoBehaviour
              {
                  DebugHelper.Log("Loaded scene from the save file " + SaveManager.currentSavePath);
                  levelLoader.LoadLevel((save.sceneName));
-             }
+                AudioManager.instance.PlayMusic(music);
+            }
          
          }         
     }

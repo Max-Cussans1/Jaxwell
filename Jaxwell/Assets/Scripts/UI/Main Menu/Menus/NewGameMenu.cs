@@ -26,6 +26,8 @@ public class NewGameMenu : MonoBehaviour
     bool save2Empty = true;
     bool save3Empty = true;
 
+    public AudioClip music;
+
     void Start()
     {
         savePath1 = Application.persistentDataPath + "/save1.jxw";
@@ -61,6 +63,7 @@ public class NewGameMenu : MonoBehaviour
     public void NewGame()
     {
         levelLoader.LoadLevel("Level_001");
+        AudioManager.instance.PlayMusic(music);
     }
 
     public void Save1Chosen()
