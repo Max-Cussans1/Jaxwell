@@ -433,6 +433,11 @@ PrefabInstance:
       propertyPath: levelLoader
       value: 
       objectReference: {fileID: 263556978}
+    - target: {fileID: 3029667899786801016, guid: 268af808ebcf40e4f9fb52d06dd1b335,
+        type: 3}
+      propertyPath: levelEndSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 6d8eafa2b13acab448d8f3922c64ad6e, type: 3}
     - target: {fileID: 3029667899786801017, guid: 268af808ebcf40e4f9fb52d06dd1b335,
         type: 3}
       propertyPath: m_Name
