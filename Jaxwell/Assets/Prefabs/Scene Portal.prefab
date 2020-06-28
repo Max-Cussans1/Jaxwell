@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9a22c908b963254b9396824a1ccd8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelEndSFX: {fileID: 8300000, guid: 4cd560827e3291545bdf48cc9f460fcd, type: 3}
+  levelEndSFX: {fileID: 8300000, guid: 6d8eafa2b13acab448d8f3922c64ad6e, type: 3}
   levelLoader: {fileID: 0}
-  destinationScene: Level_001
+  destinationScene: Level_002
 --- !u!61 &3029667899786801018
 BoxCollider2D:
   m_ObjectHideFlags: 0
