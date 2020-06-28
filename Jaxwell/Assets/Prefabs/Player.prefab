@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82379f34494487243ad49544349712c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSFX: {fileID: 8300000, guid: ffd3590ec9806c74c8f0f58b8336e378, type: 3}
+  dashSFX: {fileID: 8300000, guid: 3e46ec3cde62f424990f23c24369d483, type: 3}
   dashSpeed: 70
   dashCooldown: 2
   dashDuration: 0.3
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c969c3554eea18d4a9f3e199aee900d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: 1
+  element: 2
   fireMaxSpeed: 10
   fireAcceleration: 0.7
   fireDeceleration: 0.9
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2dfb4a8a240d478d708bc005990df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthLossSFX: {fileID: 8300000, guid: 3ef59a1f6c7a45a469299cf6366bd7ed, type: 3}
+  healthLossSFX: {fileID: 8300000, guid: 680000f9240bba94bbc39c6482e31336, type: 3}
   deathSFX: {fileID: 8300000, guid: 03d57d6b682fabe4b928d8aace241c29, type: 3}
   dead: 0
   health: 100

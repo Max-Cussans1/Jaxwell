@@ -318,11 +318,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2930405940970940907, guid: df717aa74021de842b9d7cf6aa074f44,
-        type: 3}
-      propertyPath: dashSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 3e46ec3cde62f424990f23c24369d483, type: 3}
     - target: {fileID: 2930405940970940910, guid: df717aa74021de842b9d7cf6aa074f44,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -378,13 +373,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2930405940970940911, guid: df717aa74021de842b9d7cf6aa074f44,
-        type: 3}
-      propertyPath: element
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5279375911639913464, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717aa74021de842b9d7cf6aa074f44, type: 3}
 --- !u!114 &462261423 stripped
 MonoBehaviour:

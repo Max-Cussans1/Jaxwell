@@ -4381,7 +4381,12 @@ PrefabInstance:
     - target: {fileID: 1762676355481049150, guid: f72334293147bbd448e78a06e215b23c,
         type: 3}
       propertyPath: musicVolume
-      value: 0.097
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762676355481049150, guid: f72334293147bbd448e78a06e215b23c,
+        type: 3}
+      propertyPath: sfxVolume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1762676355481049151, guid: f72334293147bbd448e78a06e215b23c,
         type: 3}

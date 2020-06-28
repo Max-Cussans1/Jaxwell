@@ -211,7 +211,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1852090032}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1252184343}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
@@ -288,7 +288,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltip
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 72195588}
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: player
@@ -373,7 +373,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltip
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 72195588}
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: player
@@ -547,12 +547,12 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltip
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 72195588}
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1215870514}
+      objectReference: {fileID: 1252184343}
     - target: {fileID: 4111620670037530126, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: m_Name
@@ -1088,7 +1088,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltip
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 72195588}
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: player
@@ -1321,7 +1321,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltip
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 72195588}
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: player
@@ -1415,6 +1415,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f5b73be81fcb8245a150eff64f2a668, type: 3}
+--- !u!1 &1252184343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 542545398879557772, guid: 311bff2b7141d924f8a5bb078ac03e08,
+    type: 3}
+  m_PrefabInstance: {fileID: 1852090032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1252229944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8215,7 +8221,7 @@ PrefabInstance:
         type: 3}
       propertyPath: tooltip
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 72195588}
     - target: {fileID: 4111620670037530125, guid: 63e5592414071be4eaf0a9b6295a99e5,
         type: 3}
       propertyPath: player
