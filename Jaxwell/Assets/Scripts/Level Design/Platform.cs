@@ -56,6 +56,8 @@ public class Platform : Elements
     float startX;
     float startY;
 
+    CollisionManager collisionManager;
+
     bool canBeSeenByCamera = false;
 
     bool broken = false;
@@ -122,7 +124,8 @@ public class Platform : Elements
 
         //get player components
         player = GameObject.Find("Player");
-        playerstate = player.GetComponent<PlayerState>();       
+        playerstate = player.GetComponent<PlayerState>();
+        collisionManager = player.GetComponent<CollisionManager>();
 
     }
 
@@ -196,8 +199,9 @@ public class Platform : Elements
                 heightDashEnded = player.transform.position.y;
                 DebugHelper.Log("Travelled " + (EarthDash.heightDashedAt - heightDashEnded) + " units with earth dash trying to break a platform");
 
+                collisionManager.CheckGroundedObject();
                 //check we travelled the distance we want and if we did break the platform
-                if (EarthDash.heightDashedAt - heightDashEnded >= dashDistanceRequiredToBreak)
+                if (EarthDash.heightDashedAt - heightDashEnded >= dashDistanceRequiredToBreak && CollisionManager.groundedObject == this.gameObject)
                 {
                     EarthDash.earthDashEnded = true;
                     p_collider.enabled = false;

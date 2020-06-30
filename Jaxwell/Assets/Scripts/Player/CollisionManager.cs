@@ -236,6 +236,74 @@ public class CollisionManager : MonoBehaviour
         return isGroundedCheck;
     }
 
+    public void CheckGroundedObject()
+    {
+        //make sure the raycast start point take into account the offset
+        raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x, transform.position.y + p_collider.offset.y);
+
+        //create 2D raycast fired directly down from player's centre just a tiny bit further than our player
+        RaycastHit2D hit = Physics2D.Raycast(raycastStartPoint, -Vector2.up, raycastDistance);
+
+        if (drawGroundedRaycastDebug)
+        {
+            //draw ray to check debug for grounded check
+            Debug.DrawRay(raycastStartPoint, -Vector2.up * raycastDistance, Color.red, 0.0f);
+        }
+
+        //if the raycast hits something
+        if (hit.collider != null)
+        {
+            //print what the raycast hit to console and where the object is
+            DebugHelper.Log("Raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hit.collider.gameObject + " at " + hit.point);
+            groundedObject = hit.collider.gameObject;
+            return;
+        }
+        else
+        {
+            //make sure the raycast start point take into account the offset
+            raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x - raycastStartOffset, transform.position.y + p_collider.offset.y);
+
+            //fire a raycast from the left side of the player if the centre might not hit
+            RaycastHit2D hitLeft = Physics2D.Raycast(raycastStartPoint, -Vector2.up, raycastDistance);
+
+            if (drawGroundedRaycastDebug)
+            {
+                //draw ray to check debug for grounded check
+                Debug.DrawRay(raycastStartPoint, -Vector2.up * raycastDistance, Color.red, 0.0f);
+            }
+
+            if (hitLeft.collider != null)
+            {
+                //print what the raycast hit to console and where the object is
+                DebugHelper.Log("Left raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitLeft.collider.gameObject + " at " + hitLeft.point);
+                groundedObject = hitLeft.collider.gameObject;
+                return;
+            }
+            else
+            {
+                raycastStartPoint = new Vector2(transform.position.x + p_collider.offset.x + raycastStartOffset, transform.position.y + p_collider.offset.y);
+
+
+                //fire a raycast from the right side of the player if the centre or left might not hit
+                RaycastHit2D hitRight = Physics2D.Raycast(raycastStartPoint, -Vector2.up, raycastDistance);
+
+                if (drawGroundedRaycastDebug)
+                {
+                    //draw ray to check debug for grounded check
+                    Debug.DrawRay(raycastStartPoint, -Vector2.up * raycastDistance, Color.red, 0.0f);
+                }
+
+                if (hitRight.collider != null)
+                {
+                    //print what the raycast hit to console and where the object is
+                    DebugHelper.Log("Right raycast to check if we're grounded from " + p_collider.gameObject + " hit " + hitRight.collider.gameObject + " at " + hitRight.point);
+                    groundedObject = hitRight.collider.gameObject;
+                    return;
+                }
+            }
+        }
+    }
+
     private bool WallCheckRight()
     {
         bool isWallCheck = false;
