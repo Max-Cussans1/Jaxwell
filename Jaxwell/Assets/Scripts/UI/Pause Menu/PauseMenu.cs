@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour
                 Resume();
             }
             else if(!GameOver.gameOver)
-            {
+            {                
                 Pause();
             }
         }

@@ -27,10 +27,10 @@ public class Tooltip : MonoBehaviour
 
     void Update()
     {
-        if(showToolTip)
+        if (showToolTip)
         {            
             if(!tooltip.enabled)
-            {
+            {                
                 tooltip.enabled = true;
             }
             tempTimeToShow -= Time.deltaTime;
@@ -38,14 +38,19 @@ public class Tooltip : MonoBehaviour
             if(tempTimeToShow <= 0)
             {
                 hasBeenShown = true;
-                showToolTip = false;
+                showToolTip = false;                
                 tooltip.enabled = false;
 
-                if(!showOnlyOnce)
+                if (!showOnlyOnce)
                 {
                     tempTimeToShow = timeToShow;
                 }
             }
+        }
+        //disable tooltips while paused
+        if(PauseMenu.isPaused && tooltip.enabled)
+        {
+            tooltip.enabled = false;
         }
     }
 
